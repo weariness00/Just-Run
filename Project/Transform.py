@@ -1,5 +1,3 @@
-import numpy
-
 from Afx import *
 
 

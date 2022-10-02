@@ -11,6 +11,8 @@ class Object:
 
         self.Color = Color
 
+        self.isActive = True
+
         self.ID = Object.Count + 1
         Object.Count += 1
         pass

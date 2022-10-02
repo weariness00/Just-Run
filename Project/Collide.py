@@ -1,4 +1,4 @@
-from Transform import *
+from Afx import *
 
 
 class Collide:
