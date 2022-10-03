@@ -7,3 +7,6 @@ from Collide import *
 from Object import *
 from Tile import *
 from EndlessTile import *
+from Player import *
+
+windowSize = numpy.array([800, 600])

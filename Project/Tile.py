@@ -11,13 +11,4 @@ class Tile(Object):
 
         pass
 
-    def Draw(self):
-        if not self.isActive:
-            return
-
-        self.transform.Position *= self.tileSize
-        x, y = self.transform.Position[0], self.transform.Position[1]
-        self.image.clip_draw(self.image_type[0],self.image_type[1], self.image_type[2], self.image_type[3], x, y)
-        # print(x,y)
-        pass
     pass

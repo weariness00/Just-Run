@@ -2,10 +2,10 @@ from Afx import *
 
 
 class Collide:
-    def __init__(self):
+    def __init__(self, transform = None):
         self.colliderBox = numpy.zeros((2, 2), dtype=int)
 
-        self.transform = None
+        self.transform = transform
 
         self.isCollide = False
         self.isMouseCollide = False
