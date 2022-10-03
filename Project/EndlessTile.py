@@ -7,12 +7,12 @@ class TileType(Enum):
 
 
 class EndlessTile:
-
     def __init__(self, Player=Object()):
         self.Player = Player
 
-        self.maxViewDistance = 16 * 100
+        self.maxViewDistance = 16 * 25
         self.terrainSize = 16
+
         self.terrainVisibleInViewDistance = self.maxViewDistance // self.terrainSize
 
         self.terrainDictionary = dict()
@@ -28,6 +28,7 @@ class EndlessTile:
         self.LastUpdateTerrain = []
 
         currentTerrain_Pos = self.Player.transform.Position // self.terrainSize
+        print(currentTerrain_Pos)
 
         obj = None
         #Player의 위치를 반경으로 Tile 활성화
@@ -46,6 +47,7 @@ class EndlessTile:
                     obj.transform.Position = pos
                     pass
                 obj.isActive = True
+                obj.tileSize = self.terrainSize
                 self.LastUpdateTerrain.append(obj)
                 obj.Draw()
                 pass
