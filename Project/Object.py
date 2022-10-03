@@ -21,4 +21,3 @@ class Object:
         pass
 
     pass
-

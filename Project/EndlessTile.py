@@ -2,7 +2,7 @@ from Afx import *
 
 
 class TileType(Enum):
-    glass_Default = Tile(load_image("image\Tile\snow-expansion.png"), (0, 208, 16, 16))
+    glass_Default = auto()
     pass
 
 
@@ -11,11 +11,11 @@ class EndlessTile:
     def __init__(self, Player=Object()):
         self.Player = Player
 
-        self.maxViewDistance = 1000
-        self.terrainSize = 100
+        self.maxViewDistance = 16 * 100
+        self.terrainSize = 16
         self.terrainVisibleInViewDistance = self.maxViewDistance // self.terrainSize
 
-        self.terrainDictionary = {}
+        self.terrainDictionary = dict()
         self.LastUpdateTerrain = []
         self.VisibleTerrainList = None
         pass
@@ -33,18 +33,21 @@ class EndlessTile:
         #Player의 위치를 반경으로 Tile 활성화
         for yOffset in range(-self.terrainVisibleInViewDistance, self.terrainVisibleInViewDistance):
             for xOffset in range(-self.terrainVisibleInViewDistance, self.terrainVisibleInViewDistance):
-                viewedTerrainPos = currentTerrain_Pos + numpy.array([xOffset, yOffset])
+                pos = currentTerrain_Pos + numpy.array([xOffset, yOffset])
+                viewedTerrainPos = (pos[0],pos[1])
 
-                if self.terrainDictionary.get(viewedTerrainPos) is not None:
-                    obj = self.terrainDictionary.get(viewedTerrainPos)
+                obj = self.terrainDictionary.get(viewedTerrainPos)
+                if obj is not None:
                     pass
                 else:
-                    self.terrainDictionary[viewedTerrainPos] = TileType.glass_Default
-                    obj = self.terrainDictionary.get(viewedTerrainPos)
-                    obj.transfrom.Position = viewedTerrainPos
+                    tile = Tile(load_image("image\Tile\snow-expansion.png"), (0, 208, 16, 16))
+                    self.terrainDictionary[viewedTerrainPos] = tile
+                    obj = self.terrainDictionary[viewedTerrainPos]
+                    obj.transform.Position = pos
                     pass
                 obj.isActive = True
                 self.LastUpdateTerrain.append(obj)
+                obj.Draw()
                 pass
             pass
         pass
