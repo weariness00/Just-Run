@@ -4,15 +4,19 @@ w, h = windowSize[0], windowSize[1]
 open_canvas(windowSize[0],windowSize[1])
 clear_canvas()
 
-Obj = Object()
+Camera.MainCamera = Camera()
 player = Player()
+Camera.MainCamera.transform = player.transform
+player.transform.Position = numpy.array([10,10])
+Camera.MainCamera.transform.Info()
+
 player.name = "player"
 player.transform.Position = numpy.array([w//2,h//2])
 
+player.Draw()
+
 endlessTile = EndlessTile(player)
 endlessTile.UpdateVisibleTerrain()
-
-player.Draw()
 
 
 update_canvas()

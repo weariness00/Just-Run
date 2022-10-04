@@ -11,11 +11,11 @@ class Transform:
     def __del__(self):
         pass
 
-    def LookAt(self, dir):
-        self.Position += dir * numpy.array([math.cos(self.Rotation * math.pi / 180), math.sin(self.Rotation * math.pi / 180)])
+    def LookAt(self, speed):
+        self.Position += speed * numpy.array([math.cos(self.Rotation * math.pi / 180), math.sin(self.Rotation * math.pi / 180)])
         pass
 
-    def Show(self):
+    def Info(self):
         print(self.Position, " = Position")
         print(self.Rotation, " = Rotation")
         print(self.Scale, " = Scale")

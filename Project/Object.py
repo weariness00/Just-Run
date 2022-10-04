@@ -32,10 +32,10 @@ class Object:
         if not self.isActive:
             return
 
-        self.Info()
-        self.transform.Show()
-        x, y = self.transform.Position[0], self.transform.Position[1]
+        #Camera.MainCamera.transform.Info()
+
+        pos = self.transform.Position #- Camera.MainCamera.transform.Position
         scale = self.transform.Scale * numpy.array([self.image_type[2], self.image_type[3]])
-        self.image.clip_draw(self.image_type[0],self.image_type[1], self.image_type[2], self.image_type[3], x, y,scale[0],scale[1])
+        self.image.clip_draw(self.image_type[0],self.image_type[1], self.image_type[2], self.image_type[3], pos[0], pos[1],scale[0],scale[1])
         pass
     pass

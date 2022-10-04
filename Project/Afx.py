@@ -8,5 +8,6 @@ from Object import *
 from Tile import *
 from EndlessTile import *
 from Player import *
+from Camera import *
 
 windowSize = numpy.array([800, 600])
