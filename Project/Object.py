@@ -1,22 +1,25 @@
+import numpy
+
 from Afx import *
 
 #Draw에서 1번 Object를 호출 뒤 2번 Object를 호출하면 1번 Object의 값을 그대로 가져다 쓴다 -> 왜?
+#Draw를 Render클래스를 만들어 추가 후 Camera나 기타 등등을 인스턴스 변수로 받는다.
 
 class Object:
     Count = 0
 
-    def __init__(self, Color=[1, 1, 1, 1], transform=Transform(), collider=Collide(), name = None):
-        self.transform = transform
-        self.collider = collider
+    def __init__(self):
+        self.transform = Transform()
+        self.collider = Collide()
         self.collider.InitTransform(self.transform)
 
         self.image = None
         self.image_type = None
-        self.Color = Color
+        self.Color = numpy.array([1,1,1,1])
 
         self.isActive = True
 
-        self.name = name
+        self.name = None
         self.ID = Object.Count
         Object.Count += 1
         pass
@@ -32,8 +35,8 @@ class Object:
         if not self.isActive:
             return
 
-        #Camera.MainCamera.transform.Info()
-
+        self.Info()
+        self.transform.Info()
         pos = self.transform.Position #- Camera.MainCamera.transform.Position
         scale = self.transform.Scale * numpy.array([self.image_type[2], self.image_type[3]])
         self.image.clip_draw(self.image_type[0],self.image_type[1], self.image_type[2], self.image_type[3], pos[0], pos[1],scale[0],scale[1])

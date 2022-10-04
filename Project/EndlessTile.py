@@ -32,7 +32,6 @@ class EndlessTile:
 
         currentTerrain_Pos = self.Player.transform.Position // self.terrainSize
 
-        obj = None
         #Player의 위치를 반경으로 Tile 활성화
         for yOffset in range(-self.terrainVisibleInViewDistance, self.terrainVisibleInViewDistance + 1):
             for xOffset in range(-self.terrainVisibleInViewDistance, self.terrainVisibleInViewDistance + 1):
@@ -44,12 +43,13 @@ class EndlessTile:
                     pass
                 else:
                     tile = Tile(load_image("image\Tile\snow-expansion.png"), (0, 208, 16, 16))
-                    self.terrainDictionary[viewedTerrainPos] = tile
-                    obj = self.terrainDictionary[viewedTerrainPos]
-                    obj.transform.Position = pos * self.terrainSize
-                    obj.tileSize = self.terrainSize
-                    obj.transform.Scale = numpy.array([10,10])
-                    obj.name = 'tile'
+                    tile.transform.Position = pos * self.terrainSize
+                    tile.tileSize = 16
+                    tile.transform.Scale *= 10
+                    tile.name = 'tile'
+
+                    obj = tile
+                    self.terrainDictionary[viewedTerrainPos] = obj
                     pass
                 obj.isActive = True
                 self.LastUpdateTerrain.append(obj)

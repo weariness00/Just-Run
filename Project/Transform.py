@@ -16,9 +16,9 @@ class Transform:
         pass
 
     def Info(self):
-        print(self.Position, " = Position")
-        print(self.Rotation, " = Rotation")
-        print(self.Scale, " = Scale")
+        print("Position : ", self.Position)
+        print("Rotation : ", self.Rotation)
+        print("Scale    : ", self.Scale)
         pass
 
     pass
