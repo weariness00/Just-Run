@@ -1,13 +1,8 @@
-from Afx import *
+from Tile import *
+from Renderer import *
 
 #타입에 따른 타일 만들기
 #Player 포지션에 따른 맵 생성 제대로 되게 하기
-#여기서 설정한 Scale이 Player한테 영향이감 왜?
-
-class TileType(Enum):
-    glass_Default = auto()
-    pass
-
 
 class EndlessTile:
     def __init__(self, Player=Object()):
@@ -33,7 +28,8 @@ class EndlessTile:
         currentTerrain_Pos = self.Player.transform.Position // self.terrainSize
 
         #Player의 위치를 반경으로 Tile 활성화
-        for yOffset in range(-self.terrainVisibleInViewDistance, self.terrainVisibleInViewDistance + 1):
+        count = 0
+        for yOffset in range(-self.terrainVisibleInViewDistance, self.terrainVisibleInViewDistance):
             for xOffset in range(-self.terrainVisibleInViewDistance, self.terrainVisibleInViewDistance + 1):
                 pos = currentTerrain_Pos + numpy.array([xOffset, yOffset])
                 viewedTerrainPos = (pos[0],pos[1])
@@ -42,18 +38,20 @@ class EndlessTile:
                 if obj is not None:
                     pass
                 else:
-                    tile = Tile(load_image("image\Tile\snow-expansion.png"), (0, 208, 16, 16))
-                    tile.transform.Position = pos * self.terrainSize
-                    tile.tileSize = 16
-                    tile.transform.Scale *= 10
-                    tile.name = 'tile'
+                    obj = Tile(load_image("image\Tile\snow-expansion.png"), (0, 208, 16, 16))
+                    obj.transform.Position = pos * self.terrainSize
+                    obj.tileSize = 16
+                    obj.transform.Scale *= 10
+                    obj.name = 'tile'
 
-                    obj = tile
                     self.terrainDictionary[viewedTerrainPos] = obj
+                    AddRenderObject(obj)
                     pass
+
                 obj.isActive = True
                 self.LastUpdateTerrain.append(obj)
-                obj.Draw()
+                # obj.Draw()
+
                 pass
             pass
         pass

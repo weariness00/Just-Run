@@ -1,24 +1,34 @@
-from Afx import *
+import Player
+from EndlessTile import *
+from Player import *
+
+
 
 w, h = windowSize[0], windowSize[1]
 open_canvas(windowSize[0],windowSize[1])
 clear_canvas()
 
-Camera.MainCamera = Camera()
-# MainCamera = Camera()
 player = Player()
-Camera.MainCamera.transform = player.transform
-player.transform.Position = numpy.array([10,10])
-
 player.name = "player"
 player.transform.Position = numpy.array([w//2,h//2])
+player.transform.Scale += 2
+Renderer.MainRender.P = player
+
+Camera.MainCamera.transform = player.transform
 
 endlessTile = EndlessTile(player)
-endlessTile.UpdateVisibleTerrain()
 
-player.Draw()
 
-update_canvas()
+while GameRunning:
+    clear_canvas()
+    endlessTile.UpdateVisibleTerrain()
 
-delay(1)
+    player.Handle_Event()
+    # player.Draw()
+    Renderer.MainRender.Update()
+
+    update_canvas()
+    delay(1/60)
+    pass
+
 close_canvas()

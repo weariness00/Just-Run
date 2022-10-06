@@ -1,5 +1,4 @@
-from Afx import *
-
+from Object import *
 
 class Camera:
     MainCamera = None
@@ -9,3 +8,4 @@ class Camera:
 
     pass
 
+Camera.MainCamera = Camera()

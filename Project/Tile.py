@@ -1,5 +1,4 @@
-from Afx import *
-
+from Object import *
 
 class Tile(Object):
 

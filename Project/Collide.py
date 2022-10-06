@@ -1,5 +1,4 @@
-from Afx import *
-
+from Transform import *
 
 class Collide:
     def __init__(self, transform = None):
