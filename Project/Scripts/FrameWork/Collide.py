@@ -1,4 +1,4 @@
-from Transform import *
+from Scripts.FrameWork.Transform import *
 
 class Collide:
     def __init__(self, transform = None):

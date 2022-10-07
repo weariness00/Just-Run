@@ -1,5 +1,6 @@
-from Tile import *
-from Renderer import *
+
+from Scripts.FrameWork.Tile import *
+from Scripts.FrameWork.Renderer import *
 
 #타입에 따른 타일 만들기
 #Player 포지션에 따른 맵 생성 제대로 되게 하기
@@ -8,14 +9,13 @@ class EndlessTile:
     def __init__(self, Player=Object()):
         self.Player = Player
 
-        self.maxViewDistance = 200
+        self.maxViewDistance = 160 * 3
         self.terrainSize = 160
-
-        self.terrainVisibleInViewDistance = self.maxViewDistance // self.terrainSize
 
         self.terrainDictionary = dict()
         self.LastUpdateTerrain = []
         self.VisibleTerrainList = None
+        self.render = None
         pass
 
     def UpdateVisibleTerrain(self):
@@ -26,11 +26,11 @@ class EndlessTile:
         self.LastUpdateTerrain = []
 
         currentTerrain_Pos = self.Player.transform.Position // self.terrainSize
+        terrainVisibleInViewDistance = self.maxViewDistance // self.terrainSize
 
         #Player의 위치를 반경으로 Tile 활성화
-        count = 0
-        for yOffset in range(-self.terrainVisibleInViewDistance, self.terrainVisibleInViewDistance):
-            for xOffset in range(-self.terrainVisibleInViewDistance, self.terrainVisibleInViewDistance + 1):
+        for yOffset in range(-terrainVisibleInViewDistance, terrainVisibleInViewDistance + 1):
+            for xOffset in range(-terrainVisibleInViewDistance - 1, terrainVisibleInViewDistance + 2):
                 pos = currentTerrain_Pos + numpy.array([xOffset, yOffset])
                 viewedTerrainPos = (pos[0],pos[1])
 
@@ -45,12 +45,12 @@ class EndlessTile:
                     obj.name = 'tile'
 
                     self.terrainDictionary[viewedTerrainPos] = obj
-                    AddRenderObject(obj)
+                    self.render.AddRenderObject(obj)
+
                     pass
 
                 obj.isActive = True
                 self.LastUpdateTerrain.append(obj)
-                # obj.Draw()
 
                 pass
             pass

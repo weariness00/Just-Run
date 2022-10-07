@@ -1,4 +1,4 @@
-from Afx import *
+from Scripts.Afx import *
 
 
 class Transform:

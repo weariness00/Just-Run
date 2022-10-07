@@ -1,4 +1,4 @@
-from Object import *
+from Scripts.FrameWork.Object import *
 
 class Camera:
     MainCamera = None

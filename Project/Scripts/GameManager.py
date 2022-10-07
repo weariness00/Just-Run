@@ -1,22 +1,22 @@
-import Player
-from EndlessTile import *
-from Player import *
-
-
+from Scripts.EndlessTile import *
+from Scripts.Object.Player import *
 
 w, h = windowSize[0], windowSize[1]
 open_canvas(windowSize[0],windowSize[1])
 clear_canvas()
+TileRender = Renderer()
+PlayerRender = Renderer()
 
 player = Player()
 player.name = "player"
 player.transform.Position = numpy.array([w//2,h//2])
 player.transform.Scale += 2
-Renderer.MainRender.P = player
+PlayerRender.AddRenderObject(player)
 
 Camera.MainCamera.transform = player.transform
 
 endlessTile = EndlessTile(player)
+endlessTile.render = TileRender
 
 
 while GameRunning:
@@ -24,8 +24,9 @@ while GameRunning:
     endlessTile.UpdateVisibleTerrain()
 
     player.Handle_Event()
-    # player.Draw()
-    Renderer.MainRender.Update()
+
+    TileRender.Update()
+    PlayerRender.Update()
 
     update_canvas()
     delay(1/60)

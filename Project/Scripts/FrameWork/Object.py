@@ -1,4 +1,4 @@
-from Collide import *
+from Scripts.FrameWork.Collide import *
 
 #Draw에서 1번 Object를 호출 뒤 2번 Object를 호출하면 1번 Object의 값을 그대로 가져다 쓴다 -> 왜?
 #Draw를 Render클래스를 만들어 추가 후 Camera나 기타 등등을 인스턴스 변수로 받는다.
