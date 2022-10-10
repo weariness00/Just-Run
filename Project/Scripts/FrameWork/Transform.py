@@ -15,6 +15,15 @@ class Transform:
         self.Position += speed * numpy.array([math.cos(self.Rotation * math.pi / 180), math.sin(self.Rotation * math.pi / 180)])
         pass
 
+    def LooAtTarget(self, target, speed):
+        if self.Position[0] == target.Position[0] and self.Position[1] == target.Position[1]:
+            return
+
+        dir = target.Position - self.Position
+        dir = dir/numpy.linalg.norm(dir)
+        self.Position = self.Position + speed * dir
+        pass
+
     def Info(self):
         print("Position : ", self.Position)
         print("Rotation : ", self.Rotation)

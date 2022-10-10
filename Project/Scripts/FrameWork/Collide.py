@@ -1,5 +1,7 @@
 from Scripts.FrameWork.Transform import *
 
+# OnCollider 부분에서 왜 에러인지 모르겠음
+
 class Collide:
     def __init__(self, transform = None):
         self.colliderBox = numpy.zeros((2, 2), dtype=int)
@@ -36,22 +38,17 @@ class Collide:
     def OnCollider(self, other):
         self.isCollide = False
 
-        thisBox = self.colliderBox * self.transform.Scale + self.transform.Position
-        otherBox = other.colliderBox * other.transform.Scale + other.transform.Position
+        this_Box = self.colliderBox * self.transform.Scale + self.transform.Position
+        other_Box = other.colliderBox * other.transform.Scale + other.transform.Position
 
-        # if (thisBox[0][0] <= otherBox[0][0] <= thisBox[1][0]) or
-        #     (this_Box[0][0] <= other_Box[1][0] <= this_Box[1][0]):
-        #     if(other_Box[0][1] >= this_Box[0][1] >= other_Box[1][1]) or
-		# 	(this_Box[0][1] >= other_Box[0][1] >= this_Box[1][1]):
-        #     self.isCollide = True
-        # elif(this_Box[0][1] >= other_Box[0][1] >= this_Box[1][1]) or
-		#     (this_Box[0][1] >= other_Box[1][1] >= this_Box[1][1]):
-        #     if(this_Box[0][0] >= other_Box[0][0] => other_Box[1][0]) or
-		#     (this_Box[0][0] <= other_Box[0][0] <= this_Box[1][0]):
-        #     self.isCollide = True
+        if this_Box[0][0] <= other_Box[0][0] <= this_Box[1][0] or this_Box[0][0] <= other_Box[1][0] <= this_Box[1][0]:
+            if other_Box[0][1] >= this_Box[0][1] >= other_Box[1][1] or this_Box[0][1] >= other_Box[0][1] >= this_Box[1][1]:
+                self.isCollide = True
+        elif this_Box[0][1] >= other_Box[0][1] >= this_Box[1][1] or this_Box[0][1] >= other_Box[1][1] >= this_Box[1][1]:
+            #if this_Box[0][0] >= other_Box[0][0] => other_Box[1][0] or this_Box[0][0] <= other_Box[0][0] <= this_Box[1][0]:
+                self.isCollide = True
 
         return self.isCollide
-        pass
 
     def Info(self):
         print("\nCollider\n",self.colliderBox)

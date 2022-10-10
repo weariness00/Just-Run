@@ -21,13 +21,20 @@ class Player(Object):
             self.idle[key] = False
         pass
 
+    def __del__(self):
+        pass
+
+    def Update(self):
+        self.Handle_Event()
+        self.Movement()
+        pass
     def Handle_Event(self):
         events = get_events()
         for event in events:
             if event.type == SDL_QUIT:
-                SetRunning(False)
+                Instance.SetRunning(False)
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                SetRunning(False)
+                Instance.SetRunning(False)
 
             if event.type == SDL_KEYDOWN:
                 if event.key == SDLK_LEFT:
@@ -53,7 +60,7 @@ class Player(Object):
                 pass
 
             pass
-        self.Movement()
+
 
         pass
 

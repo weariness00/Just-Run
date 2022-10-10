@@ -11,7 +11,7 @@ class Renderer:
             if not obj.isActive:
                 continue
 
-            pos = obj.transform.Position - Camera.MainCamera.transform.Position + windowSize//2
+            pos = obj.transform.Position - Camera.MainCamera.transform.Position + Instance.windowSize//2
             scale = obj.transform.Scale * numpy.array([obj.image_type[2], obj.image_type[3]])
             obj.image.clip_draw(obj.image_type[0], obj.image_type[1], obj.image_type[2], obj.image_type[3], pos[0], pos[1], scale[0], scale[1])
             pass
