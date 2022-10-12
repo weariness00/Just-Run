@@ -1,6 +1,5 @@
 from Scripts.FrameWork.Object import *
 
-
 class keyType(Enum):
     Left = 0
     Right = 1
@@ -19,6 +18,19 @@ class Player(Object):
 
         for key in keyType:
             self.idle[key] = False
+
+        #Transform 초긱화
+        self.transform.Scale *= 2
+
+        #Collde 초기화
+        self.collider = Collide()
+        self.collider.object = self
+        self.collider.InitTransform(self.transform)
+        box = numpy.array([[20,10], [0,0]])
+        self.collider.SetCollideBox(box)
+        # self.collider.Pivot = numpy.array([-23, -35])
+        self.collider.tag = "Player"
+
         pass
 
     def __del__(self):
@@ -79,6 +91,26 @@ class Player(Object):
 
         self.transform.Position += movePos
 
+        pass
+
+    def OnCollide(self):
+        collides = self.collider.OnCollider()
+
+        for collider in collides:
+            if collider.tag == "Tile":
+                print("충돌 TIle")
+                movePos = numpy.array([0, 0])
+                if self.idle[keyType.Left]:
+                    movePos[0] -= 5
+                if self.idle[keyType.Right]:
+                    movePos[0] += 5
+                if self.idle[keyType.UP]:
+                    movePos[1] += 5
+                if self.idle[keyType.Down]:
+                    movePos[1] -= 5
+
+                self.transform.Position -= movePos
+            pass
         pass
 
     pass

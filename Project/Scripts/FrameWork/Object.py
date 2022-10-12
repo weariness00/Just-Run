@@ -5,11 +5,10 @@ from Scripts.FrameWork.Collide import *
 
 class Object:
     Count = 0
-
+    AllObject = []
     def __init__(self):
         self.transform = Transform()
-        self.collider = Collide()
-        self.collider.InitTransform(self.transform)
+        self.collider = None
 
         self.image = None
         self.image_type = None
@@ -20,6 +19,7 @@ class Object:
         self.name = None
         self.ID = Object.Count
         Object.Count += 1
+        Object.AllObject.append(self)
         pass
 
     def __del__(self):

@@ -1,3 +1,4 @@
+import random
 
 from Scripts.Object.Object_Type import *
 from Scripts.FrameWork.Renderer import *
@@ -38,7 +39,8 @@ class EndlessTile:
                 if obj is not None:
                     pass
                 else:
-                    obj = Tile(load_image("image\Tile\snow-expansion.png"), (16 * 1, 208, 16, 16))
+                    # obj = Tile(load_image("image\Tile\snow-expansion.png"), (16 * 1, 208, 16, 16))
+                    obj = TileType(random.randint(1, 1))
                     obj.transform.Position = pos * self.terrainSize
                     obj.tileSize = 16
                     obj.transform.Scale *= 10

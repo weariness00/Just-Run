@@ -16,7 +16,6 @@ MonsterRender = Renderer()
 player = Player()
 player.name = "player"
 player.transform.Position = numpy.array([Instance.windowSize[0]//2,Instance.windowSize[1]//2])
-player.transform.Scale += 2
 PlayerRender.AddRenderObject(player)
 
 Camera.MainCamera.transform = player.transform
@@ -30,18 +29,21 @@ MonsterRender.AddRenderObject(monster)
 ObjectUpdateList = [player, monster]
 RenderUpdateList = [TileRender, PlayerRender, MonsterRender]
 
+#임시
+Collide.MainCamera = Camera.MainCamera
+
 while Instance.GameRunning:
     clear_canvas()
     endlessTile.UpdateVisibleTerrain()
-
-    for obj in ObjectUpdateList:
-        obj.Update()
-
     for render in RenderUpdateList:
         render.Update()
+    for obj in ObjectUpdateList:
+        obj.Update()
+        obj.OnCollide()
+
+
 
     update_canvas()
     delay(1/60)
     pass
-
 close_canvas()

@@ -23,4 +23,7 @@ class Monster(Object):
         self.transform.LooAtTarget(self.__targetPlayer.transform, self.__speed)
 
         pass
+
+    def OnCollide(self):
+        pass
     pass
