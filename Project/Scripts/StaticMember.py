@@ -1,4 +1,5 @@
 import numpy
+import Static_Funtion
 windowSize = None
 GameRunning = None
 

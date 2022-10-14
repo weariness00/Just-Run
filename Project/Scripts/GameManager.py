@@ -35,11 +35,14 @@ Collide.MainCamera = Camera.MainCamera
 while Instance.GameRunning:
     clear_canvas()
     endlessTile.UpdateVisibleTerrain()
+
     for render in RenderUpdateList:
         render.Update()
+
     for obj in ObjectUpdateList:
         obj.Update()
         obj.OnCollide()
+        pass
 
 
 

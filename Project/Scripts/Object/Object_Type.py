@@ -20,8 +20,8 @@ def TileType(typeNumber):
         image_type[0] = 16 * typeNumber
         tile = Tile(image, image_type, Collide())
         tile.collider.object = tile
-        box = numpy.array([[4, 6], [0, 0]])
-        tile.collider.SetCollideBox(box)
+        tile.collider.Pivot = numpy.array([14, -5])
+        tile.collider.SetCollideBox(numpy.array([[4, 6], [0, 0]]))
         tile.collider.tag = "Tile"
         return tile
     elif typeNumber == 2:

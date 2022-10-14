@@ -5,5 +5,6 @@ import math
 import numpy
 from pico2d import *
 from enum import Enum, auto
+from Static_Funtion import *
 
 import Scripts.StaticMember as Instance

@@ -26,9 +26,8 @@ class Player(Object):
         self.collider = Collide()
         self.collider.object = self
         self.collider.InitTransform(self.transform)
-        box = numpy.array([[20,10], [0,0]])
-        self.collider.SetCollideBox(box)
-        # self.collider.Pivot = numpy.array([-23, -35])
+        self.collider.Pivot = numpy.array([0,-10])
+        self.collider.SetCollideBox(numpy.array([[20,10], [0,0]]))
         self.collider.tag = "Player"
 
         pass
@@ -109,7 +108,9 @@ class Player(Object):
                 if self.idle[keyType.Down]:
                     movePos[1] -= 5
 
-                self.transform.Position -= movePos
+                print(collider.object.Info())
+
+                # self.transform.Position -= movePos
             pass
         pass
 
