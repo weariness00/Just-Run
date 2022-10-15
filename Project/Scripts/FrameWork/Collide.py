@@ -1,3 +1,5 @@
+import numpy
+
 from Scripts.FrameWork.Transform import *
 
 class Collide:
@@ -6,20 +8,19 @@ class Collide:
     def __init__(self):
         self.colliderBox = None
         self.colliderSize = None
-
+        self.Pivot = None
         self.rPos = None # box의 x, y 반지름
 
         self.transform = None
         self.object = None
 
-        self.Pivot = None
-
+        self.isTrigger = False #이게 켜진 Objcet가 충돌하면 충돌한 크기만큼 뒤로 간다.
         self.isCollide = False
         self.isMouseCollide = False
-        self.image = load_image('collider.png')
-
 
         self.tag = None
+
+        self.image = load_image('collider.png')
 
         Collide.AllCollider.append(self)
         pass
@@ -33,7 +34,7 @@ class Collide:
 
     def SetCollideBox(self, box):
         findDot = numpy.array(box)
-        for i in range(0,2):
+        for i in range(0, 2):
             if findDot[0, 0] > box[i, 0]:
                 findDot[0, 0] = box[i, 0]
             if findDot[0, 1] > box[i, 0]:
@@ -47,7 +48,7 @@ class Collide:
 
         self.colliderBox = numpy.array([self.Pivot - findDot[1]//2, self.Pivot + findDot[1]//2]) # 충돌박스를 중점을 기준으로 정해진 크기만큼 배정
         self.colliderSize = self.colliderBox[1] - self.colliderBox[0]
-        self.rPos = self.colliderSize/2
+        self.rPos = self.colliderSize//2
         # self.collider4Dot = [self.colliderBox[0],
         #                      [self.colliderBox[1][0], self.colliderBox[0][1]],
         #                      self.colliderBox[1],
@@ -73,11 +74,20 @@ class Collide:
             other_Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
             otherRPos = collider.rPos * collider.transform.Scale
 
-            xAB_Distance = Distance(this_Pos, [other_Pos[0], this_Pos[1]])
-            yAB_Distance = Distance(this_Pos, [this_Pos[0], other_Pos[1]])
+            xAB_Distance = Instance.Distance(this_Pos, [other_Pos[0], this_Pos[1]])
+            yAB_Distance = Instance.Distance(this_Pos, [this_Pos[0], other_Pos[1]])
 
             if xAB_Distance <= otherRPos[0] + thisRPos[0] and yAB_Distance <= otherRPos[1] + thisRPos[1]:
                 collides.append(collider)
+                if self.isTrigger:
+                    ABDis = numpy.array([xAB_Distance, yAB_Distance], dtype = int)
+                    gapPos = self.rPos - ABDis
+
+                    if gapPos[0] < gapPos[1]:
+                        self.transform.Position[0] -= self.transform.movePosition[0]
+                    elif gapPos[0] > gapPos[1]:
+                        self.transform.Position[1] -= self.transform.movePosition[1]
+                    pass
             pass
 
         return collides

@@ -7,7 +7,7 @@ class Monster(Object):
         self.image_type = [0,0,312,269]
         self.transform.Scale = self.transform.Scale * 0.3
 
-        self.__speed = 4
+        self.__speed = 300
         self.__idle = dict()
         self.__targetPlayer = target
         pass
@@ -20,8 +20,8 @@ class Monster(Object):
         pass
 
     def MoveMent(self):
-        self.transform.LooAtTarget(self.__targetPlayer.transform, self.__speed)
-
+        realspeed = self.__speed * Instance.FrameTime()
+        self.transform.LooAtTarget(self.__targetPlayer.transform, realspeed)
         pass
 
     def OnCollide(self):

@@ -1,11 +1,15 @@
+import numpy
+
 from Scripts.Afx import *
 
 
 class Transform:
     def __init__(self, Position=[0, 0], Rotation=0, Scale=[1, 1]):
-        self.Position = numpy.array(Position)
+        self.Position = numpy.array(Position, dtype=float)
         self.Rotation = Rotation
         self.Scale = numpy.array(Scale)
+
+        self.movePosition = numpy.array([0,0], dtype=float)
         pass
 
     def __del__(self):

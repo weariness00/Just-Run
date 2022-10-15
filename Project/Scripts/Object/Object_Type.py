@@ -1,7 +1,5 @@
-import numpy
-
 from Scripts.Object.Tile import *
-from Scripts.Object.Monster import *
+from Scripts.Object.Monster.Monster import *
 
 # TileType = []
 #

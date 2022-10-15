@@ -40,7 +40,7 @@ class EndlessTile:
                     pass
                 else:
                     # obj = Tile(load_image("image\Tile\snow-expansion.png"), (16 * 1, 208, 16, 16))
-                    obj = TileType(random.randint(1, 1))
+                    obj = TileType(random.randint(0, 1))
                     obj.transform.Position = pos * self.terrainSize
                     obj.tileSize = 16
                     obj.transform.Scale *= 10

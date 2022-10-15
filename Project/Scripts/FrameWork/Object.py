@@ -12,6 +12,9 @@ class Object:
 
         self.image = None
         self.image_type = None
+        self.radian = 0
+        self.dir = 'None'
+
         self.Color = numpy.array([1,1,1,1])
 
         self.isActive = True

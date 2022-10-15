@@ -5,6 +5,6 @@ import math
 import numpy
 from pico2d import *
 from enum import Enum, auto
-from Static_Funtion import *
+import time
 
-import Scripts.StaticMember as Instance
+import Scripts.Static as Instance
