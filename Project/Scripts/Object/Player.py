@@ -31,13 +31,10 @@ class Player(Object):
         self.collider.isTrigger = True
 
         #Animation 초기화
-        self.__defaultName = 'image/player/Player_'
-        self.__sprite_Name = "Idle"
-        self.__ani_Name = Instance.SetPngName(self.__defaultName, self.__sprite_Name)
-        self.image = load_image(self.__ani_Name)
-        self.image_type = [0,0,43,60]
-        self.__ani_Frame = 7
-        self.__ani_Count = 0;
+        self._defaultName = 'image/player/Player_'
+        self.ChangeSprite('Idle')
+        self._ani_Frame = 6
+        self._ani_Count = 0
 
         pass
 
@@ -51,46 +48,45 @@ class Player(Object):
         self.OnCollide()
         pass
     def Handle_Event(self):
+        state = None
+
         events = get_events()
         for event in events:
+            if event.type == SDL_KEYUP:
+                if event.key == SDLK_LEFT:
+                    self.idle[keyType.Left] = False
+                    state = 'Idle'
+                if event.key == SDLK_RIGHT:
+                    self.idle[keyType.Right] = False
+                    state = 'Idle'
+                if event.key == SDLK_UP:
+                    self.idle[keyType.UP] = False
+                    state = 'Idle'
+                if event.key == SDLK_DOWN:
+                    self.idle[keyType.Down] = False
+                    state = 'Idle'
+                self.ChangeSprite(state)
+                pass
 
             if event.type == SDL_KEYDOWN:
                 if event.key == SDLK_LEFT:
                     self.idle[keyType.Left] = True
                     self.dir = 'None'
-                    self.__sprite_Name = "Working"
+                    state = "Working"
                 if event.key == SDLK_RIGHT:
                     self.idle[keyType.Right] = True
                     self.dir = 'h'
-                    self.__sprite_Name = "Working"
+                    state = "Working"
                 if event.key == SDLK_UP:
                     self.idle[keyType.UP] = True
-                    self.__sprite_Name = "Working"
+                    state = "Working"
                 if event.key == SDLK_DOWN:
                     self.idle[keyType.Down] = True
-                    self.__sprite_Name = "Working"
-                self.ChangeSprite()
+                    state = "Working"
+                self.ChangeSprite(state)
                 pass
-
-            if event.type == SDL_KEYUP:
-                if event.key == SDLK_LEFT:
-                    self.idle[keyType.Left] = False
-                    self.__sprite_Name = 'idle'
-                if event.key == SDLK_RIGHT:
-                    self.idle[keyType.Right] = False
-                    self.__sprite_Name = 'idle'
-                if event.key == SDLK_UP:
-                    self.idle[keyType.UP] = False
-                    self.__sprite_Name = 'idle'
-                if event.key == SDLK_DOWN:
-                    self.idle[keyType.Down] = False
-                    self.__sprite_Name = 'idle'
-                self.ChangeSprite()
-                pass
-
 
             pass
-
         pass
 
     def Movement(self):
@@ -105,7 +101,7 @@ class Player(Object):
         if self.idle[keyType.Down]:
             movePos[1] -= self.__speed * Instance.FrameTime()
 
-        self.transform.movePosition = movePos
+        self.transform.movePos = movePos
         self.transform.Position += movePos
         pass
 
@@ -114,26 +110,28 @@ class Player(Object):
 
         for collider in collides:
             if collider.tag == "Tile":
-                print("충돌 TIle")
+                collider.object.Info() # 체크용
 
             pass
         pass
 
     def Animaiton(self):
-        self.image_type[0] = (int(self.__ani_Count) % self.__ani_Frame) * self.image_type[2]
-        self.__ani_Count += Instance.FrameTime() * 10
+        self.image_type[0] = (int(self._ani_Count) % self._ani_Frame) * self.image_type[2]
+        self._ani_Count += Instance.FrameTime() * 10
 
-    def ChangeSprite(self):
-        if self.__sprite_Name == "Working":
+    def ChangeSprite(self, state):
+        if state == "Working":
+            self._sprite_Name = 'Working'
             self.image_type = [0, 0, 43, 60]
-            self.__ani_Frame = 7
-        elif self.__sprite_Name == "Idle":
+            self._ani_Frame = 7
+        elif state == "Idle":
+            self._sprite_Name = 'Idle'
             self.image_type = [0, 0, 40, 60]
-            self.__ani_Frame = 6
+            self._ani_Frame = 6
         pass
 
-        self.__ani_Name = Instance.SetPngName(self.__defaultName, self.__sprite_Name)
-        self.image = load_image(self.__ani_Name)
+        ani_Name = Instance.SetPngName(self._defaultName, self._sprite_Name)
+        self.image = load_image(ani_Name)
         pass
 
     pass

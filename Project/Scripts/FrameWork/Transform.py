@@ -9,7 +9,7 @@ class Transform:
         self.Rotation = Rotation
         self.Scale = numpy.array(Scale)
 
-        self.movePosition = numpy.array([0,0], dtype=float)
+        self.movePos = None # 이동하기 전 position
         pass
 
     def __del__(self):

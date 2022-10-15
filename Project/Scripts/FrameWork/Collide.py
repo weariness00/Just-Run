@@ -14,7 +14,7 @@ class Collide:
         self.transform = None
         self.object = None
 
-        self.isTrigger = False #이게 켜진 Objcet가 충돌하면 충돌한 크기만큼 뒤로 간다.
+        self.isTrigger = False #이게 켜진 Objcet가 충돌하면 충돌한 거리만큼 뒤로 간다.
         self.isCollide = False
         self.isMouseCollide = False
 
@@ -48,11 +48,7 @@ class Collide:
 
         self.colliderBox = numpy.array([self.Pivot - findDot[1]//2, self.Pivot + findDot[1]//2]) # 충돌박스를 중점을 기준으로 정해진 크기만큼 배정
         self.colliderSize = self.colliderBox[1] - self.colliderBox[0]
-        self.rPos = self.colliderSize//2
-        # self.collider4Dot = [self.colliderBox[0],
-        #                      [self.colliderBox[1][0], self.colliderBox[0][1]],
-        #                      self.colliderBox[1],
-        #                      [self.colliderBox[0][0], self.colliderBox[1][1]]]
+        self.rPos = self.colliderSize/2
         pass
 
     def OnCollider(self): #모든 Collider를 검사후 충돌 된 것들을 반환
@@ -64,7 +60,6 @@ class Collide:
         this_Pos = self.Pivot * self.transform.Scale + self.transform.Position + cameraPos
         thisRPos = self.rPos * self.transform.Scale
 
-        # self.image.clip_draw(0, 0, 1, 1,this_Pos[0], this_Pos[1], self.colliderSize[0] * self.transform.Scale[0], self.colliderSize[1] * self.transform.Scale[1])
         for collider in Collide.AllCollider:
             if collider == self or (self.colliderBox is None) or (collider.colliderBox is None):
                 continue
@@ -80,13 +75,13 @@ class Collide:
             if xAB_Distance <= otherRPos[0] + thisRPos[0] and yAB_Distance <= otherRPos[1] + thisRPos[1]:
                 collides.append(collider)
                 if self.isTrigger:
-                    ABDis = numpy.array([xAB_Distance, yAB_Distance], dtype = int)
+                    ABDis = numpy.array([xAB_Distance, yAB_Distance], dtype = float)
                     gapPos = self.rPos - ABDis
 
                     if gapPos[0] < gapPos[1]:
-                        self.transform.Position[0] -= self.transform.movePosition[0]
+                        self.transform.Position[0] -= self.transform.movePos[0]
                     elif gapPos[0] > gapPos[1]:
-                        self.transform.Position[1] -= self.transform.movePosition[1]
+                        self.transform.Position[1] -= self.transform.movePos[1]
                     pass
             pass
 

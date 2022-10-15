@@ -10,10 +10,15 @@ class Object:
         self.transform = Transform()
         self.collider = None
 
+        # Aniamtion 관련
+        self._defaultName = None
+        self._sprite_Name = 'Idle'
+        self._ani_Frame = 0
+        self._ani_Count = 0
         self.image = None
         self.image_type = None
-        self.radian = 0
         self.dir = 'None'
+        self.radian = 0
 
         self.Color = numpy.array([1,1,1,1])
 

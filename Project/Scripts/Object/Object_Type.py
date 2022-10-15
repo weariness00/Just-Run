@@ -1,13 +1,6 @@
 from Scripts.Object.Tile import *
 from Scripts.Object.Monster.Monster import *
 
-# TileType = []
-#
-# Tile_01 = Tile(load_image("image\Tile\snow-expansion.png"), (0, 208, 16, 16))
-#
-# TileType += [Tile_01]
-# TileType += [Tile(load_image("image\Tile\snow-expansion.png"), (16, 208, 16, 16))]
-
 TileTypeMaxCount = 4
 def TileType(typeNumber):
     image = load_image("image\Tile\snow-expansion.png")
