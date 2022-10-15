@@ -36,15 +36,15 @@ while Instance.GameRunning:
     clear_canvas()
     endlessTile.UpdateVisibleTerrain()
 
-    for render in RenderUpdateList:
-        render.Update()
-
     for obj in ObjectUpdateList:
         obj.Update()
         obj.OnCollide()
         pass
 
+    for render in RenderUpdateList:
+        render.Update()
 
+    Collide.AllBoxDraw()
 
     update_canvas()
     delay(1/60)

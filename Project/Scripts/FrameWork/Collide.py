@@ -5,7 +5,6 @@ class Collide:
     MainCamera = None
     def __init__(self):
         self.colliderBox = None
-        self.collider4Dot = None
         self.colliderSize = None
 
         self.rPos = None # box의 x, y 반지름
@@ -17,7 +16,7 @@ class Collide:
 
         self.isCollide = False
         self.isMouseCollide = False
-        self.image = load_image('1x1.png')
+        self.image = load_image('collider.png')
 
 
         self.tag = None
@@ -49,10 +48,10 @@ class Collide:
         self.colliderBox = numpy.array([self.Pivot - findDot[1]//2, self.Pivot + findDot[1]//2]) # 충돌박스를 중점을 기준으로 정해진 크기만큼 배정
         self.colliderSize = self.colliderBox[1] - self.colliderBox[0]
         self.rPos = self.colliderSize/2
-        self.collider4Dot = [self.colliderBox[0],
-                             [self.colliderBox[1][0], self.colliderBox[0][1]],
-                             self.colliderBox[1],
-                             [self.colliderBox[0][0], self.colliderBox[1][1]]]
+        # self.collider4Dot = [self.colliderBox[0],
+        #                      [self.colliderBox[1][0], self.colliderBox[0][1]],
+        #                      self.colliderBox[1],
+        #                      [self.colliderBox[0][0], self.colliderBox[1][1]]]
         pass
 
     def OnCollider(self): #모든 Collider를 검사후 충돌 된 것들을 반환
@@ -60,12 +59,11 @@ class Collide:
         if (self.colliderBox == None).all():
             return collides
 
-        cameraPos = Instance.windowSize//2 - Collide.MainCamera.transform.Position
+        cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize//2
         this_Pos = self.Pivot * self.transform.Scale + self.transform.Position + cameraPos
-        this4Dot = self.collider4Dot * self.transform.Scale + self.transform.Position + cameraPos
         thisRPos = self.rPos * self.transform.Scale
 
-        self.image.clip_draw(0, 0, 1, 1,this_Pos[0], this_Pos[1], self.colliderSize[0] * self.transform.Scale[0], self.colliderSize[1] * self.transform.Scale[1])
+        # self.image.clip_draw(0, 0, 1, 1,this_Pos[0], this_Pos[1], self.colliderSize[0] * self.transform.Scale[0], self.colliderSize[1] * self.transform.Scale[1])
         for collider in Collide.AllCollider:
             if collider == self or (self.colliderBox is None) or (collider.colliderBox is None):
                 continue
@@ -73,10 +71,7 @@ class Collide:
             # 각 콜라이더의 피봇이 다른 콜라이더의 피봇을 향해 백터 방향으로 증가하다가 자신의 박스 경계선을 만나는 곳과의 거리 계산후 r(A) r(B)
             # (선분)AB <= r(A) + r(B) 일씨 충돌로 간주
             other_Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
-            other4Dot = collider.collider4Dot * collider.transform.Scale + collider.transform.Position + cameraPos
             otherRPos = collider.rPos * collider.transform.Scale
-            collider.image.clip_draw(0, 0, 1, 1, other_Pos[0], other_Pos[1],
-                                     collider.colliderSize[0] * collider.transform.Scale[0], collider.colliderSize[1]* collider.transform.Scale[1])
 
             xAB_Distance = Distance(this_Pos, [other_Pos[0], this_Pos[1]])
             yAB_Distance = Distance(this_Pos, [this_Pos[0], other_Pos[1]])
@@ -87,22 +82,17 @@ class Collide:
 
         return collides
 
-        # this_Box = (self.colliderBox + self.Pivot) * self.transform.Scale + self.transform.Position- Collide.MainCamera.transform.Position + Instance.windowSize//2
-        # for collider in Collide.AllCollider:
-        #     if collider == self or (self.colliderBox is None) or (collider.colliderBox is None):
-        #         continue
-        #
-        #     other_Box = (collider.colliderBox + collider.Pivot) * collider.transform.Scale + collider.transform.Position - Collide.MainCamera.transform.Position + Instance.windowSize//2
-        #     if this_Box[0][0] <= other_Box[0][0] <= this_Box[1][0] or this_Box[0][0] <= other_Box[1][0] <= this_Box[1][0]:
-        #         if (other_Box[0][1] <= this_Box[1][1] <= other_Box[1][1]) or \
-        #                 (this_Box[0][1] <= other_Box[1][1] <= this_Box[1][1]):
-        #             collides.append(collider)
-        #     elif this_Box[0][1] <= other_Box[0][1] <= this_Box[1][1] or this_Box[0][1] <= other_Box[1][1] <= this_Box[1][1]:
-        #         if (other_Box[1][0] >= this_Box[0][0] >= other_Box[0][0]) or \
-        #                 (this_Box[0][0] <= other_Box[0][0] <= this_Box[1][0]):
-        #             collides.append(collider)
-        #     pass
-        # return collides
+    @staticmethod
+    def AllBoxDraw():
+        cameraPos = Instance.windowSize // 2 - Collide.MainCamera.transform.Position
+        for collider in Collide.AllCollider:
+            if collider.colliderBox is None:
+                continue
+
+            Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
+            collider.image.clip_draw(0, 0, 1, 1, Pos[0], Pos[1],
+                                     collider.colliderSize[0] * collider.transform.Scale[0], collider.colliderSize[1] * collider.transform.Scale[1])
+        pass
 
     def Info(self):
         print("\nCollider\n", self.colliderBox)
