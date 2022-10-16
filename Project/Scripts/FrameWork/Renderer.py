@@ -6,16 +6,30 @@ class Renderer:
         self.RendererObjectList = []
         pass
 
-    def Update(self):
-        self.__Draw()
+    def __del__(self):
         pass
 
-    def __Draw(self):
+    def Draw(self):
         for obj in self.RendererObjectList:
             if not obj.isActive:
                 continue
 
             pos = obj.transform.Position - Camera.MainCamera.transform.Position + Instance.windowSize//2
+            scale = obj.transform.Scale * numpy.array([obj.image_type[2], obj.image_type[3]])
+            obj.image.clip_composite_draw(obj.image_type[0], obj.image_type[1],
+                                obj.image_type[2], obj.image_type[3],
+                                obj.radian, obj.dir,
+                                pos[0], pos[1],
+                                scale[0], scale[1])
+            pass
+        pass
+
+    def UIDraw(self):
+        for obj in self.RendererObjectList:
+            if not obj.isActive:
+                continue
+
+            pos = obj.transform.Position
             scale = obj.transform.Scale * numpy.array([obj.image_type[2], obj.image_type[3]])
             obj.image.clip_composite_draw(obj.image_type[0], obj.image_type[1],
                                 obj.image_type[2], obj.image_type[3],

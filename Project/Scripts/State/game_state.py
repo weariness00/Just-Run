@@ -11,54 +11,70 @@ poolStartTime = None
 TileRender = None
 PlayerRender = None
 MonsterRender = None
-player = None
+LifeUIRender = None
 
+player = None
 endlessTile = None
 
 monsterPools = None
 
 ObjectUpdateList = None
+UIUpdateList = None
+
 RenderUpdateList = None
+UIRenderUpdateList = None
 
 def enter():
     global start, end, poolStartTime
-    global TileRender, PlayerRender, MonsterRender
+    global TileRender, PlayerRender, MonsterRender, LifeUIRender
     global player, monsterPools
     global endlessTile
-    global ObjectUpdateList, RenderUpdateList
+    global ObjectUpdateList, UIUpdateList
+    global RenderUpdateList, UIRenderUpdateList
     start = time.time()
     end = None
+
+    # Init
     poolStartTime = time.time()
     Collide.AllCollider = []
+    monsterPools = []
+    ObjectUpdateList = []
+    UIUpdateList = []
 
     # 객채 생성
     TileRender = Renderer()
     PlayerRender = Renderer()
     MonsterRender = Renderer()
+    LifeUIRender = Renderer()
     player = Player()
     endlessTile = EndlessTile(player)
+    monsterPools.append(MonsterPool(Limbo(player), 20, 0.1))
 
     # Player 초기화
     player.name = "player"
     player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
-    PlayerRender.AddRenderObject(player)
 
     # Camera 초기화
     Camera.MainCamera.transform = player.transform
     Collide.MainCamera = Camera.MainCamera
 
-    # Render 초기화
-    endlessTile.render = TileRender
-    monsterPools = []
-    monsterPools.append(MonsterPool(Limbo(player), 20, 1))
-    for mobPool in monsterPools:
-        MonsterRender.RendererObjectList += mobPool.pool
-    RenderUpdateList = [TileRender, PlayerRender, MonsterRender]
-
     # UpdateList 초기화
-    ObjectUpdateList = [player]
+    ObjectUpdateList += [player]
     for mobPool in monsterPools:
         ObjectUpdateList += mobPool.pool
+
+    UIUpdateList += player.lifeObject
+
+
+    # Render 초기화
+    endlessTile.render = TileRender
+    PlayerRender.AddRenderObject(player)
+    for mobPool in monsterPools:
+        MonsterRender.RendererObjectList += mobPool.pool
+    LifeUIRender.RendererObjectList += player.lifeObject
+    RenderUpdateList = [TileRender, PlayerRender, MonsterRender]
+
+    UIRenderUpdateList = [LifeUIRender]
     pass
 
 # finalization code
@@ -106,7 +122,8 @@ def update():
 
     for obj in ObjectUpdateList:
         obj.Update()
-        pass
+    for ui in UIUpdateList:
+        ui.Update()
     # end = time.time()
     # if 1/144 - float(end - start) > 0:
     #     delay(1/144 - float(end - start))
@@ -116,9 +133,12 @@ def update():
 
 def draw():
     clear_canvas()
-    global RenderUpdateList
+    global RenderUpdateList, UIRenderUpdateList
     for render in RenderUpdateList:
-        render.Update()
+        render.Draw()
+
+    for UIRender in UIRenderUpdateList:
+        UIRender.UIDraw()
 
     Collide.AllBoxDraw()
 

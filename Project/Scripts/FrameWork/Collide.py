@@ -15,7 +15,7 @@ class Collide:
         self.object = None
 
         self.isTrigger = False #이게 켜진 Objcet가 충돌하면 충돌한 거리만큼 뒤로 간다.
-        self.isCollide = False
+        self.isCollide = True
         self.isMouseCollide = False
 
         self.tag = None
@@ -58,7 +58,7 @@ class Collide:
 
     def OnCollider(self): #모든 Collider를 검사후 충돌 된 것들을 반환
         collides = []
-        if (self.colliderBox == None).all():
+        if (self.colliderBox == None).all() or self.isCollide is False:
             return collides
 
         cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize//2
@@ -96,7 +96,7 @@ class Collide:
     def AllBoxDraw():
         cameraPos = Instance.windowSize // 2 - Collide.MainCamera.transform.Position
         for collider in Collide.AllCollider:
-            if collider.colliderBox is None or collider.object.isActive is False:
+            if collider.colliderBox is None or collider.object.isActive is False or collider.isCollide is False:
                 continue
 
             Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos

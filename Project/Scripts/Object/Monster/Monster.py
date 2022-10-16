@@ -8,6 +8,7 @@ class Monster(Object):
         self.__idle = dict()
         self._speed = None
         self._targetPlayer = target
+        self.isMoveMent = True
 
         # Collider
         self.collider = Collide()
@@ -25,23 +26,9 @@ class Monster(Object):
         pass
 
     def MoveMent(self):
-        realspeed = self._speed * self.time.OneFrameTime()
-        self.transform.LooAtTarget(self._targetPlayer.transform, realspeed)
-
-        self.time.start = time.time()
-        pass
-
-    def OnCollide(self):
-        if self.isActive is False:
+        if self.isMoveMent is False:
             return
 
-        collides = self.collider.OnCollider()
-
-        for collider in collides:
-            if collider.tag == "Player":
-                collider.object.life -= 1
-                self.isActive = False
-
-            pass
+        realspeed = self._speed * self.time.OneFrameTime()
+        self.transform.LooAtTarget(self._targetPlayer.transform, realspeed)
         pass
-    pass

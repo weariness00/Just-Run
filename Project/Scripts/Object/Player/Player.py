@@ -1,4 +1,6 @@
-from Scripts.FrameWork.Object import *
+import numpy
+
+from Scripts.Object.Player.Life import *
 
 class keyType(Enum):
     Left = 0
@@ -11,6 +13,7 @@ class Player(Object):
     def __init__(self):
         super(Player, self).__init__()
 
+        # 객체 초기화
         self.maxLife = 3
         self.life = self.maxLife
         self.__speed = 150
@@ -19,6 +22,9 @@ class Player(Object):
 
         for key in keyType:
             self.idle[key] = False
+
+        # Life 초기화
+        self.lifeObject = [Life(numpy.array([100 * i + 50, Instance.windowSize[1] - 50], dtype=float)) for i in range(self.maxLife + 1)]
 
         #Transform 초긱화
         self.transform.Scale *= 2
@@ -119,6 +125,10 @@ class Player(Object):
         for collider in collides:
             if collider.tag == "Tile":
                 collider.object.Info() # 체크용
+            if collider.tag == "Monster":
+                # 맞았을때 스프라이트 해주기
+                pass
+
 
             pass
         pass
