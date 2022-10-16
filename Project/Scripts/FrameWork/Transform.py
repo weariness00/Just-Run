@@ -16,7 +16,9 @@ class Transform:
         pass
 
     def LookAt(self, speed):
-        self.Position += speed * numpy.array([math.cos(self.Rotation * math.pi / 180), math.sin(self.Rotation * math.pi / 180)])
+        movePos = speed * numpy.array([math.cos(self.Rotation * math.pi / 180), math.sin(self.Rotation * math.pi / 180)])
+        self.movePos = movePos
+        self.Position += movePos
         pass
 
     def LooAtTarget(self, target, speed):
@@ -25,6 +27,8 @@ class Transform:
 
         dir = target.Position - self.Position
         dir = dir/numpy.linalg.norm(dir)
+
+        self.movePos = speed * dir
         self.Position = self.Position + speed * dir
         pass
 

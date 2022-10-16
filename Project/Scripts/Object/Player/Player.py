@@ -11,8 +11,9 @@ class Player(Object):
     def __init__(self):
         super(Player, self).__init__()
 
-
-        self.__speed = 450
+        self.maxLife = 3
+        self.life = self.maxLife
+        self.__speed = 150
         self.idle = dict()
 
         for key in keyType:
@@ -23,11 +24,11 @@ class Player(Object):
 
         #Collde 초기화
         self.collider = Collide()
+        self.collider.tag = "Player"
         self.collider.object = self
         self.collider.InitTransform(self.transform)
-        self.collider.Pivot = numpy.array([0,-23])
-        self.collider.SetCollideBox(numpy.array([[20,10], [0,0]]))
-        self.collider.tag = "Player"
+        self.collider.Pivot = numpy.array([0,-13], dtype= float)
+        self.collider.SetCollideBox(numpy.array([[0,0],[15,32]]))
         self.collider.isTrigger = True
 
         #Animation 초기화
@@ -93,19 +94,24 @@ class Player(Object):
         movePos = numpy.array([0,0], dtype= float)
 
         if self.idle[keyType.Left]:
-            movePos[0] -= self.__speed * Instance.FrameTime()
+            movePos[0] -= self.__speed * self.time.OneFrameTime()
         if self.idle[keyType.Right]:
-            movePos[0] += self.__speed * Instance.FrameTime()
+            movePos[0] += self.__speed * self.time.OneFrameTime()
         if self.idle[keyType.UP]:
-            movePos[1] += self.__speed * Instance.FrameTime()
+            movePos[1] += self.__speed * self.time.OneFrameTime()
         if self.idle[keyType.Down]:
-            movePos[1] -= self.__speed * Instance.FrameTime()
+            movePos[1] -= self.__speed * self.time.OneFrameTime()
 
         self.transform.movePos = movePos
         self.transform.Position += movePos
+
+        self.time.start = time.time()
         pass
 
     def OnCollide(self):
+        if self.isActive is False:
+            return
+
         collides = self.collider.OnCollider()
 
         for collider in collides:
@@ -117,7 +123,7 @@ class Player(Object):
 
     def Animaiton(self):
         self.image_type[0] = (int(self._ani_Count) % self._ani_Frame) * self.image_type[2]
-        self._ani_Count += Instance.FrameTime() * 10
+        self._ani_Count += self.time.OneFrameTime()
 
     def ChangeSprite(self, state):
         if state == "Working":

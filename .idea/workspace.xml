@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d764e-323a-4809-b216-70cbe6132418" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Project/Scripts/EndlessTile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Scripts/EndlessTile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Scripts/FrameWork/Collide.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Scripts/FrameWork/Collide.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Scripts/FrameWork/Object.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Scripts/FrameWork/Object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Scripts/GameManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Scripts/GameManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Scripts/Object/Monster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Scripts/Object/Monster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Scripts/Object/Object_Type.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Scripts/Object/Object_Type.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Scripts/Object/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Scripts/Object/Player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/Scripts/Object/Tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project/Scripts/Object/Tile.py" afterDir="false" />
-    </list>
+    <list default="true" id="ae4d764e-323a-4809-b216-70cbe6132418" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

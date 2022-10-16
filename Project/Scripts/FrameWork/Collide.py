@@ -8,7 +8,7 @@ class Collide:
     def __init__(self):
         self.colliderBox = None
         self.colliderSize = None
-        self.Pivot = None
+        self.Pivot = numpy.array([0,0], dtype= float)
         self.rPos = None # box의 x, y 반지름
 
         self.transform = None
@@ -20,7 +20,7 @@ class Collide:
 
         self.tag = None
 
-        self.image = load_image('collider.png')
+        self.image = load_image('colliderBox.png')
 
         Collide.AllCollider.append(self)
         pass
@@ -61,7 +61,7 @@ class Collide:
         thisRPos = self.rPos * self.transform.Scale
 
         for collider in Collide.AllCollider:
-            if collider == self or (self.colliderBox is None) or (collider.colliderBox is None):
+            if collider == self or (self.colliderBox is None) or (collider.colliderBox is None) or collider.object.isActive is False:
                 continue
             # 두 개의 콜라이더의 피봇끼리의 거리를 구한 후  (선분)AB
             # 각 콜라이더의 피봇이 다른 콜라이더의 피봇을 향해 백터 방향으로 증가하다가 자신의 박스 경계선을 만나는 곳과의 거리 계산후 r(A) r(B)
@@ -78,9 +78,9 @@ class Collide:
                     ABDis = numpy.array([xAB_Distance, yAB_Distance], dtype = float)
                     gapPos = self.rPos - ABDis
 
-                    if gapPos[0] < gapPos[1]:
+                    if gapPos[0] <= gapPos[1]:
                         self.transform.Position[0] -= self.transform.movePos[0]
-                    elif gapPos[0] > gapPos[1]:
+                    if gapPos[0] >= gapPos[1]:
                         self.transform.Position[1] -= self.transform.movePos[1]
                     pass
             pass
@@ -91,11 +91,11 @@ class Collide:
     def AllBoxDraw():
         cameraPos = Instance.windowSize // 2 - Collide.MainCamera.transform.Position
         for collider in Collide.AllCollider:
-            if collider.colliderBox is None:
+            if collider.colliderBox is None or collider.object.isActive is False:
                 continue
 
             Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
-            collider.image.clip_draw(0, 0, 1, 1, Pos[0], Pos[1],
+            collider.image.clip_draw(0, 0, 100, 100, Pos[0], Pos[1],
                                      collider.colliderSize[0] * collider.transform.Scale[0], collider.colliderSize[1] * collider.transform.Scale[1])
         pass
 

@@ -1,7 +1,6 @@
 from Scripts.EndlessTile import *
-from Scripts.Object.Player import *
+from Scripts.Object.Player.Player import *
 from Scripts.Object.Monster.MonsterPool import *
-import Scripts.FrameWork.game_framework as game_framework
 
 start = None
 end = None
@@ -47,7 +46,7 @@ def enter():
 
     # Render 초기화
     endlessTile.render = TileRender
-    monsterPools.append(MonsterPool(Limbo(player), 20, 5))
+    monsterPools.append(MonsterPool(Limbo(player), 20, 0.5))
     for mobPool in monsterPools:
         MonsterRender.RendererObjectList += mobPool.pool
     RenderUpdateList = [TileRender, PlayerRender, MonsterRender]
@@ -97,7 +96,6 @@ def update():
     for obj in ObjectUpdateList:
         obj.Update()
         pass
-
     # end = time.time()
     # if 1/144 - float(end - start) > 0:
     #     delay(1/144 - float(end - start))
@@ -114,7 +112,7 @@ def draw():
     Collide.AllBoxDraw()
 
     update_canvas()
-    Instance.SetStartTime()
+
     pass
 
 def pause():
