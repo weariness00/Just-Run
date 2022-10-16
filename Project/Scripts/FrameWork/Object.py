@@ -33,6 +33,9 @@ class Object:
         pass
 
     def __del__(self):
+        # self.transform.__del__()
+        # self.collider.__del__()
+        # del self.Color
         pass
 
     def Info(self):

@@ -1,6 +1,8 @@
 from Scripts.EndlessTile import *
 from Scripts.Object.Player.Player import *
 from Scripts.Object.Monster.MonsterPool import *
+import Scripts.FrameWork.game_framework as game_framework
+import Scripts.State.lobby_state as lobby
 
 start = None
 end = None
@@ -13,7 +15,7 @@ player = None
 
 endlessTile = None
 
-monsterPools = []
+monsterPools = None
 
 ObjectUpdateList = None
 RenderUpdateList = None
@@ -27,6 +29,7 @@ def enter():
     start = time.time()
     end = None
     poolStartTime = time.time()
+    Collide.AllCollider = []
 
     # 객채 생성
     TileRender = Renderer()
@@ -46,7 +49,8 @@ def enter():
 
     # Render 초기화
     endlessTile.render = TileRender
-    monsterPools.append(MonsterPool(Limbo(player), 20, 0.5))
+    monsterPools = []
+    monsterPools.append(MonsterPool(Limbo(player), 20, 1))
     for mobPool in monsterPools:
         MonsterRender.RendererObjectList += mobPool.pool
     RenderUpdateList = [TileRender, PlayerRender, MonsterRender]
@@ -68,14 +72,21 @@ def exit():
     del ObjectUpdateList, RenderUpdateList
     del endlessTile
     del player, monsterPools
+    del Collide.AllCollider
     pass
 
 def handle_events():
-    # events = get_events()
-    # for event in events:
-    #     if event.type == SDL_QUIT:
-    #         game_framework.quit()
-    #     pass
+    global player
+    events = get_events()
+    player.events = events
+    for event in events:
+        if event.type == SDL_QUIT:
+            game_framework.quit()
+        if event.type == SDL_KEYDOWN:
+            if event.key == SDLK_SPACE:
+                game_framework.change_state(lobby)
+        pass
+
     pass
 
 

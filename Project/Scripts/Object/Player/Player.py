@@ -15,6 +15,7 @@ class Player(Object):
         self.life = self.maxLife
         self.__speed = 150
         self.idle = dict()
+        self.events = []
 
         for key in keyType:
             self.idle[key] = False
@@ -47,12 +48,13 @@ class Player(Object):
         self.Movement()
         self.Animaiton()
         self.OnCollide()
+        self.time.start = time.time()
         pass
     def Handle_Event(self):
         state = None
 
-        events = get_events()
-        for event in events:
+        # events = get_events()
+        for event in self.events:
             if event.type == SDL_KEYUP:
                 if event.key == SDLK_LEFT:
                     self.idle[keyType.Left] = False
@@ -105,7 +107,7 @@ class Player(Object):
         self.transform.movePos = movePos
         self.transform.Position += movePos
 
-        self.time.start = time.time()
+
         pass
 
     def OnCollide(self):
@@ -123,7 +125,7 @@ class Player(Object):
 
     def Animaiton(self):
         self.image_type[0] = (int(self._ani_Count) % self._ani_Frame) * self.image_type[2]
-        self._ani_Count += self.time.OneFrameTime()
+        self._ani_Count += self.time.OneFrameTime() * 10
 
     def ChangeSprite(self, state):
         if state == "Working":

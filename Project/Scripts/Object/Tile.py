@@ -12,4 +12,9 @@ class Tile(Object):
 
         pass
 
+    def __del__(self):
+        super(Tile, self).__del__()
+
+        pass
+
     pass

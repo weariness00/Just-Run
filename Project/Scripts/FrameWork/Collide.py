@@ -26,6 +26,11 @@ class Collide:
         pass
 
     def __del__(self):
+        # del self.colliderBox, self.colliderSize
+        # del self.Piovt, self.rPos
+        # del self.object
+        # del self.image
+        # del self
         pass
 
     def InitTransform(self, transform):
