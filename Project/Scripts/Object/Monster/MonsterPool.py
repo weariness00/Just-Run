@@ -21,7 +21,7 @@ class MonsterPool():
         for monster in self.pool:
             if count == 0:
                 break
-            if monster.isActive == True:
+            if monster.isActive is True:
                 continue
 
             print('Monster 스폰')

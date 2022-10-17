@@ -22,6 +22,8 @@ def handle_events():
             game_framework.quit()
 
         if event.type == SDL_KEYDOWN:
+            if event.key == SDLK_ESCAPE:
+                game_framework.quit()
             if event.key == SDLK_SPACE:
                 game_framework.change_state(game)
         pass
