@@ -2,7 +2,7 @@ from Scripts.EndlessTile import *
 from Scripts.Object.Player.Player import *
 from Scripts.Object.Monster.MonsterPool import *
 import Scripts.FrameWork.game_framework as game_framework
-import Scripts.State.lobby_state as lobby
+import Scripts.State.Lobby_State as lobby
 
 start = None
 end = None

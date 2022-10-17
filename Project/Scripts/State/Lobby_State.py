@@ -1,6 +1,6 @@
 from Scripts.Afx import *
 import Scripts.FrameWork.game_framework as game_framework
-import Scripts.State.game_state as game
+import Scripts.State.GamePlay_State as game
 
 lobby_image = None
 

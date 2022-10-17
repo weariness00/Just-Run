@@ -1,7 +1,7 @@
 from Scripts.Afx import *
 import Scripts.FrameWork.game_framework as game_framework
-import Scripts.State.lobby_state as lobby
-import Scripts.State.game_state as game_state
+import Scripts.State.Lobby_State as lobby
+import Scripts.State.GamePlay_State as game_state
 
 # 플레이어의 애니메이션을 좀 더 자연스럽게 만들어야함
 # 콜라이더의 충돌 Trigger 부분을 자연스럽게 만들어야함
