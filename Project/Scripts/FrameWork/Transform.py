@@ -9,7 +9,7 @@ class Transform:
         self.Rotation = Rotation
         self.Scale = numpy.array(Scale)
 
-        self.movePos = None # 이동하기 전 position
+        self.direction = None # 이동하기 전 position
         pass
 
     def __del__(self):
@@ -22,7 +22,7 @@ class Transform:
 
     def LookAt(self, speed):
         movePos = speed * numpy.array([math.cos(self.Rotation * math.pi / 180), math.sin(self.Rotation * math.pi / 180)])
-        self.movePos = movePos
+        self.direction = movePos
         self.Position += movePos
         pass
 
@@ -33,7 +33,7 @@ class Transform:
         dir = target.Position - self.Position
         dir = dir/numpy.linalg.norm(dir)
 
-        self.movePos = speed * dir
+        self.direction = speed * dir
         self.Position = self.Position + speed * dir
         pass
 

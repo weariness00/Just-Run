@@ -86,7 +86,7 @@ class Collide:
             if self.isTrigger:  # 물리 충돌
                 # 박스기리 충돌된 공간만큼 뒤로 감
                 gapDistance = (thisRDis + otherRDis) - ABDis
-                moveDir = self.transform.movePos
+                moveDir = self.transform.direction
 
                 if gapDistance[0] < gapDistance[1]:
                     if moveDir[0] > 0:

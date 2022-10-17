@@ -18,7 +18,7 @@ class Renderer:
             scale = obj.transform.Scale * numpy.array([obj.image_type[2], obj.image_type[3]])
             obj.image.clip_composite_draw(obj.image_type[0], obj.image_type[1],
                                 obj.image_type[2], obj.image_type[3],
-                                obj.radian, obj.dir,
+                                obj.image_radian, obj.image_dir,
                                 pos[0], pos[1],
                                 scale[0], scale[1])
             pass
@@ -33,7 +33,7 @@ class Renderer:
             scale = obj.transform.Scale * numpy.array([obj.image_type[2], obj.image_type[3]])
             obj.image.clip_composite_draw(obj.image_type[0], obj.image_type[1],
                                 obj.image_type[2], obj.image_type[3],
-                                obj.radian, obj.dir,
+                                obj.image_radian, obj.image_dir,
                                 pos[0], pos[1],
                                 scale[0], scale[1])
             pass

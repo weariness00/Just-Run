@@ -84,11 +84,11 @@ class Player(Object):
             if event.type == SDL_KEYDOWN:
                 if event.key == SDLK_LEFT:
                     self.idle[keyType.Left] = True
-                    self.dir = 'None'
+                    self.image_dir = 'None'
                     state = "Working"
                 if event.key == SDLK_RIGHT:
                     self.idle[keyType.Right] = True
-                    self.dir = 'h'
+                    self.image_dir = 'h'
                     state = "Working"
                 if event.key == SDLK_UP:
                     self.idle[keyType.UP] = True
@@ -103,19 +103,19 @@ class Player(Object):
         pass
 
     def Movement(self):
-        movePos = numpy.array([0,0], dtype= float)
+        moveDir = numpy.array([0, 0], dtype= float)
 
         if self.idle[keyType.Left]:
-            movePos[0] -= self.__speed * self.time.OneFrameTime()
+            moveDir[0] -= self.__speed * self.time.OneFrameTime()
         if self.idle[keyType.Right]:
-            movePos[0] += self.__speed * self.time.OneFrameTime()
+            moveDir[0] += self.__speed * self.time.OneFrameTime()
         if self.idle[keyType.UP]:
-            movePos[1] += self.__speed * self.time.OneFrameTime()
+            moveDir[1] += self.__speed * self.time.OneFrameTime()
         if self.idle[keyType.Down]:
-            movePos[1] -= self.__speed * self.time.OneFrameTime()
+            moveDir[1] -= self.__speed * self.time.OneFrameTime()
 
-        self.transform.movePos = movePos
-        self.transform.Position += movePos
+        self.transform.direction = moveDir
+        self.transform.Position += moveDir
         pass
 
     def OnCollide(self):
