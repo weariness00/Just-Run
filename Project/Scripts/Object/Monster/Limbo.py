@@ -21,7 +21,7 @@ class Limbo(Monster):
 
         # Animaiton
         self._defaultName = 'image/Monster/Limbo Monster/'
-        self.ChangeSprite('Idle')
+        self.ChangeSprite('Working')
 
         # Timer
         self.start = time.time()
@@ -59,7 +59,12 @@ class Limbo(Monster):
 
     def Animation(self):
         self.image_type[0] = (int(self._ani_Count) % self._ani_Frame) * self.image_type[2]
-        self._ani_Count += self.time.OneFrameTime() * 5
+        self._ani_Count += self.time.OneFrameTime() * 2.5
+
+        if self.transform.direction[0] > 0:
+            self.image_dir = 'h'
+        elif self.transform.direction[0] < 0:
+            self.image_dir = 'None'
 
         if self._sprite_Name == 'Death' and time.time() - self.start > 1:
             self.isActive = False
@@ -74,6 +79,8 @@ class Limbo(Monster):
             self.image_type = [0, 0, 312, 269]
             self._ani_Frame = 2
         elif state == "Working":
+            self.image_type = [0, 0, 305, 280]
+            self._ani_Frame = 2
             pass
         elif state == 'Death':
             self.image_type = [0, 0, 305, 280]
