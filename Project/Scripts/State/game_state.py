@@ -48,7 +48,7 @@ def enter():
     LifeUIRender = Renderer()
     player = Player()
     endlessTile = EndlessTile(player)
-    monsterPools.append(MonsterPool(Limbo(player), 20, 0.1))
+    monsterPools.append(MonsterPool(Limbo(player), 20, 1))
 
     # Player 초기화
     player.name = "player"
@@ -64,7 +64,6 @@ def enter():
         ObjectUpdateList += mobPool.pool
 
     UIUpdateList += player.lifeObject
-
 
     # Render 초기화
     endlessTile.render = TileRender
@@ -99,6 +98,8 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         if event.type == SDL_KEYDOWN:
+            if event.key == SDLK_ESCAPE:
+                game_framework.quit()
             if event.key == SDLK_SPACE:
                 game_framework.change_state(lobby)
         pass

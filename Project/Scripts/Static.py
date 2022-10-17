@@ -20,19 +20,6 @@ def Distance(myDot, otherDot):
         ((myDot[1] - otherDot[1]) ** 2)
     ) ** 0.5  # fast sqrt
 
-# def SetStartTime():
-#     global Start_Time
-#     Start_Time = time.time()
-#     pass
-#
-# def GetStartTime():
-#     global Start_Time
-#     return Start_Time
-#
-# def FrameTime():
-#     frameTime = time.time() - GetStartTime()
-#     return float(frameTime)
-
 def SetPngName(default, name):
     png = default + name + ".png"
     return png

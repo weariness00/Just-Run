@@ -64,17 +64,21 @@ class Player(Object):
             if event.type == SDL_KEYUP:
                 if event.key == SDLK_LEFT:
                     self.idle[keyType.Left] = False
-                    state = 'Idle'
+                    # state = 'Idle'
                 if event.key == SDLK_RIGHT:
                     self.idle[keyType.Right] = False
-                    state = 'Idle'
+                    # state = 'Idle'
                 if event.key == SDLK_UP:
                     self.idle[keyType.UP] = False
-                    state = 'Idle'
+                    # state = 'Idle'
                 if event.key == SDLK_DOWN:
                     self.idle[keyType.Down] = False
-                    state = 'Idle'
-                self.ChangeSprite(state)
+                    # state = 'Idle'
+
+                if any(self.idle.values()) == False:
+                    self.ChangeSprite('Idle')
+                else:
+                    self.ChangeSprite(state)
                 pass
 
             if event.type == SDL_KEYDOWN:
@@ -112,8 +116,6 @@ class Player(Object):
 
         self.transform.movePos = movePos
         self.transform.Position += movePos
-
-
         pass
 
     def OnCollide(self):

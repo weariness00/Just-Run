@@ -24,6 +24,8 @@ class MonsterPool():
             if monster.isActive == True:
                 continue
 
+            print('Monster 스폰')
+
             monster.isActive = True
             monster.transform.Position -= 400
             count -= 1
