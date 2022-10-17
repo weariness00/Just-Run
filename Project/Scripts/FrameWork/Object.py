@@ -19,8 +19,8 @@ class Object:
         self._ani_Count = 0
         self.image = None
         self.image_type = None
-        self.dir = 'None'
-        self.radian = 0
+        self.image_dir = 'None'
+        self.image_radian = 0
 
         self.Color = numpy.array([1,1,1,1])
 
