@@ -48,14 +48,14 @@ def enter():
     LifeUIRender = Renderer()
     player = Player()
     endlessTile = EndlessTile(player)
-    monsterPools.append(MonsterPool(Limbo(player), 20, 0.1))
+    monsterPools.append(MonsterPool(Limbo(player), 50, 0.1))
 
     # Player 초기화
     player.name = "player"
     player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
 
     # Camera 초기화
-    Camera.MainCamera.transform = player.transform
+    Camera.MainCamera = Camera(player.transform)
     Collide.MainCamera = Camera.MainCamera
 
     # UpdateList 초기화
@@ -121,10 +121,19 @@ def update():
             monsterPool.Spawn(1)
         pass
 
+    # Function Flow
+    # 모든 Object의 Update 호출
     for obj in ObjectUpdateList:
         obj.Update()
     for ui in UIUpdateList:
         ui.Update()
+    # 모든 Object의 OnCollider을 호출
+    for obj in ObjectUpdateList:
+        obj.OnCollide()
+    # 모든 Object의 OnTrigger을 호출
+    for obj in ObjectUpdateList:
+        obj.collider.OnTrigger()
+
     # end = time.time()
     # if 1/144 - float(end - start) > 0:
     #     delay(1/144 - float(end - start))

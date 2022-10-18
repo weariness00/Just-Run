@@ -38,6 +38,9 @@ class Object:
         # del self.Color
         pass
 
+    def OnCollide(self):
+        pass
+
     def Info(self):
         print(self.ID, " : ", self.name)
         pass
