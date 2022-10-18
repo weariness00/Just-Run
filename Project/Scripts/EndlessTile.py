@@ -53,7 +53,6 @@ class EndlessTile:
 
                 obj.isActive = True
                 self.LastUpdateTerrain.append(obj)
-
                 pass
             pass
         pass

@@ -66,8 +66,8 @@ class Collide:
         thisRDis = self.rDistance * self.transform.Scale
 
         for collider in Collide.AllCollider:
-            if collider == self or collider.object.isActive is False or collider.isCollide is False or\
-                    self.colliderBox is None or (collider.colliderBox is None):
+            if collider.object.ID == self.object.ID or collider.object.isActive is False or collider.isCollide is False:# or\
+                    #self.colliderBox is None: #or (collider.colliderBox is None):
                 continue
             # 두 개의 콜라이더의 피봇끼리의 거리를 구한 후  (선분)AB
             # 각 콜라이더의 피봇이 다른 콜라이더의 피봇을 향해 백터 방향으로 증가하다가 자신의 박스 경계선을 만나는 곳과의 거리 계산후 r(A) r(B)
