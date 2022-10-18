@@ -48,7 +48,7 @@ def enter():
     LifeUIRender = Renderer()
     player = Player()
     endlessTile = EndlessTile(player)
-    monsterPools.append(MonsterPool(Limbo(player), 20, 1))
+    monsterPools.append(MonsterPool(Limbo(player), 20, 0.1))
 
     # Player 초기화
     player.name = "player"
