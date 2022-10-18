@@ -1,6 +1,6 @@
 from Scripts.Afx import *
 import Scripts.FrameWork.game_framework as game_framework
-import Scripts.State.GamePlay_State as game_sate
+import Scripts.State.GamePlay_State as game_state
 
 lobby_image = None
 
@@ -27,7 +27,7 @@ def handle_events():
             if event.key == SDLK_ESCAPE:
                 game_framework.quit()
             if event.key == SDLK_SPACE:
-                game_framework.change_state(game_sate)
+                game_framework.change_state(game_state)
         pass
     pass
 
