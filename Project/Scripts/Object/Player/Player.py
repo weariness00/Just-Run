@@ -1,6 +1,6 @@
 import numpy
-
 from Scripts.Object.Player.Life import *
+from Scripts.FrameWork.Animation import *
 
 class keyType(Enum):
     Left = 0
@@ -38,11 +38,20 @@ class Player(Object):
         self.collider.SetCollideBox(numpy.array([[0,0],[15,32]]))
         self.collider.isTrigger = True
 
-        #Animation 초기화
-        self._defaultName = 'image/player/Player_'
-        self.ChangeSprite('Idle')
-        self._ani_Frame = 6
-        self._ani_Count = 0
+        # Animation 초기화
+        self.idleAni = Animation()
+        self.idleAni.image = load_image('image/player/Player_Idle.png')
+        self.idleAni.image_type = [0, 0, 40, 60]
+        self.idleAni.frame = 6
+        self.idleAni.countSpeed = 5
+
+        self.workingAni = Animation()
+        self.workingAni.image = load_image('image/player/Player_Working.png')
+        self.workingAni.image_type = [0, 0, 43, 60]
+        self.workingAni.frame = 7
+        self.workingAni.countSpeed = 10
+
+        self.mainAnimation = self.idleAni
 
         pass
 
@@ -52,7 +61,7 @@ class Player(Object):
     def Update(self):
         self.Handle_Event()
         self.Movement()
-        self.Animaiton()
+        self.OnAnimation()
         self.time.start = time.time()
         pass
     def Handle_Event(self):
@@ -63,39 +72,34 @@ class Player(Object):
             if event.type == SDL_KEYUP:
                 if event.key == SDLK_LEFT:
                     self.idle[keyType.Left] = False
-                    # state = 'Idle'
                 if event.key == SDLK_RIGHT:
                     self.idle[keyType.Right] = False
-                    # state = 'Idle'
                 if event.key == SDLK_UP:
                     self.idle[keyType.UP] = False
-                    # state = 'Idle'
                 if event.key == SDLK_DOWN:
                     self.idle[keyType.Down] = False
-                    # state = 'Idle'
 
                 if any(self.idle.values()) == False:
-                    self.ChangeSprite('Idle')
+                    self.mainAnimation = self.idleAni
                 else:
-                    self.ChangeSprite(state)
+                    pass
                 pass
 
             if event.type == SDL_KEYDOWN:
                 if event.key == SDLK_LEFT:
                     self.idle[keyType.Left] = True
                     self.image_dir = 'None'
-                    state = "Working"
+                    self.mainAnimation = self.workingAni
                 if event.key == SDLK_RIGHT:
                     self.idle[keyType.Right] = True
                     self.image_dir = 'h'
-                    state = "Working"
+                    self.mainAnimation = self.workingAni
                 if event.key == SDLK_UP:
                     self.idle[keyType.UP] = True
-                    state = "Working"
+                    self.mainAnimation = self.workingAni
                 if event.key == SDLK_DOWN:
                     self.idle[keyType.Down] = True
-                    state = "Working"
-                self.ChangeSprite(state)
+                    self.mainAnimation = self.workingAni
                 pass
 
             pass
@@ -137,23 +141,12 @@ class Player(Object):
             pass
         pass
 
-    def Animaiton(self):
-        self.image_type[0] = (int(self._ani_Count) % self._ani_Frame) * self.image_type[2]
-        self._ani_Count += self.time.OneFrameTime() * 10
+    def OnAnimation(self):
+        self.mainAnimation.OnAnimation(self.time.OneFrameTime())
 
-    def ChangeSprite(self, state):
-        if state == "Working":
-            self._sprite_Name = 'Working'
-            self.image_type = [0, 0, 43, 60]
-            self._ani_Frame = 7
-        elif state == "Idle":
-            self._sprite_Name = 'Idle'
-            self.image_type = [0, 0, 40, 60]
-            self._ani_Frame = 6
-        pass
+        self.image = self.mainAnimation.image
+        self.image_type = self.mainAnimation.image_type
 
-        ani_Name = Instance.SetPngName(self._defaultName, self._sprite_Name)
-        self.image = load_image(ani_Name)
         pass
 
     pass
