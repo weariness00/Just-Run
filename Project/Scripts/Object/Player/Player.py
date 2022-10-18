@@ -53,7 +53,6 @@ class Player(Object):
         self.Handle_Event()
         self.Movement()
         self.Animaiton()
-        self.OnCollide()
         self.time.start = time.time()
         pass
     def Handle_Event(self):
@@ -122,13 +121,16 @@ class Player(Object):
         if self.isActive is False:
             return
 
-        collides = self.collider.OnCollider()
+        self.collider.OnCollider()
 
-        for collider in collides:
+        for collider in self.collider.onColliderList:
             if collider.tag == "Tile":
                 collider.object.Info() # 체크용
             if collider.tag == "Monster":
                 # 맞았을때 스프라이트 해주기
+                self.lifeObject[self.life].ChangeSprite('BlueFire')
+                if self.life > 0:
+                    self.life -= 1
                 pass
 
 

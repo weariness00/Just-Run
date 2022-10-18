@@ -34,7 +34,6 @@ class Limbo(Monster):
 
     def Update(self):
         super(Limbo, self).Update()
-        self.OnCollide()
         self.Animation()
         self.time.start = time.time()
         pass
@@ -43,13 +42,10 @@ class Limbo(Monster):
         if self.isActive is False:
             return
 
-        collides = self.collider.OnCollider()
+        self.collider.OnCollider()
 
-        for collider in collides:
+        for collider in self.collider.onColliderList:
             if collider.tag == "Player":
-                collider.object.lifeObject[collider.object.life].ChangeSprite('BlueFire')
-                if collider.object.life > 0:
-                    collider.object.life -= 1
                 self.collider.isCollide = False
                 self.ChangeSprite('Death')
 
@@ -70,7 +66,7 @@ class Limbo(Monster):
             self.isActive = False
             self.collider.isCollide = True
             self.isMoveMent = True
-            self.ChangeSprite('Idle')
+            self.ChangeSprite('Working')
         pass
 
     def ChangeSprite(self, state):
