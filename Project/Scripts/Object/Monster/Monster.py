@@ -4,7 +4,6 @@ class Monster(Object):
     def __init__(self, target):
         super(Monster, self).__init__()
 
-
         self.__idle = dict()
         self._speed = None
         self._targetPlayer = target

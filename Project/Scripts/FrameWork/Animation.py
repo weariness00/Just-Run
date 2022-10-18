@@ -3,7 +3,7 @@ from Scripts.Afx import *
 class Animation:
     def __init__(self):
         self.frame = 0
-        self.count = 0
+        self.__count = 0
 
         self.countSpeed = 0
 
@@ -17,8 +17,9 @@ class Animation:
         pass
 
     def OnAnimation(self, frameTime):
-        self.image_type[0] = (int(self.count) % self.frame) * self.image_type[2]
-        self.count += frameTime * self.countSpeed
+        self.image_type[0] = (int(self.__count) % self.frame) * self.image_type[2]
+        self.__count += frameTime * self.countSpeed
+        # self.__count -= int(self.__count) % self.frame
         pass
 
     pass

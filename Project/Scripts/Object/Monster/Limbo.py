@@ -1,6 +1,5 @@
-import numpy
-
 from Scripts.Object.Monster.Monster import *
+from Scripts.FrameWork.Animation import *
 
 class Limbo(Monster):
     def __init__(self, target):
@@ -19,9 +18,20 @@ class Limbo(Monster):
         self.collider.SetCollideBox(numpy.array([[0,0],[230,200]]))
         self.collider.isTrigger = True
 
-        # Animaiton
-        self._defaultName = 'image/Monster/Limbo Monster/'
-        self.ChangeSprite('Working')
+        # Animation
+        self.workingAni = Animation()
+        self.workingAni.image = load_image('image/Monster/Limbo Monster/Working.png')
+        self.workingAni.image_type = [0, 0, 305, 280]
+        self.workingAni.frame = 2
+        self.workingAni.countSpeed = 2.25
+
+        self.deathAni = Animation()
+        self.deathAni.image = load_image('image/Monster/Limbo Monster/Death.png')
+        self.deathAni.image_type = [0, 0, 305, 280]
+        self.deathAni.frame = 2
+        self.deathAni.countSpeed = 4
+
+        self.mainAnimation = self.workingAni
 
         # Timer
         self.start = time.time()
@@ -34,7 +44,7 @@ class Limbo(Monster):
 
     def Update(self):
         super(Limbo, self).Update()
-        self.Animation()
+        self.OnAnimation()
         self.time.start = time.time()
         pass
 
@@ -47,46 +57,31 @@ class Limbo(Monster):
         for collider in self.collider.onColliderList:
             if collider.tag == "Player":
                 self.collider.isCollide = False
-                self.ChangeSprite('Death')
+                self.isMoveMent = False
+                self.mainAnimation = self.deathAni
+                self.start = time.time()
 
             pass
         pass
     pass
 
-    def Animation(self):
-        self.image_type[0] = (int(self._ani_Count) % self._ani_Frame) * self.image_type[2]
-        self._ani_Count += self.time.OneFrameTime() * 2.5
+    def OnAnimation(self):
+        self.mainAnimation.OnAnimation(self.time.OneFrameTime())
+
+        self.image = self.mainAnimation.image
+        self.image_type = self.mainAnimation.image_type
 
         if self.transform.direction[0] > 0:
             self.image_dir = 'h'
         elif self.transform.direction[0] < 0:
             self.image_dir = 'None'
 
-        if self._sprite_Name == 'Death' and time.time() - self.start > 1:
+        if self.mainAnimation == self.deathAni and time.time() - self.start > 1:
             self.isActive = False
             self.collider.isCollide = True
             self.isMoveMent = True
-            self.ChangeSprite('Working')
+            self.mainAnimation = self.workingAni
         pass
-
-    def ChangeSprite(self, state):
-        self._sprite_Name = state
-        if state == "Idle":
-            self.image_type = [0, 0, 312, 269]
-            self._ani_Frame = 2
-        elif state == "Working":
-            self.image_type = [0, 0, 305, 280]
-            self._ani_Frame = 2
-            pass
-        elif state == 'Death':
-            self.image_type = [0, 0, 305, 280]
-            self._ani_Frame = 2
-            self.start = time.time()
-            self.isMoveMent = False
-            pass
-
-        ani_Name = Instance.SetPngName(self._defaultName, self._sprite_Name)
-        self.image = load_image(ani_Name)
 
     def Copy(self):
         return Limbo(self._targetPlayer)

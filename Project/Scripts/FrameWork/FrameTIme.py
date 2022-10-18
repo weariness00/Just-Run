@@ -10,7 +10,7 @@ class FrameTime:
         pass
 
     def OneFrameTime(self):
-        fTeim = time.time() - self.start
-        return float(fTeim)
+        fTime = time.time() - self.start
+        return float(fTime)
         pass
     pass

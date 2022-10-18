@@ -132,7 +132,7 @@ class Player(Object):
                 collider.object.Info() # 체크용
             if collider.tag == "Monster":
                 # 맞았을때 스프라이트 해주기
-                self.lifeObject[self.life].ChangeSprite('BlueFire')
+                self.lifeObject[self.life].mainAnimation = self.lifeObject[self.life].blueFireAni
                 if self.life > 0:
                     self.life -= 1
                 pass
@@ -146,7 +146,6 @@ class Player(Object):
 
         self.image = self.mainAnimation.image
         self.image_type = self.mainAnimation.image_type
-
         pass
 
     pass

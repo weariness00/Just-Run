@@ -1,5 +1,5 @@
 from Scripts.FrameWork.Object import *
-
+from Scripts.FrameWork.Animation import *
 
 class Life(Object):
     
@@ -10,13 +10,19 @@ class Life(Object):
         self.transform.Scale *= 5
 
         # Animation
-        self.redFireObject = Object()
-        self.blueFireObject = Object()
+        self.redFireAni = Animation()
+        self.redFireAni.image = load_image('image/UI/Life/Fire.png')
+        self.redFireAni.image_type = [0, 0, 15, 20]
+        self.redFireAni.frame = 4
+        self.redFireAni.countSpeed = 5
 
-        self._defaultName = 'image/UI/Life/'
-        self.ChangeSprite('Fire')
+        self.blueFireAni = Animation()
+        self.blueFireAni.image = load_image('image/UI/Life/BlueFire.png')
+        self.blueFireAni.image_type = [0, 0, 15, 20]
+        self.blueFireAni.frame = 4
+        self.blueFireAni.countSpeed = 5
 
-
+        self.mainAnimation = self.redFireAni
         pass
     
     def __del__(self):
@@ -24,23 +30,15 @@ class Life(Object):
         pass
 
     def Update(self):
-        self.__Animation()
+        self.OnAnimation()
         self.time.start = time.time()
         pass
 
-    def __Animation(self):
-        self.image_type[0] = (int(self._ani_Count) % self._ani_Frame) * self.image_type[2]
-        self._ani_Count += self.time.OneFrameTime() * 10
+    def OnAnimation(self):
+        self.mainAnimation.OnAnimation(self.time.OneFrameTime())
+
+        self.image = self.mainAnimation.image
+        self.image_type = self.mainAnimation.image_type
         pass
 
-    def ChangeSprite(self, state):
-        self._sprite_Name = state
-        self.image_type = [0, 0, 15, 20]
-        self._ani_Frame = 4
-
-        ani_Name = Instance.SetPngName(self._defaultName, self._sprite_Name)
-        self.image = load_image(ani_Name)
-
-        pass
-    
     pass
