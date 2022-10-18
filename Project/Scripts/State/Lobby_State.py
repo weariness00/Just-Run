@@ -1,12 +1,14 @@
 from Scripts.Afx import *
 import Scripts.FrameWork.game_framework as game_framework
-import Scripts.State.GamePlay_State as game
+import Scripts.State.GamePlay_State as game_sate
 
 lobby_image = None
 
 def enter():
     global lobby_image
     lobby_image = load_image('image/FirePunch.png')
+    lobby_image.draw_now(Instance.windowSize[0] / 2, Instance.windowSize[1] / 2,
+                         Instance.windowSize[0], Instance.windowSize[1])
     pass
 
 # finalization code
@@ -25,7 +27,7 @@ def handle_events():
             if event.key == SDLK_ESCAPE:
                 game_framework.quit()
             if event.key == SDLK_SPACE:
-                game_framework.change_state(game)
+                game_framework.change_state(game_sate)
         pass
     pass
 
@@ -36,11 +38,11 @@ def update():
 
 def draw():
     global lobby_image
-    clear_canvas()
-
-    lobby_image.draw_now(Instance.windowSize[0]/2, Instance.windowSize[1]/2, Instance.windowSize[0], Instance.windowSize[1])
-
-    update_canvas()
+    # clear_canvas()
+    #
+    # lobby_image.draw_now(Instance.windowSize[0]/2, Instance.windowSize[1]/2, Instance.windowSize[0], Instance.windowSize[1])
+    #
+    # update_canvas()
     pass
 
 def pause():

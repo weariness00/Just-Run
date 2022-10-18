@@ -6,6 +6,5 @@ import numpy
 from pico2d import *
 from enum import Enum, auto
 import time
-from copy import *
 
 import Scripts.Static as Instance

@@ -10,7 +10,7 @@ class EndlessTile:
     def __init__(self, Player=Object()):
         self.Player = Player
 
-        self.maxViewDistance = 160 * 3
+        self.maxViewDistance = 160 * 4
         self.terrainSize = 160
 
         self.terrainDictionary = dict()
@@ -31,7 +31,7 @@ class EndlessTile:
 
         #Player의 위치를 반경으로 Tile 활성화
         for yOffset in range(-terrainVisibleInViewDistance, terrainVisibleInViewDistance + 1):
-            for xOffset in range(-terrainVisibleInViewDistance - 1, terrainVisibleInViewDistance + 2):
+            for xOffset in range(-terrainVisibleInViewDistance - 1, terrainVisibleInViewDistance + 3):
                 pos = currentTerrain_Pos + numpy.array([xOffset, yOffset])
                 viewedTerrainPos = (pos[0],pos[1])
 
@@ -40,7 +40,7 @@ class EndlessTile:
                     pass
                 else:
                     # obj = Tile(load_image("image\Tile\snow-expansion.png"), (16 * 1, 208, 16, 16))
-                    obj = TileType(random.randint(0, 1))
+                    obj = TileType(random.randint(TileTypeMin, TileTypeMax))
                     obj.transform.Position = pos * self.terrainSize
                     obj.tileSize = 16
                     obj.transform.Scale *= 10
