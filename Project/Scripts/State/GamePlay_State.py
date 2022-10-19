@@ -1,33 +1,48 @@
 from Scripts.EndlessTile import *
 from Scripts.Object.Player.Player import *
 from Scripts.Object.Monster.MonsterPool import *
+from Scripts.Object.Player.Skill.SkillBox import *
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby
 
+# Timer
 start = None
 end = None
 
+# Render
+#   Object
 TileRender = None
 PlayerRender = None
 MonsterRender = None
-LifeUIRender = None
 
+#   UI
+LifeUIRender = None
+SkillUIRender = None
+
+# Objcet
 player = None
 endlessTile = None
 
+# UI
+skillBox_UI = None # 임시
+
+# pool
 monsterPools = None
 
+# Update List
 ObjectUpdateList = None
 UIUpdateList = None
 
+# Render List
 RenderUpdateList = None
 UIRenderUpdateList = None
 
 def enter():
     global start, end
-    global TileRender, PlayerRender, MonsterRender, LifeUIRender
-    global player, monsterPools
-    global endlessTile
+    global TileRender, PlayerRender, MonsterRender, LifeUIRender, SkillUIRender
+    global player, endlessTile
+    global skillBox_UI
+    global monsterPools
     global ObjectUpdateList, UIUpdateList
     global RenderUpdateList, UIRenderUpdateList
     start = time.time()
@@ -44,10 +59,13 @@ def enter():
     PlayerRender = Renderer()
     MonsterRender = Renderer()
     LifeUIRender = Renderer()
+    SkillUIRender = Renderer()
 
     player = Player()
 
     endlessTile = EndlessTile(player)
+
+    skillBox_UI = SkillBox()
 
     # Monster Pool 객체 생성
     limboPool = MonsterPool(Limbo(player), 20, 1)
@@ -70,16 +88,19 @@ def enter():
         ObjectUpdateList += mobPool.pool
 
     UIUpdateList += player.lifeObject
+    UIUpdateList += [skillBox_UI]
 
     # Render 초기화
     endlessTile.render = TileRender
     PlayerRender.AddRenderObject(player)
     for mobPool in monsterPools:
         MonsterRender.RendererObjectList += mobPool.pool
-    LifeUIRender.RendererObjectList += player.lifeObject
     RenderUpdateList = [TileRender, PlayerRender, MonsterRender]
 
-    UIRenderUpdateList = [LifeUIRender]
+    LifeUIRender.RendererObjectList += player.lifeObject
+    SkillUIRender.RendererObjectList += [skillBox_UI]
+
+    UIRenderUpdateList = [LifeUIRender, SkillUIRender]
     pass
 
 # finalization code
