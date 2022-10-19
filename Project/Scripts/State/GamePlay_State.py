@@ -50,7 +50,7 @@ def enter():
     endlessTile = EndlessTile(player)
 
     # Monster Pool 객체 생성
-    limboPool = MonsterPool(Limbo(player), 100, 5)
+    limboPool = MonsterPool(Limbo(player), 20, 1)
     monsterPools.append(limboPool)
 
     # Player 초기화
@@ -62,7 +62,7 @@ def enter():
     Collide.MainCamera = Camera.MainCamera
 
     # Monster Pool 초기화
-    limboPool.Spawn(10)
+    limboPool.Spawn(5)
 
     # UpdateList 초기화
     ObjectUpdateList += [player]
@@ -124,7 +124,7 @@ def update():
         flowTime = time.time() - monsterPool.startTime
         if flowTime > monsterPool.coolTime:
             monsterPool.startTime = time.time()
-            monsterPool.Spawn(10)
+            monsterPool.Spawn(5)
         pass
 
     # Function Flow

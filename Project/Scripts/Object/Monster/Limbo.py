@@ -7,7 +7,7 @@ class Limbo(Monster):
         super(Limbo, self).__init__(target)
         self.name = 'Limbo'
         self.isActive = False
-        self._speed = 100
+        self._speed = 150
         self._targetPlayer = target
 
         # Transform

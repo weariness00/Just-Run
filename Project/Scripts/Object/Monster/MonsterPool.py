@@ -30,6 +30,7 @@ class MonsterPool():
 
             monster.isActive = True
             monster.transform.Position = self.RandomSpawnPosition()
+            monster.lifeTime = random.randint(5, 10 + 1)
             monster.lifeStart = time.time()
             count -= 1
             pass
