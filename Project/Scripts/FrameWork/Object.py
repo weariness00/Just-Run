@@ -29,6 +29,9 @@ class Object:
     def __del__(self):
         pass
 
+    def Update(self):
+        pass
+
     def OnCollide(self):
         pass
 
