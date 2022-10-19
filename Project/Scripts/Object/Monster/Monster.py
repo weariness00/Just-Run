@@ -9,6 +9,10 @@ class Monster(Object):
         self._targetPlayer = target
         self.isMoveMent = True
 
+        # 생명주기
+        self.lifeTime = 10
+        self.lifeStart = 0
+
         # Collider
         self.collider = Collide()
         self.collider.InitTransform(self.transform)
@@ -18,10 +22,6 @@ class Monster(Object):
 
     def __del__(self):
         super(Monster, self).__del__()
-        pass
-
-    def Update(self):
-        self.MoveMent()
         pass
 
     def MoveMent(self):

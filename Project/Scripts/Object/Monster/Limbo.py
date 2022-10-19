@@ -14,7 +14,7 @@ class Limbo(Monster):
         self.transform.Scale = self.transform.Scale * 0.2
 
         # Collide
-        self.collider.Pivot = numpy.array([0, -30], dtype= float)
+        self.collider.Pivot += [0, -30]
         self.collider.SetCollideBox(numpy.array([[0,0],[230,200]]))
         self.collider.isTrigger = True
 
@@ -34,8 +34,7 @@ class Limbo(Monster):
         self.mainAnimation = self.workingAni
 
         # Timer
-        self.start = time.time()
-
+        self.deathStart = time.time()
         pass
 
     def __del__(self):
@@ -43,13 +42,17 @@ class Limbo(Monster):
         pass
 
     def Update(self):
-        super(Limbo, self).Update()
+        if self.isActive is False:
+            return
+
+        super(Limbo, self).MoveMent()
+        self.CheckLifeTime()
         self.OnAnimation()
         self.time.start = time.time()
         pass
 
     def OnCollide(self):
-        if self.isActive is False or self.collider.isCollide is False:
+        if self.collider.isCollide is False:
             return
 
         self.collider.OnCollider()
@@ -59,8 +62,7 @@ class Limbo(Monster):
                 self.collider.isCollide = False
                 self.isMoveMent = False
                 self.mainAnimation = self.deathAni
-                self.start = time.time()
-
+                self.deathStart = time.time()
             pass
         pass
     pass
@@ -76,11 +78,24 @@ class Limbo(Monster):
         elif self.transform.direction[0] < 0:
             self.image_dir = 'None'
 
-        if self.mainAnimation == self.deathAni and time.time() - self.start > 1:
+        if self.mainAnimation == self.deathAni and time.time() - self.deathStart > 1:
             self.isActive = False
             self.collider.isCollide = True
             self.isMoveMent = True
             self.mainAnimation = self.workingAni
+        pass
+
+    def CheckLifeTime(self):  # 생명주기 체크
+        if self.collider.isCollide is False:
+            return
+
+        lTime = time.time() - self.lifeStart
+        if lTime > self.lifeTime:
+            self.collider.isCollide = False
+            self.isMoveMent = False
+            self.mainAnimation = self.deathAni
+            self.deathStart = time.time()
+            pass
         pass
 
     def Copy(self):
