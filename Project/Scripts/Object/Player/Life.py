@@ -6,7 +6,7 @@ class Life(Object):
     def __init__(self, position):
         super(Life, self).__init__()
         # Transform
-        self.transform.Position = position
+        self.transform.Position += position
         self.transform.Scale *= 5
 
         # Animation

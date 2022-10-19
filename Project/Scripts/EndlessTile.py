@@ -1,5 +1,3 @@
-import random
-
 from Scripts.Object.Object_Type import *
 from Scripts.FrameWork.Renderer import *
 

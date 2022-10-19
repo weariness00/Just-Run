@@ -6,7 +6,6 @@ import Scripts.State.Lobby_State as lobby
 
 start = None
 end = None
-poolStartTime = None
 
 TileRender = None
 PlayerRender = None
@@ -25,7 +24,7 @@ RenderUpdateList = None
 UIRenderUpdateList = None
 
 def enter():
-    global start, end, poolStartTime
+    global start, end
     global TileRender, PlayerRender, MonsterRender, LifeUIRender
     global player, monsterPools
     global endlessTile
@@ -35,7 +34,6 @@ def enter():
     end = None
 
     # Init
-    poolStartTime = time.time()
     Collide.AllCollider = []
     monsterPools = []
     ObjectUpdateList = []
@@ -46,9 +44,14 @@ def enter():
     PlayerRender = Renderer()
     MonsterRender = Renderer()
     LifeUIRender = Renderer()
+
     player = Player()
+
     endlessTile = EndlessTile(player)
-    monsterPools.append(MonsterPool(Limbo(player), 50, 0.1))
+
+    # Monster Pool 객체 생성
+    limboPool = MonsterPool(Limbo(player), 100, 5)
+    monsterPools.append(limboPool)
 
     # Player 초기화
     player.name = "player"
@@ -57,6 +60,9 @@ def enter():
     # Camera 초기화
     Camera.MainCamera = Camera(player.transform)
     Collide.MainCamera = Camera.MainCamera
+
+    # Monster Pool 초기화
+    limboPool.Spawn(10)
 
     # UpdateList 초기화
     ObjectUpdateList += [player]
@@ -115,10 +121,10 @@ def update():
     endlessTile.UpdateVisibleTerrain()
 
     for monsterPool in monsterPools:
-        flowTime = time.time() - poolStartTime
+        flowTime = time.time() - monsterPool.startTime
         if flowTime > monsterPool.coolTime:
-            poolStartTime = time.time()
-            monsterPool.Spawn(1)
+            monsterPool.startTime = time.time()
+            monsterPool.Spawn(10)
         pass
 
     # Function Flow

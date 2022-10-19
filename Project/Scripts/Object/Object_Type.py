@@ -12,7 +12,7 @@ def TileType(typeNumber):
         image_type[0] = 16 * typeNumber
         tile = Tile(image, image_type, Collide())
         tile.collider.object = tile
-        tile.collider.Pivot = numpy.array([6, -5])
+        tile.collider.Pivot += [6, -5]
         tile.collider.SetCollideBox(numpy.array([[4, 6], [0, 0]]))
         tile.collider.tag = "Tile"
         return tile
@@ -20,7 +20,7 @@ def TileType(typeNumber):
         image_type[0] = 16 * typeNumber
         tile = Tile(image, image_type, Collide())
         tile.collider.object = tile
-        tile.collider.Pivot = numpy.array([-6, -5])
+        tile.collider.Pivot += [-6, -5]
         tile.collider.SetCollideBox(numpy.array([[4, 6], [0, 0]]))
         tile.collider.tag = "Tile"
         return tile
@@ -28,7 +28,7 @@ def TileType(typeNumber):
         image_type[0] = 16 * typeNumber
         tile = Tile(image, image_type, Collide())
         tile.collider.object = tile
-        tile.collider.Pivot = numpy.array([6, 7])
+        tile.collider.Pivot += [6, 7]
         tile.collider.SetCollideBox(numpy.array([[2, 2], [0, 0]]))
         tile.collider.tag = "Tile"
         return tile

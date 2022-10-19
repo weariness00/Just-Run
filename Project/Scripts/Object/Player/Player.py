@@ -24,7 +24,7 @@ class Player(Object):
             self.idle[key] = False
 
         # Life 초기화
-        self.lifeObject = [Life(numpy.array([100 * i + 50, Instance.windowSize[1] - 50], dtype=float)) for i in range(self.maxLife + 1)]
+        self.lifeObject = [Life([100 * i + 50, Instance.windowSize[1] - 50]) for i in range(self.maxLife + 1)]
 
         #Transform 초긱화
         self.transform.Scale *= 2
@@ -34,7 +34,7 @@ class Player(Object):
         self.collider.tag = "Player"
         self.collider.object = self
         self.collider.InitTransform(self.transform)
-        self.collider.Pivot = numpy.array([0,-13], dtype= float)
+        self.collider.Pivot += [0, -13]
         self.collider.SetCollideBox(numpy.array([[0,0],[15,32]]))
         self.collider.isTrigger = True
 
@@ -59,6 +59,9 @@ class Player(Object):
         pass
 
     def Update(self):
+        if self.isActive is False:
+            return
+
         self.Handle_Event()
         self.Movement()
         self.OnAnimation()
@@ -122,7 +125,7 @@ class Player(Object):
         pass
 
     def OnCollide(self):
-        if self.isActive is False:
+        if self.collider.isCollide is False:
             return
 
         self.collider.OnCollider()

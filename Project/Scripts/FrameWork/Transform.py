@@ -1,5 +1,3 @@
-import numpy
-
 from Scripts.Afx import *
 
 

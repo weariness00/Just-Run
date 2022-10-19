@@ -1,5 +1,3 @@
-import numpy
-
 from Scripts.FrameWork.Transform import *
 
 class Collide:
@@ -84,8 +82,6 @@ class Collide:
                 continue
             self.onColliderList.append(collider)
             pass
-
-
         return self.onColliderList
 
     #물리 충돌
