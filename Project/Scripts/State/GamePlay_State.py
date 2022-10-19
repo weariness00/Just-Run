@@ -150,7 +150,7 @@ def draw():
     for UIRender in UIRenderUpdateList:
         UIRender.UIDraw()
 
-    Collide.AllBoxDraw()
+    # Collide.AllBoxDraw()
 
     update_canvas()
 

@@ -83,26 +83,6 @@ class Collide:
             if (ABDis > otherRDis + thisRDis).any():
                 continue
             self.onColliderList.append(collider)
-
-            gapDistance = (thisRDis + otherRDis) - ABDis
-
-            # if self.isTrigger:  # 물리 충돌
-            #     # 박스기리 충돌된 공간만큼 뒤로 감
-            #     # TODO Triger는 모든 Object의 OnCollider가 끝난뒤 실행
-            #     gapDistance = (thisRDis + otherRDis) - ABDis
-            #     moveDir = self.transform.direction
-            #
-            #     if gapDistance[0] < gapDistance[1]:
-            #         if moveDir[0] > 0:
-            #             self.transform.Position[0] -= gapDistance[0] + 1
-            #         elif moveDir[0] < 0:
-            #             self.transform.Position[0] += gapDistance[0] + 1
-            #     if gapDistance[0] > gapDistance[1]:
-            #         if moveDir[1] > 0:
-            #             self.transform.Position[1] -= gapDistance[1] + 1
-            #         elif moveDir[1] < 0:
-            #             self.transform.Position[1] += gapDistance[1] + 1
-            #     pass
             pass
 
 

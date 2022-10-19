@@ -2,7 +2,7 @@ from Scripts.Object.Tile import *
 from Scripts.Object.Monster.Monster import *
 
 TileTypeMin = 0
-TileTypeMax = 2
+TileTypeMax = 3
 def TileType(typeNumber):
     image = load_image("image\Tile\snow-expansion.png")
     image_type = [0, 208, 16, 16]

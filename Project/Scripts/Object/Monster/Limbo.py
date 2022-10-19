@@ -49,7 +49,7 @@ class Limbo(Monster):
         pass
 
     def OnCollide(self):
-        if self.isActive is False:
+        if self.isActive is False or self.collider.isCollide is False:
             return
 
         self.collider.OnCollider()

@@ -129,7 +129,7 @@ class Player(Object):
 
         for collider in self.collider.onColliderList:
             if collider.tag == "Tile":
-                collider.object.Info() # 체크용
+                pass
             if collider.tag == "Monster":
                 # 맞았을때 스프라이트 해주기
                 self.lifeObject[self.life].mainAnimation = self.lifeObject[self.life].blueFireAni

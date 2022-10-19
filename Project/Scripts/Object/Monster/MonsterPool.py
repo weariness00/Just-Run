@@ -25,7 +25,7 @@ class MonsterPool():
                 continue
 
             monster.isActive = True
-            monster.transform.Position -= 400
+            monster.transform.Position += 400
             count -= 1
             pass
         pass
