@@ -139,12 +139,6 @@ def update():
     # 모든 Object의 OnTrigger을 호출
     for obj in ObjectUpdateList:
         obj.collider.OnTrigger()
-
-    # end = time.time()
-    # if 1/144 - float(end - start) > 0:
-    #     delay(1/144 - float(end - start))
-    # start = time.time()
-
     pass
 
 def draw():
