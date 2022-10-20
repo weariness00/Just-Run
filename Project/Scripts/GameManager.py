@@ -1,7 +1,7 @@
 from Scripts.Afx import *
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby_state
-import Scripts.State.GamePlay_State as game_state
+import Scripts.State.LevelUp_State as test_State
 
 # TODO 프레임 드랍을 해결해야됨
 #   Lobby 에서마저 낮은 프레임 (250 ~ 333)을 보여준다 왜?

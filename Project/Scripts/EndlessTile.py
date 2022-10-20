@@ -1,5 +1,5 @@
 from Scripts.Object.Object_Type import *
-from Scripts.FrameWork.Renderer import *
+from Scripts.FrameWork.Render import *
 
 #타입에 따른 타일 만들기
 #Player 포지션에 따른 맵 생성 제대로 되게 하기

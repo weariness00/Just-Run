@@ -7,8 +7,7 @@ lobby_image = None
 def enter():
     global lobby_image
     lobby_image = load_image('image/FirePunch.png')
-    lobby_image.draw_now(Instance.windowSize[0] / 2, Instance.windowSize[1] / 2,
-                         Instance.windowSize[0], Instance.windowSize[1])
+
     pass
 
 # finalization code
@@ -38,11 +37,8 @@ def update():
 
 def draw():
     global lobby_image
-    # clear_canvas()
-    #
-    # lobby_image.draw_now(Instance.windowSize[0]/2, Instance.windowSize[1]/2, Instance.windowSize[0], Instance.windowSize[1])
-    #
-    # update_canvas()
+    lobby_image.draw_now(Instance.windowSize[0]/2, Instance.windowSize[1]/2, Instance.windowSize[0], Instance.windowSize[1])
+
     pass
 
 def pause():
