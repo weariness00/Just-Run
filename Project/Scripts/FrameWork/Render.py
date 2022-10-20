@@ -1,7 +1,7 @@
 from Scripts.FrameWork.Camera import *
 
 # 클래스의 멤버 변수가 파일 분할시 적용이 안되는 이유 찾아봅시다
-class Renderer:
+class Render:
     def __init__(self):
         self.RendererObjectList = []
         pass
