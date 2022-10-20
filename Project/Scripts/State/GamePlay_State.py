@@ -4,6 +4,7 @@ from Scripts.Object.Monster.MonsterPool import *
 from Scripts.Object.Player.Skill.SkillBox import *
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby
+import  Scripts.State.LevelUp_State as LevelUp
 
 # Timer
 start = None
@@ -55,11 +56,11 @@ def enter():
     UIUpdateList = []
 
     # 객채 생성
-    TileRender = Renderer()
-    PlayerRender = Renderer()
-    MonsterRender = Renderer()
-    LifeUIRender = Renderer()
-    SkillUIRender = Renderer()
+    TileRender = Render()
+    PlayerRender = Render()
+    MonsterRender = Render()
+    LifeUIRender = Render()
+    SkillUIRender = Render()
 
     player = Player()
 
@@ -72,7 +73,6 @@ def enter():
     monsterPools.append(limboPool)
 
     # Player 초기화
-    player.name = "player"
     player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
 
     # Camera 초기화
@@ -129,6 +129,8 @@ def handle_events():
                 game_framework.quit()
             if event.key == SDLK_SPACE:
                 game_framework.change_state(lobby)
+            if event.key == SDLK_F1: # 디버그용 key
+                game_framework.push_state(LevelUp)
         pass
 
     pass
@@ -163,7 +165,6 @@ def update():
     pass
 
 def draw():
-    clear_canvas()
     global RenderUpdateList, UIRenderUpdateList
     for render in RenderUpdateList:
         render.Draw()
@@ -173,13 +174,22 @@ def draw():
 
     # Collide.AllBoxDraw()
 
-    update_canvas()
-
     pass
 
 def pause():
+    global start
+    start = time.time()
     pass
 
 def resume():
+    difTime = time.time() - start
+    for obj in ObjectUpdateList:
+        obj.time.start = time.time()
+        if obj.collider.tag == 'Monster':
+            obj.lifeStart += difTime
+        if obj.name == "Player":
+            obj.InitHandle()
+    for ui in UIUpdateList:
+        ui.time.start = time.time()
     pass
 

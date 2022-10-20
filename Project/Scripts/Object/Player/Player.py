@@ -14,6 +14,7 @@ class Player(Object):
         super(Player, self).__init__()
 
         # 객체 초기화
+        self.name = 'Player'
         self.maxLife = 3
         self.life = self.maxLife
         self.__speed = 150
@@ -68,9 +69,6 @@ class Player(Object):
         self.time.start = time.time()
         pass
     def Handle_Event(self):
-        state = None
-
-        # events = get_events()
         for event in self.events:
             if event.type == SDL_KEYUP:
                 if event.key == SDLK_LEFT:
@@ -149,6 +147,11 @@ class Player(Object):
 
         self.image = self.mainAnimation.image
         self.image_type = self.mainAnimation.image_type
+        pass
+
+    def InitHandle(self):
+        for key in keyType:
+            self.idle[key] = False
         pass
 
     pass
