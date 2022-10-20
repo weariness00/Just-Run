@@ -56,6 +56,7 @@ class Collide:
         pass
 
     def OnCollider(self): #모든 Collider를 검사후 충돌 된 것들을 반환
+        del self.onColliderList
         self.onColliderList = []
 
         if self.isCollide is False or self.object.isActive is False:
@@ -127,7 +128,6 @@ class Collide:
                         self.transform.Position[1] += gapDistance[1] + 1
                 pass
             pass
-
         pass
 
     @staticmethod
