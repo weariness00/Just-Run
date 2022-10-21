@@ -2,6 +2,8 @@ from Scripts.FrameWork.Transform import *
 
 class Collide:
     AllCollider = []
+    AllColliderX = None
+    AllColliderY = None
     MainCamera = None
     def __init__(self):
         self.colliderBox = None
@@ -15,6 +17,7 @@ class Collide:
         self.isCollide = True # 현재 콜라이더 박스가 켜진 상태인지
 
         self.onColliderList = None
+        self.index = [-1, -1]
 
         self.isTrigger = False #이게 켜진 Objcet가 충돌하면 충돌한 거리만큼 뒤로 간다.
         self.isMouseCollide = False
@@ -57,20 +60,57 @@ class Collide:
         self.rDistance = self.colliderSize/2
         pass
 
-
-    def OnCollider(self): #모든 Collider를 검사후 충돌 된 것들을 반환
+    def OnCollider(self):
         del self.onColliderList
         self.onColliderList = []
 
         if self.isCollide is False or self.object.isActive is False:
             return
 
+        cameraPos = -Collide.MainCamera.transform.Position + Instance.windowSize//2
+        this_Pos = self.Pivot * self.transform.Scale + self.transform.Position + cameraPos
+        thisRDis = self.rDistance * self.transform.Scale
+
+        maxNum = [len(Collide.AllColliderX), len(Collide.AllColliderY)]
+        collides = []
+        for i in range(1, 5 + 1):
+            collides.append(Collide.AllColliderX[self.index[0] - i])
+            collides.append(Collide.AllColliderY[self.index[1] - i])
+            collides.append(Collide.AllColliderX[(self.index[0] + i) % maxNum[0]])
+            collides.append(Collide.AllColliderY[(self.index[1] + i) % maxNum[1]])
+            pass
+
+        for i in range(0, len(collides) - 1):
+            for n in range(i + 1, len(collides)):
+                if collides[i].object.ID == collides[n].object.ID:
+                    del collides[n]
+                    break
+
+        for collider in collides:
+            other_Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
+            otherRDis = collider.rDistance * collider.transform.Scale
+
+            xAB_Distance = Instance.Distance(this_Pos, [other_Pos[0], this_Pos[1]])
+            yAB_Distance = Instance.Distance(this_Pos, [this_Pos[0], other_Pos[1]])
+            ABDis = numpy.array([xAB_Distance, yAB_Distance], dtype=float)
+
+            if (ABDis > otherRDis + thisRDis).any():
+                continue
+            self.onColliderList.append(collider)
+            pass
+        del collides
+        pass
+
+    def OnTrigger(self):
+        if self.isCollide is False or self.object.isActive is False or self.isTrigger is False:
+            return
+
         cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize//2
         this_Pos = self.Pivot * self.transform.Scale + self.transform.Position + cameraPos
         thisRDis = self.rDistance * self.transform.Scale
 
-        for collider in Collide.AllCollider:
-            if collider.object.ID == self.object.ID or collider.object.isActive is False or collider.isCollide is False:
+        for collider in self.onColliderList:
+            if collider.object.isActive is False or collider.isCollide is False:
                 continue
             # 두 개의 콜라이더의 피봇끼리의 거리를 구한 후  (선분)AB
             # 각 콜라이더의 피봇이 다른 콜라이더의 피봇을 향해 백터 방향으로 증가하다가 자신의 박스 경계선을 만나는 곳과의 거리 계산후 r(A) r(B)
@@ -84,35 +124,7 @@ class Collide:
 
             if (ABDis > otherRDis + thisRDis).any():
                 continue
-            self.onColliderList.append(collider)
-            return
-        self.onColliderList.append(None)
-        pass
 
-    #물리 충돌
-    def OnTrigger(self):
-        if self.isCollide is False or self.object.isActive is False:
-            return
-
-        collider = self.onColliderList[0]
-        if collider is None:
-            return
-
-        cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize//2
-        this_Pos = self.Pivot * self.transform.Scale + self.transform.Position + cameraPos
-        thisRDis = self.rDistance * self.transform.Scale
-
-        if collider.object.ID == self.object.ID or collider.object.isActive is False or collider.isCollide is False:
-            return
-
-        other_Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
-        otherRDis = collider.rDistance * collider.transform.Scale
-
-        xAB_Distance = Instance.Distance(this_Pos, [other_Pos[0], this_Pos[1]])
-        yAB_Distance = Instance.Distance(this_Pos, [this_Pos[0], other_Pos[1]])
-        ABDis = numpy.array([xAB_Distance, yAB_Distance], dtype=float)
-
-        if self.isTrigger:  # 물리 충돌
             # 박스기리 충돌된 공간만큼 뒤로 감
             # TODO Triger는 모든 Object의 OnCollider가 끝난뒤 실행
             gapDistance = (thisRDis + otherRDis) - ABDis
@@ -131,8 +143,81 @@ class Collide:
             pass
         pass
 
-        pass
+    # 두번째 방법
+    # def OnCollider(self): #모든 Collider를 검사후 충돌 된 것들을 반환
+    #     del self.onColliderList
+    #     self.onColliderList = []
+    #
+    #     if self.isCollide is False or self.object.isActive is False:
+    #         return
+    #
+    #     cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize//2
+    #     this_Pos = self.Pivot * self.transform.Scale + self.transform.Position + cameraPos
+    #     thisRDis = self.rDistance * self.transform.Scale
+    #
+    #     for collider in Collide.AllCollider:
+    #         if collider.object.ID == self.object.ID or collider.object.isActive is False or collider.isCollide is False:
+    #             continue
+    #         # 두 개의 콜라이더의 피봇끼리의 거리를 구한 후  (선분)AB
+    #         # 각 콜라이더의 피봇이 다른 콜라이더의 피봇을 향해 백터 방향으로 증가하다가 자신의 박스 경계선을 만나는 곳과의 거리 계산후 r(A) r(B)
+    #         # (선분)AB <= r(A) + r(B) 일씨 충돌로 간주
+    #         other_Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
+    #         otherRDis = collider.rDistance * collider.transform.Scale
+    #
+    #         xAB_Distance = Instance.Distance(this_Pos, [other_Pos[0], this_Pos[1]])
+    #         yAB_Distance = Instance.Distance(this_Pos, [this_Pos[0], other_Pos[1]])
+    #         ABDis = numpy.array([xAB_Distance, yAB_Distance], dtype=float)
+    #
+    #         if (ABDis > otherRDis + thisRDis).any():
+    #             continue
+    #         self.onColliderList.append(collider)
+    #         return
+    #     self.onColliderList.append(None)
+    #     pass
+    #
+    # #물리 충돌
+    # def OnTrigger(self):
+    #     if self.isCollide is False or self.object.isActive is False:
+    #         return
+    #
+    #     collider = self.onColliderList[0]
+    #     if collider is None:
+    #         return
+    #
+    #     cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize//2
+    #     this_Pos = self.Pivot * self.transform.Scale + self.transform.Position + cameraPos
+    #     thisRDis = self.rDistance * self.transform.Scale
+    #
+    #     if collider.object.ID == self.object.ID or collider.object.isActive is False or collider.isCollide is False:
+    #         return
+    #
+    #     other_Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
+    #     otherRDis = collider.rDistance * collider.transform.Scale
+    #
+    #     xAB_Distance = Instance.Distance(this_Pos, [other_Pos[0], this_Pos[1]])
+    #     yAB_Distance = Instance.Distance(this_Pos, [this_Pos[0], other_Pos[1]])
+    #     ABDis = numpy.array([xAB_Distance, yAB_Distance], dtype=float)
+    #
+    #     if self.isTrigger:  # 물리 충돌
+    #         # 박스기리 충돌된 공간만큼 뒤로 감
+    #         # TODO Triger는 모든 Object의 OnCollider가 끝난뒤 실행
+    #         gapDistance = (thisRDis + otherRDis) - ABDis
+    #         moveDir = self.transform.direction
+    #
+    #         if gapDistance[0] < gapDistance[1]:
+    #             if moveDir[0] > 0:
+    #                 self.transform.Position[0] -= gapDistance[0] + 1
+    #             elif moveDir[0] < 0:
+    #                 self.transform.Position[0] += gapDistance[0] + 1
+    #         if gapDistance[0] > gapDistance[1]:
+    #             if moveDir[1] > 0:
+    #                 self.transform.Position[1] -= gapDistance[1] + 1
+    #             elif moveDir[1] < 0:
+    #                 self.transform.Position[1] += gapDistance[1] + 1
+    #         pass
+    #     pass
 
+    # 첫번째 방법
     # def OnCollider(self): #모든 Collider를 검사후 충돌 된 것들을 반환
     #     del self.onColliderList
     #     self.onColliderList = []
@@ -220,6 +305,29 @@ class Collide:
                                      collider.colliderSize[0] * collider.transform.Scale[0], collider.colliderSize[1] * collider.transform.Scale[1])
         pass
 
+    @staticmethod
+    def SortAllCollide():
+        del Collide.AllColliderX
+        del Collide.AllColliderY
+        # Collider 의 Pivot을 기준으로 X, Y로 정렬
+        cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize // 2
+
+        AllCollider = []
+        for collider in Collide.AllCollider:
+            if collider is False:
+                continue
+            AllCollider.append(collider)
+            pass
+
+        Collide.AllColliderX = sorted(AllCollider, key=lambda c: c.Pivot[0] * c.transform.Scale[0] + c.transform.Position[0] + cameraPos[0])
+        for i in range(len(Collide.AllColliderX)):
+            Collide.AllColliderX[i].index[0] = i
+        Collide.AllColliderY = sorted(AllCollider, key=lambda c: c.Pivot[1] * c.transform.Scale[1] + c.transform.Position[1] + cameraPos[1])
+        for i in range(len(Collide.AllColliderY)):
+            Collide.AllColliderY[i].index[1] = i
+
+        del AllCollider
+        pass
     def Info(self):
         print("\nCollider\n", self.colliderBox)
         print(self.tag)
