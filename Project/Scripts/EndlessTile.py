@@ -1,4 +1,4 @@
-from Scripts.Object.Object_Type import *
+from Scripts.Object.Tile_Type import *
 from Scripts.FrameWork.Render import *
 
 #타입에 따른 타일 만들기
