@@ -73,7 +73,7 @@ class Collide:
 
         maxNum = [len(Collide.AllColliderX), len(Collide.AllColliderY)]
         collides = []
-        for i in range(1, 5 + 1):
+        for i in range(1, 6 + 1):
             collides.append(Collide.AllColliderX[self.index[0] - i])
             collides.append(Collide.AllColliderY[self.index[1] - i])
             collides.append(Collide.AllColliderX[(self.index[0] + i) % maxNum[0]])
@@ -86,6 +86,7 @@ class Collide:
                     del collides[n]
                     break
 
+        self.onColliderList += collides
         for collider in collides:
             other_Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
             otherRDis = collider.rDistance * collider.transform.Scale
@@ -96,7 +97,7 @@ class Collide:
 
             if (ABDis > otherRDis + thisRDis).any():
                 continue
-            self.onColliderList.append(collider)
+            # self.onColliderList.append(collider)
             pass
         del collides
         pass
