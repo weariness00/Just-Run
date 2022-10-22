@@ -1,4 +1,5 @@
 from Scripts.FrameWork.Camera import *
+from Scripts.FrameWork.Text import *
 
 # 클래스의 멤버 변수가 파일 분할시 적용이 안되는 이유 찾아봅시다
 class Render:
@@ -37,6 +38,13 @@ class Render:
                                 pos[0], pos[1],
                                 scale[0], scale[1])
             pass
+        pass
+
+    def TextDraw(self):
+        for text in self.RendererObjectList:
+            text.font.draw(text.transform.Position[0], text.transform.Position[1],
+                           text.text,
+                           text.color)
         pass
 
     def AddRenderObject(self, obj):
