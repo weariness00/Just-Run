@@ -52,6 +52,18 @@ class LevelUP_PopUp(Object):
             imageObj.transform.Position += self.imageBoxObject[i].transform.Position
             imageObj.transform.Scale += [3, 3]
             pass
+        self.boxText = [[Text(30) for i in range(3)], [Text() for i in range(3)]]
+        for i, textObj in enumerate(self.boxText[0]):
+            textObj.text = SkillContain.array[0].skillName.text
+            textObj.transform.Position += self.textBoxObject[i].transform.Position + [-280, 50]
+            textObj.color = (1, 1, 1)
+            pass
+        for i, textObj in enumerate(self.boxText[1]):
+            textObj.text = SkillContain.array[0].explain.text
+            textObj.transform.Position += self.textBoxObject[i].transform.Position + [-260, 0]
+            textObj.color = (1, 1, 1)
+            pass
+
         pass
 
     def __del__(self):
