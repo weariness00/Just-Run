@@ -38,7 +38,6 @@ def update():
 def draw():
     global lobby_image
     lobby_image.draw_now(Instance.windowSize[0]/2, Instance.windowSize[1]/2, Instance.windowSize[0], Instance.windowSize[1])
-
     pass
 
 def pause():
