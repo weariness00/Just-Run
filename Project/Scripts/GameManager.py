@@ -3,11 +3,9 @@ import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby_state
 import Scripts.State.LevelUp_State as test_State
 
-# TODO 프레임 드랍을 해결해야됨
-#   Lobby 에서마저 낮은 프레임 (250 ~ 333)을 보여준다 왜?
-# TODO 쓸데 없는 계산 비용을 낭비하는 코드를 찾아보기 <- 프레임 드랍 해결 부분
-
-# TODO MonsterPool 에서 소환할때 랜덤한 위치어야하는데 Player 바로 앞에서 소환됨
+# TODO
+#   Collide를 수정해 프레임 드랍을 획기적으로 줄였으나
+#   충돌체크의 부자연스러움이 나타남
 
 Instance.Init()
 open_canvas(Instance.windowSize[0], Instance.windowSize[1])
