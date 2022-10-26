@@ -1,4 +1,5 @@
 from Scripts.Object.Monster.Monster import *
+from Scripts.Object.Monster.AttackBall import *
 from Scripts.FrameWork.Animation import *
 
 
@@ -10,6 +11,7 @@ class RedBat(Monster):
         self.isActive = False
         self._speed = 100
         self._targetPlayer = target
+        self.attackRange = 500
 
         # Transform
         self.transform.Scale = self.transform.Scale * 0.15
@@ -21,7 +23,7 @@ class RedBat(Monster):
         # Animation
         frame = 8
         image_type = [0, 0, 534, 419]
-        countSpeed = 3
+        countSpeed = 10
         self.workingAni = Animation()
         self.workingAni.image = load_image('image/Monster/RedBat Monster/Working.png')
         self.workingAni.image_type = image_type
@@ -32,17 +34,19 @@ class RedBat(Monster):
         self.attackAni.image = load_image('image/Monster/RedBat Monster/Attack.png')
         self.attackAni.image_type = image_type
         self.attackAni.frame = frame
-        self.attackAni.countSpeed = countSpeed
+        self.attackAni.countSpeed = 3
 
         self.deathAni = Animation()
         self.deathAni.image = load_image('image/Monster/RedBat Monster/Death.png')
         self.deathAni.image_type = image_type
         self.deathAni.frame = frame
-        self.deathAni.countSpeed = countSpeed
+        self.deathAni.countSpeed = 8
 
         self.mainAnimation = self.workingAni
 
-        # Timer
+        # Attack Object
+        self.attackObject += [AttackBall(target)]
+
         pass
 
     def __del__(self):
@@ -54,6 +58,7 @@ class RedBat(Monster):
             return
 
         super(RedBat, self).MoveMent()
+        self.Attack()
         super(RedBat, self).CheckLifeTime()
         super(RedBat, self).OnAnimation()
         self.time.start = time.time()
@@ -74,10 +79,21 @@ class RedBat(Monster):
                 self.deathStart = time.time()
             if collider.tag == 'Tile':
                 self.collider.isTrigger = False
+            if collider.tag == 'Monster Attack':
+                self.collider.isTrigger = False
 
             pass
         pass
     pass
+
+    def Attack(self):
+        if self.mainAnimation is not self.attackAni:
+            return
+
+        self.attackObject[0].transform.Position = self.transform.Position
+        self.attackObject[0].isMoveMent = True
+        self.attackObject[0].isActive = True
+        pass
 
     def Copy(self):
         return RedBat(self._targetPlayer)
