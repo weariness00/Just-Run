@@ -6,10 +6,19 @@ class Text:
         self.transform = Transform()
         self.text = 'None'
 
-        self.font = load_font('Font/Saenggeo_Jincheon.otf', size)
+        self.font_Name = load_font('Font/Name.ttf', size)
+        self.font_Explain = load_font('Font/Explain.ttf', size)
+        self.font = self.font_Name
         self.color = (0, 0, 0)
         pass
 
     def __del__(self):
         pass
+
+    def Copy(self):
+        t = Text()
+        t.text = self.text
+        t.font = self.font
+        t.color = self.color
+        return t
     pass
