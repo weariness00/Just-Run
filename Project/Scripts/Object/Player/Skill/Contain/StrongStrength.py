@@ -1,19 +1,18 @@
 # 강인한 체력
 
-from Scripts.Object.Player.Skill.Skill import *
-from Scripts.Object.Player.Life import *
+from Scripts.Object.Player.Player import *
 
 class StrongStrength(Skill):
 
     def __init__(self):
-        super(StrongStrength, self).__init__(self)
+        super(StrongStrength, self).__init__()
         # 객체 초기화
         self.image = load_image('image/UI/Skill/StrongStrength.png')
         self.image_type = [0, 0, 32, 32]
 
         # Text 초기화
         self.skillName.text = '[강인한 체력]'
-        self.explain.text = '모든 목숨을 회복하고 추가로 +1 만큼의 목숨을 얻습니다.'
+        self.explain.text = '모든 목숨을 회복, 추가로 +1 만큼의 목숨을 얻습니다.'
         # 능력 초기화
         pass
 
