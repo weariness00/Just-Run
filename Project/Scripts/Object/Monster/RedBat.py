@@ -1,6 +1,5 @@
 from Scripts.Object.Monster.Monster import *
 from Scripts.Object.Monster.AttackBall import *
-from Scripts.FrameWork.Animation import *
 
 
 class RedBat(Monster):
@@ -12,10 +11,10 @@ class RedBat(Monster):
         super(RedBat, self).__init__(target)
         self.name = 'RedBat'
         self.isActive = False
-        self._speed = 100
+        self._speed = 70
         self._targetPlayer = target
         self.attackRange = 500
-        self.attackObjectCount = 1
+        self.attackObjectCount = 2
 
         # Transform
         self.transform.Scale = self.transform.Scale * 0.15
@@ -28,19 +27,16 @@ class RedBat(Monster):
         frame = 8
         image_type = [0, 0, 534, 419]
         countSpeed = 10
-        self.workingAni = Animation()
         self.workingAni.image = RedBat.workImage
         self.workingAni.image_type = image_type
         self.workingAni.frame = frame
         self.workingAni.countSpeed = countSpeed
 
-        self.attackAni = Animation()
         self.attackAni.image = RedBat.attackImage
         self.attackAni.image_type = image_type
         self.attackAni.frame = frame
         self.attackAni.countSpeed = 5
 
-        self.deathAni = Animation()
         self.deathAni.image = RedBat.deathImage
         self.deathAni.image_type = image_type
         self.deathAni.frame = frame
@@ -82,6 +78,7 @@ class RedBat(Monster):
                 self.isMoveMent = False
                 self.isDeath = True
                 self.mainAnimation = self.deathAni
+                self.attackAni.count = 0
                 self.deathStart = time.time()
             if collider.tag == 'Tile':
                 self.collider.isTrigger = False

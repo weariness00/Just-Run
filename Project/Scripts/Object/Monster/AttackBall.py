@@ -11,7 +11,11 @@ class AttackBall(Monster):
         self.isMoveMent = True
         self._speed = 90
 
-        self.collider.SetCollideBox(numpy.array([[0,0],[32,32]]))
+        # Transform
+        self.transform.Scale *= 0.7
+
+        # Collide
+        self.collider.SetCollideBox(numpy.array([[0,0], [32,32] * self.transform.Scale]))
         self.collider.tag = 'Monster Attack'
         pass
 
@@ -25,6 +29,8 @@ class AttackBall(Monster):
 
         super(AttackBall, self).MoveMent()
         super(AttackBall, self).CheckLifeTime()
+        if self.isDeath is True:
+            self.isActive = False
 
         self.time.start = time.time()
         pass

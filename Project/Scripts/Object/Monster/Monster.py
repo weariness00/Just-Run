@@ -1,4 +1,5 @@
 from Scripts.FrameWork.Object import *
+from Scripts.FrameWork.Animation import *
 
 class Monster(Object):
     def __init__(self, target):
@@ -8,7 +9,13 @@ class Monster(Object):
         self._speed = None
         self._targetPlayer = target
         self.isMoveMent = True
-        self.isDeath = False
+        self.isDeath = False    # 현재 죽은 상태인지
+
+
+        # Attack 관련 멤버
+        self.attackSpeed = 5
+        self.attackTimer = None
+        self.attackRange = -1
 
         # 생명주기
         self.lifeTime = 10
@@ -22,9 +29,12 @@ class Monster(Object):
 
         # Animaiton
         self.mainAnimation = None
-        self.workingAni = None
-        self.attackAni = None
-        self.deathAni = None
+        self.workingAni = Animation()
+        self.attackAni = Animation()
+        self.deathAni = Animation()
+
+        # Attack Object
+        self.attackObject = []
 
         # Timer
         self.deathStart = time.time()
@@ -37,6 +47,18 @@ class Monster(Object):
     def MoveMent(self):
         if self.isMoveMent is False:
             return
+
+        distance = Instance.Distance(self._targetPlayer.transform.Position, self.transform.Position)
+
+        if self.attackRange >= 0:
+            attackTime = time.time() - self.attackTimer
+            if distance < self.attackRange:
+                if attackTime < self.attackSpeed:
+                    return
+                self.mainAnimation = self.attackAni
+                self.isMoveMent = False
+                self.attackTimer = time.time()
+                return
 
         realspeed = self._speed * self.time.OneFrameTime()
         self.transform.LooAtTarget(self._targetPlayer.transform, realspeed)
@@ -58,6 +80,7 @@ class Monster(Object):
             self.isDeath = False
             self.collider.isCollide = True
             self.isMoveMent = True
+            self.attackAni.count = 0
             self.mainAnimation = self.workingAni
         pass
 
