@@ -5,6 +5,7 @@ from Scripts.FrameWork.FrameTime import *
 #Draw를 Render클래스를 만들어 추가 후 Camera나 기타 등등을 인스턴스 변수로 받는다.
 
 class Object:
+    image = load_image('image/Bin.png')
     Count = 0
     AllObject = []
     def __init__(self):
@@ -13,8 +14,8 @@ class Object:
         self.time = FrameTime()
 
         # Aniamtion 관련
-        self.image = None
-        self.image_type = None
+        self.image = Object.image
+        self.image_type = [0, 0, 0, 0]
         self.image_dir = 'None'
         self.image_radian = 0
 
