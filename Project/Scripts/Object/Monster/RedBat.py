@@ -4,6 +4,9 @@ from Scripts.FrameWork.Animation import *
 
 
 class RedBat(Monster):
+    workImage = load_image('image/Monster/RedBat Monster/Working.png')
+    attackImage = load_image('image/Monster/RedBat Monster/Attack.png')
+    deathImage = load_image('image/Monster/RedBat Monster/Death.png')
     def __init__(self, target):
         # Objcet
         super(RedBat, self).__init__(target)
@@ -12,6 +15,7 @@ class RedBat(Monster):
         self._speed = 100
         self._targetPlayer = target
         self.attackRange = 500
+        self.attackObjectCount = 1
 
         # Transform
         self.transform.Scale = self.transform.Scale * 0.15
@@ -25,19 +29,19 @@ class RedBat(Monster):
         image_type = [0, 0, 534, 419]
         countSpeed = 10
         self.workingAni = Animation()
-        self.workingAni.image = load_image('image/Monster/RedBat Monster/Working.png')
+        self.workingAni.image = RedBat.workImage
         self.workingAni.image_type = image_type
         self.workingAni.frame = frame
         self.workingAni.countSpeed = countSpeed
 
         self.attackAni = Animation()
-        self.attackAni.image = load_image('image/Monster/RedBat Monster/Attack.png')
+        self.attackAni.image = RedBat.attackImage
         self.attackAni.image_type = image_type
         self.attackAni.frame = frame
-        self.attackAni.countSpeed = 3
+        self.attackAni.countSpeed = 5
 
         self.deathAni = Animation()
-        self.deathAni.image = load_image('image/Monster/RedBat Monster/Death.png')
+        self.deathAni.image = RedBat.deathImage
         self.deathAni.image_type = image_type
         self.deathAni.frame = frame
         self.deathAni.countSpeed = 8
@@ -45,7 +49,8 @@ class RedBat(Monster):
         self.mainAnimation = self.workingAni
 
         # Attack Object
-        self.attackObject += [AttackBall(target)]
+        for i in range(self.attackObjectCount):
+            self.attackObject += [AttackBall(target)]
 
         pass
 
@@ -58,9 +63,9 @@ class RedBat(Monster):
             return
 
         super(RedBat, self).MoveMent()
-        self.Attack()
         super(RedBat, self).CheckLifeTime()
         super(RedBat, self).OnAnimation()
+        self.Attack()
         self.time.start = time.time()
         pass
 
@@ -75,6 +80,7 @@ class RedBat(Monster):
             if collider.tag == "Player":
                 self.collider.isCollide = False
                 self.isMoveMent = False
+                self.isDeath = True
                 self.mainAnimation = self.deathAni
                 self.deathStart = time.time()
             if collider.tag == 'Tile':
@@ -90,9 +96,26 @@ class RedBat(Monster):
         if self.mainAnimation is not self.attackAni:
             return
 
-        self.attackObject[0].transform.Position = self.transform.Position
-        self.attackObject[0].isMoveMent = True
-        self.attackObject[0].isActive = True
+        if self.attackAni.count < 7:
+            return
+
+        self.attackAni.count = 0
+        self.mainAnimation = self.workingAni
+        self.isMoveMent = True
+
+        for i in range(self.attackObjectCount):
+            if self.attackObject[i].isActive is True:
+                continue
+
+            self.attackObject[i].transform.Position = numpy.array(self.transform.Position)
+
+            self.attackObject[i].collider.isCollide = True
+            self.attackObject[i].isActive = True
+            self.attackObject[i].isMoveMent = True
+            self.attackObject[i].lifeStart = time.time()
+            self.attackObject[i].time.start = time.time()
+            break
+
         pass
 
     def Copy(self):

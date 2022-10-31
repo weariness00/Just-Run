@@ -1,17 +1,17 @@
 from Scripts.Object.Monster.Monster import *
 
 class AttackBall(Monster):
-
+    image = load_image('image/Monster/RedBat Monster/Ball_Red.png')
     def __init__(self, target):
         super(AttackBall, self).__init__(target)
 
-        self.image = load_image('image/Monster/RedBat Monster/Ball_Red.png')
+        self.image = AttackBall.image
         self.image_type = [0, 0, 32, 32]
         self.isActive = False
-        self.isMoveMent = False
+        self.isMoveMent = True
         self._speed = 90
 
-        self.collider.SetCollideBox(numpy.array([[0,0],[6,6]]))
+        self.collider.SetCollideBox(numpy.array([[0,0],[32,32]]))
         self.collider.tag = 'Monster Attack'
         pass
 
@@ -25,6 +25,7 @@ class AttackBall(Monster):
 
         super(AttackBall, self).MoveMent()
         super(AttackBall, self).CheckLifeTime()
+
         self.time.start = time.time()
         pass
 
@@ -36,8 +37,9 @@ class AttackBall(Monster):
 
         for collider in onColliderList:
             if collider.tag == "Player":
-                self.isMoveMent = False
                 self.isActive = False
+                self.isMoveMent = True
+                print('Playe 충돌 __ AttackBall 에서')
             pass
         pass
     pass
