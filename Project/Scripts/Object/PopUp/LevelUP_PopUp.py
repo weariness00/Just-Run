@@ -1,5 +1,5 @@
 from Scripts.Object.Player.Skill.SkillContain import *
-
+from Scripts.Object.Player.Player import Player
 
 class LevelUP_PopUp(Object):
 
@@ -9,6 +9,7 @@ class LevelUP_PopUp(Object):
         self.count = 2
 
         SkillContain.array[0].skillName.transform.Position += [800, 450]
+        self.skillIndex = 0
 
         # Box UI 컬러
         self.yellowBox = Animation()
@@ -44,26 +45,38 @@ class LevelUP_PopUp(Object):
 
         self.ChangeBoxColor('Red')
         # Box 에 들어갈 스킬 image와 text
+        self.boxText = [[], []]
+        self.skillIndex = [-1,-1,-1]
+        count = 0
+        while True:
+            if count >= 3:
+                break
+            index = SkillContain.RandomIndex()
+            if self.skillIndex == index:
+                continue
+            self.skillIndex[count] = index
+            count += 1
+            pass
+
+        for i in range(3):
+            self.boxText[0].append(SkillContain.array[self.skillIndex[i]].skillName.Copy())
+            self.boxText[0][i].transform.Position = self.textBoxObject[i].transform.Position + [-280, 50]
+            self.boxText[0][i].color = (1, 1, 1)
+            pass
+        for i in range(3):
+            self.boxText[1].append(SkillContain.array[self.skillIndex[i]].explain.Copy())
+            self.boxText[1][i].transform.Position = self.textBoxObject[i].transform.Position + [-260, 0]
+            self.boxText[1][i].color = (1, 1, 1)
+            pass
+
         self.boxImage = [Object() for i in range(3)]
         for i, imageObj in enumerate(self.boxImage):
             # TODO 이 아래부터는 다 임시
-            imageObj.image = SkillContain.array[0].image
-            imageObj.image_type = SkillContain.array[0].image_type
+            imageObj.image = SkillContain.array[self.skillIndex[i]].image
+            imageObj.image_type = SkillContain.array[self.skillIndex[i]].image_type
             imageObj.transform.Position += self.imageBoxObject[i].transform.Position
             imageObj.transform.Scale += [3, 3]
             pass
-        self.boxText = [[Text(30) for i in range(3)], [Text() for i in range(3)]]
-        for i, textObj in enumerate(self.boxText[0]):
-            textObj.text = SkillContain.array[0].skillName.text
-            textObj.transform.Position += self.textBoxObject[i].transform.Position + [-280, 50]
-            textObj.color = (1, 1, 1)
-            pass
-        for i, textObj in enumerate(self.boxText[1]):
-            textObj.text = SkillContain.array[0].explain.text
-            textObj.transform.Position += self.textBoxObject[i].transform.Position + [-260, 0]
-            textObj.color = (1, 1, 1)
-            pass
-
         pass
 
     def __del__(self):
@@ -71,8 +84,13 @@ class LevelUP_PopUp(Object):
         del self.yellowBox, self.redBox, self.blueBox
         pass
 
-    def On(self):
-        SkillContain.array[0].OnSkill()
+    def OnSkill(self):
+        if SkillContain.array[self.skillIndex[self.count]].skill_Type == 'Passive':
+            SkillContain.array[self.skillIndex[self.count]].OnSkill()
+        else:
+            Player.this.skill = SkillContain.array[self.skillIndex[self.count]]
+            Player.this.skill.transform.Position = Player.this.skillBox.transform.Position
+            Player.this.skill.transform.Scale = 2.5
         pass
 
     def ChangeBoxColor(self, color):
