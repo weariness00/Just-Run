@@ -7,8 +7,13 @@ class Clone_Techniqu(Skill):
     def __init__(self):
         super(Clone_Techniqu, self).__init__()
         # 객체 초기화
-        self.image = load_image('image/UI/Skill/StrongStrength.png')
-        self.image_type = [0, 0, 32, 32]
+        self.image = load_image('image/UI/Skill/Clone_Techniqu.png')
+        self.image_type = [0, 0, 64, 64]
+        self.skill_Type = 'Active'
+
+
+        # Transform
+        self.transform.Scale *= 0.5
 
         # Text 초기화
         self.skillName.text = '[분신술]'
