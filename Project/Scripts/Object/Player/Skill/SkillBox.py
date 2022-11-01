@@ -9,6 +9,8 @@ class SkillBox(Object):
         self.image = load_image('image/UI/Skill/SkillBox.png')
         self.image_type = [0, 0, 96, 96]
 
+        self.transform.Scale *= 1.2
+
         # Transform
         self.transform.Position += [Instance.windowSize[0]//2, 100]
 

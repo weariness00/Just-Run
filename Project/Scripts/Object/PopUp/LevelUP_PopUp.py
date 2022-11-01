@@ -75,12 +75,13 @@ class LevelUP_PopUp(Object):
             imageObj.image = SkillContain.array[self.skillIndex[i]].image
             imageObj.image_type = SkillContain.array[self.skillIndex[i]].image_type
             imageObj.transform.Position += self.imageBoxObject[i].transform.Position
-            imageObj.transform.Scale += [3, 3]
+            imageObj.transform.Scale = SkillContain.array[self.skillIndex[i]].transform.Scale
             pass
         pass
 
     def __del__(self):
         del self.textBoxObject, self.imageBoxObject
+        del self.boxImage, self.boxText
         del self.yellowBox, self.redBox, self.blueBox
         pass
 
@@ -90,7 +91,7 @@ class LevelUP_PopUp(Object):
         else:
             Player.this.skill = SkillContain.array[self.skillIndex[self.count]]
             Player.this.skill.transform.Position = Player.this.skillBox.transform.Position
-            Player.this.skill.transform.Scale = 2.5
+            Player.this.skill.transform.Info()
         pass
 
     def ChangeBoxColor(self, color):

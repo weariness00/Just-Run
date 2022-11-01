@@ -5,7 +5,7 @@ class Transform:
     def __init__(self, Position=[0, 0], Rotation=0, Scale=[1, 1]):
         self.Position = numpy.array(Position, dtype=float)
         self.Rotation = Rotation
-        self.Scale = numpy.array(Scale,dtype=float)
+        self.Scale = numpy.array(Scale, dtype=float)
 
         self.direction = None # 이동하기 전 position
         pass
