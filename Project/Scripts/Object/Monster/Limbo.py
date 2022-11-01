@@ -1,5 +1,4 @@
 from Scripts.Object.Monster.Monster import *
-from Scripts.FrameWork.Animation import *
 
 class Limbo(Monster):
     def __init__(self, target):
@@ -21,13 +20,11 @@ class Limbo(Monster):
         # Animation
         frame = 2
         image_type =[0, 0, 305, 280]
-        self.workingAni = Animation()
         self.workingAni.image = load_image('image/Monster/Limbo Monster/Working.png')
         self.workingAni.image_type = image_type
         self.workingAni.frame = frame
         self.workingAni.countSpeed = 2.25
 
-        self.deathAni = Animation()
         self.deathAni.image = load_image('image/Monster/Limbo Monster/Death.png')
         self.deathAni.image_type = image_type
         self.deathAni.frame = frame
@@ -60,8 +57,11 @@ class Limbo(Monster):
             if collider.tag == "Player":
                 self.collider.isCollide = False
                 self.isMoveMent = False
+                self.isDeath = True
                 self.mainAnimation = self.deathAni
                 self.deathStart = time.time()
+            if collider.tag == 'Monster Attack':
+                self.collider.isTrigger = False
             pass
         pass
     pass

@@ -1,7 +1,7 @@
 from Scripts.EndlessTile import *
 from Scripts.Object.Player.Player import *
 from Scripts.Object.Monster.MonsterPool import *
-from Scripts.Object.Player.Skill.SkillBox import *
+from Scripts.Object.Player.Skill.SkillContain import *
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby
 import  Scripts.State.LevelUp_State as LevelUp
@@ -24,9 +24,6 @@ SkillUIRender = None
 player = None
 endlessTile = None
 
-# UI
-skillBox_UI = None # 임시
-
 # pool
 monsterPools = None
 
@@ -42,7 +39,6 @@ def enter():
     global start, end
     global TileRender, PlayerRender, MonsterRender, LifeUIRender, SkillUIRender
     global player, endlessTile
-    global skillBox_UI
     global monsterPools
     global ObjectUpdateList, UIUpdateList
     global RenderUpdateList, UIRenderUpdateList
@@ -62,43 +58,57 @@ def enter():
     LifeUIRender = Render()
     SkillUIRender = Render()
 
+    SkillContain()
     player = Player()
+    Player.this = player
 
     endlessTile = EndlessTile(player)
 
-    skillBox_UI = SkillBox()
-
     # Monster Pool 객체 생성
-    limboPool = MonsterPool(Limbo(player), 20, 1)
-    monsterPools.append(limboPool)
+    monsterPools.append(MonsterPool(Limbo(player), 20, 1))
+    monsterPools.append(MonsterPool(RedBat(player), 20, 1))
 
     # Player 초기화
     player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
+
 
     # Camera 초기화
     Camera.MainCamera = Camera(player.transform)
     Collide.MainCamera = Camera.MainCamera
 
     # Monster Pool 초기화
-    limboPool.Spawn(5)
+    for pool in monsterPools:
+        pool.Spawn(5)
 
     # UpdateList 초기화
     ObjectUpdateList += [player]
     for mobPool in monsterPools:
         ObjectUpdateList += mobPool.pool
 
+    for mobAttackObj in monsterPools:
+        for pool in mobAttackObj.pool:
+            ObjectUpdateList += pool.attackObject
+
     UIUpdateList += player.lifeObject
-    UIUpdateList += [skillBox_UI]
+    UIUpdateList += [player.skillBox, player.skill]
 
     # Render 초기화
+    #   Object
     endlessTile.render = TileRender
     PlayerRender.AddRenderObject(player)
+
     for mobPool in monsterPools:
         MonsterRender.RendererObjectList += mobPool.pool
+
+    for mobAttackObj in monsterPools:
+        for pool in mobAttackObj.pool:
+            MonsterRender.RendererObjectList += pool.attackObject
+
     RenderUpdateList = [TileRender, PlayerRender, MonsterRender]
 
+    #   UI
     LifeUIRender.RendererObjectList += player.lifeObject
-    SkillUIRender.RendererObjectList += [skillBox_UI]
+    SkillUIRender.RendererObjectList += [player.skillBox, player.skill]
 
     UIRenderUpdateList = [LifeUIRender, SkillUIRender]
     pass
@@ -157,6 +167,7 @@ def update():
     for ui in UIUpdateList:
         ui.Update()
     # 모든 Object의 OnCollider을 호출
+    Collide.SortAllCollide()
     for obj in ObjectUpdateList:
         obj.OnCollide()
     # 모든 Object의 OnTrigger을 호출
@@ -172,7 +183,7 @@ def draw():
     for UIRender in UIRenderUpdateList:
         UIRender.UIDraw()
 
-    # Collide.AllBoxDraw()
+    Collide.AllBoxDraw()
 
     pass
 
@@ -191,5 +202,15 @@ def resume():
             obj.InitHandle()
     for ui in UIUpdateList:
         ui.time.start = time.time()
+
+    pass
+
+
+def ChagneSkillBox():
+    global UIUpdateList
+    global SkillUIRender
+
+    UIUpdateList[-1] = Player.this.skill
+    SkillUIRender.RendererObjectList[-1] = Player.this.skill
     pass
 

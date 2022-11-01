@@ -1,6 +1,6 @@
-import numpy
 from Scripts.Object.Player.Life import *
-from Scripts.FrameWork.Animation import *
+from Scripts.Object.Player.Skill.SkillBox import *
+from Scripts.Object.Player.Skill.Skill import Skill
 
 class keyType(Enum):
     Left = 0
@@ -9,7 +9,9 @@ class keyType(Enum):
     Down = 3
     pass
 
+
 class Player(Object):
+    this = None
     def __init__(self):
         super(Player, self).__init__()
 
@@ -26,6 +28,10 @@ class Player(Object):
 
         # Life 초기화
         self.lifeObject = [Life([100 * i + 50, Instance.windowSize[1] - 50]) for i in range(self.maxLife + 1)]
+
+        # SKill
+        self.skillBox = SkillBox()
+        self.skill = Skill()
 
         #Transform 초긱화
         self.transform.Scale *= 2
@@ -53,7 +59,6 @@ class Player(Object):
         self.workingAni.countSpeed = 10
 
         self.mainAnimation = self.idleAni
-
         pass
 
     def __del__(self):
@@ -70,6 +75,8 @@ class Player(Object):
         pass
     def Handle_Event(self):
         for event in self.events:
+            self.skill.Handle_Event(event)
+
             if event.type == SDL_KEYUP:
                 if event.key == SDLK_LEFT:
                     self.idle[keyType.Left] = False
@@ -126,16 +133,18 @@ class Player(Object):
         if self.collider.isCollide is False:
             return
 
-        self.collider.OnCollider()
-
-        for collider in self.collider.onColliderList:
+        onColliderList = self.collider.OnCollider()
+        for collider in onColliderList:
             if collider.tag == "Tile":
+                print("Tile과 충돌 _ Player 클래스에")
                 pass
             if collider.tag == "Monster":
                 # 맞았을때 스프라이트 해주기
                 self.lifeObject[self.life].mainAnimation = self.lifeObject[self.life].blueFireAni
                 if self.life > 0:
                     self.life -= 1
+
+                print("몬스터와 충돌 _ Player 클래스에")
                 pass
 
 

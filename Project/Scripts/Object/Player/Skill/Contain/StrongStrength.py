@@ -9,6 +9,7 @@ class StrongStrength(Skill):
         # 객체 초기화
         self.image = load_image('image/UI/Skill/StrongStrength.png')
         self.image_type = [0, 0, 32, 32]
+        self.skill_Type = 'Passive'
 
         # Text 초기화
         self.skillName.text = '[강인한 체력]'

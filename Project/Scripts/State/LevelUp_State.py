@@ -6,30 +6,39 @@ import Scripts.State.GamePlay_State as Game_State
 # Render
 levelUP_Render = None
 UI_Render = None
+Text_Render = None
 
 # UI
 levelUp_UI = None
 backGround_UI = None
+Skills_UI = None
 
 # Update List
 UIUpdateList = None
 
 # Render List
 UIRenderUpdateList = None
+TextRenderUpdateList = None
+
+# Init Memeber
 
 def enter():
-    global levelUP_Render, UI_Render
-    global levelUp_UI, backGround_UI
+    global levelUP_Render, UI_Render, Text_Render
+    global levelUp_UI, backGround_UI, Skills_UI
     global UIUpdateList
-    global UIRenderUpdateList
+    global UIRenderUpdateList, TextRenderUpdateList
+
+    # Init Member
 
     # Init
     UIUpdateList = []
     UIRenderUpdateList = []
+    TextRenderUpdateList = []
 
     # 객체 생성
     levelUP_Render = Render()
     UI_Render = Render()
+    Text_Render = Render()
 
     levelUp_UI = LevelUP_PopUp()
 
@@ -40,15 +49,21 @@ def enter():
     backGround_UI.transform.Position = Instance.windowSize//2
 
     #Render 초기화
-    levelUP_Render.RendererObjectList += levelUp_UI.boxObject
+    levelUP_Render.RendererObjectList += levelUp_UI.textBoxObject
+    levelUP_Render.RendererObjectList += levelUp_UI.imageBoxObject
+    levelUP_Render.RendererObjectList += levelUp_UI.boxImage
     UI_Render.RendererObjectList += [backGround_UI]
 
+    # for skill in SkillContain.array:
+    Text_Render.RendererObjectList += levelUp_UI.boxText[0]
+    Text_Render.RendererObjectList += levelUp_UI.boxText[1]
 
     # Update List 초기화
     UIUpdateList += [levelUp_UI]
 
     # Render List 초기화
     UIRenderUpdateList += [UI_Render, levelUP_Render]
+    TextRenderUpdateList += [Text_Render]
 
     pass
 
@@ -60,15 +75,27 @@ def exit():
     pass
 
 def handle_events():
+    global count
+    global levelUp_UI
+
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
-
         if event.type == SDL_KEYDOWN:
             if event.key == SDLK_ESCAPE:
                 game_framework.pop_state()
-
+            elif event.key == SDLK_DOWN:
+                levelUp_UI.count = (levelUp_UI.count - 1) % 3
+                levelUp_UI.ChangeBoxColor('Red')
+            elif event.key == SDLK_UP:
+                levelUp_UI.count = (levelUp_UI.count + 1) % 3
+                levelUp_UI.ChangeBoxColor('Red')
+            elif event.key == SDLK_RETURN:   # 현재 Enter의 값하고 달라서 디버그 돌려서 나온 key value를 임의로 넣어줌
+                levelUp_UI.OnSkill()
+                Game_State.ChagneSkillBox()
+                game_framework.pop_state()
+            pass
         pass
     pass
 
@@ -88,12 +115,15 @@ def draw():
     global levelUP_Render
     global levelUp_UI
     global UIUpdateList
-    global UIRenderUpdateList
+    global UIRenderUpdateList, TextRenderUpdateList
 
     Game_State.draw()
 
     for render in UIRenderUpdateList:
         render.UIDraw()
+
+    for text in TextRenderUpdateList:
+        text.TextDraw()
     pass
 
 def pause():

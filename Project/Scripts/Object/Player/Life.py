@@ -5,6 +5,8 @@ class Life(Object):
     
     def __init__(self, position):
         super(Life, self).__init__()
+        self.name = 'Life'
+
         # Transform
         self.transform.Position += position
         self.transform.Scale *= 5
