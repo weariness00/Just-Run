@@ -1,4 +1,5 @@
-from Scripts.Object.Player.Skill.Skill import *
+# from Scripts.Object.Player.Skill.Skill import *
+from Scripts.Afx import *
 from Scripts.Object.Player.Skill.Contain.StrongStrength import StrongStrength
 from Scripts.Object.Player.Skill.Contain.Clone_Techniqu import Clone_Techniqu
 from Scripts.Object.Player.Skill.Contain.Dash import Dash

@@ -1,4 +1,4 @@
-from Scripts.Object.Tile import *
+from Scripts.Object.Tile.Tile import *
 from Scripts.Object.Monster.Monster import *
 
 TileTypeMin = 0

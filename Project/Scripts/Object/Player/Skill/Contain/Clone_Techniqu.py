@@ -11,7 +11,6 @@ class Clone_Techniqu(Skill):
         self.image_type = [0, 0, 64, 64]
         self.skill_Type = 'Active'
 
-
         # Transform
         self.transform.Scale *= 0.5
 

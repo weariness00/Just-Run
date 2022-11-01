@@ -1,4 +1,5 @@
 from Scripts.Object.Player.Skill.SkillContain import *
+from Scripts.Object.Player.Skill.Skill import *
 from Scripts.Object.Player.Player import Player
 
 class LevelUP_PopUp(Object):
