@@ -1,6 +1,6 @@
 # 분신술
 
-from Scripts.Object.Player.Skill.Skill import *
+from Scripts.Object.Skill.Skill import *
 
 class Clone_Techniqu(Skill):
 

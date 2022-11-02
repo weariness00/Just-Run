@@ -1,5 +1,5 @@
 from Scripts.FrameWork.Render import *
-from Scripts.Object.PopUp.LevelUP_PopUp import *
+from Scripts.PopUp.LevelUP_PopUp import *
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.GamePlay_State as Game_State
 

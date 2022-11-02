@@ -1,8 +1,7 @@
-# from Scripts.Object.Player.Skill.Skill import *
 from Scripts.Afx import *
-from Scripts.Object.Player.Skill.Contain.StrongStrength import StrongStrength
-from Scripts.Object.Player.Skill.Contain.Clone_Techniqu import Clone_Techniqu
-from Scripts.Object.Player.Skill.Contain.Dash import Dash
+from Scripts.Object.Skill.Contain.StrongStrength import StrongStrength
+from Scripts.Object.Skill.Contain.Clone_Techniqu import Clone_Techniqu
+from Scripts.Object.Skill.Contain.Dash import Dash
 
 class SkillContain:
     array = []
@@ -12,7 +11,6 @@ class SkillContain:
         self.array.append(Clone_Techniqu())
         self.array.append(Dash())
         SkillContain.maxIndex = len(self.array)
-        print(self.maxIndex)
         pass
 
     @staticmethod

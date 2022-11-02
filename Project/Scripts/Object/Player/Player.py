@@ -1,6 +1,6 @@
 from Scripts.Object.Player.Life import *
-from Scripts.Object.Player.Skill.SkillBox import *
-from Scripts.Object.Player.Skill.Skill import Skill
+from Scripts.Object.Skill.SkillBox import *
+from Scripts.Object.Skill.Skill import Skill
 
 class keyType(Enum):
     Left = 0
@@ -19,7 +19,7 @@ class Player(Object):
         self.name = 'Player'
         self.maxLife = 3
         self.life = self.maxLife
-        self.__speed = 150
+        self.speed = 150
         self.idle = dict()
         self.events = []
 
@@ -117,13 +117,13 @@ class Player(Object):
         moveDir = numpy.array([0, 0], dtype= float)
 
         if self.idle[keyType.Left]:
-            moveDir[0] -= self.__speed * self.time.OneFrameTime()
+            moveDir[0] -= self.speed * self.time.OneFrameTime()
         if self.idle[keyType.Right]:
-            moveDir[0] += self.__speed * self.time.OneFrameTime()
+            moveDir[0] += self.speed * self.time.OneFrameTime()
         if self.idle[keyType.UP]:
-            moveDir[1] += self.__speed * self.time.OneFrameTime()
+            moveDir[1] += self.speed * self.time.OneFrameTime()
         if self.idle[keyType.Down]:
-            moveDir[1] -= self.__speed * self.time.OneFrameTime()
+            moveDir[1] -= self.speed * self.time.OneFrameTime()
 
         self.transform.direction = moveDir
         self.transform.Position += moveDir
@@ -136,7 +136,6 @@ class Player(Object):
         onColliderList = self.collider.OnCollider()
         for collider in onColliderList:
             if collider.tag == "Tile":
-                print("Tile과 충돌 _ Player 클래스에")
                 pass
             if collider.tag == "Monster":
                 # 맞았을때 스프라이트 해주기

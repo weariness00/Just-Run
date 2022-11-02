@@ -1,6 +1,6 @@
 from Scripts.Object.Tile.EndlessTile import *
 from Scripts.Object.Monster.MonsterPool import *
-from Scripts.Object.Player.Skill.SkillContain import *
+from Scripts.Object.Skill.SkillContain import *
 from Scripts.Object.Player.Player import *
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby

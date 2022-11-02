@@ -1,6 +1,6 @@
 # 돌진
 
-from Scripts.Object.Player.Skill.Skill import *
+from Scripts.Object.Skill.Skill import *
 
 class Dash(Skill):
     def __init__(self):
