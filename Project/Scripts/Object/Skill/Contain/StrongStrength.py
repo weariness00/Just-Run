@@ -1,6 +1,6 @@
 # 강인한 체력
-
 from Scripts.Object.Player.Player import *
+
 
 class StrongStrength(Skill):
 
@@ -21,14 +21,20 @@ class StrongStrength(Skill):
         pass
 
     def OnSkill(self):
-        i = 0
+        self.level += 1
         for life in Player.this.lifeObject[Player.this.life:]:
             life.mainAnimation = life.redFireAni
-            i += 1
+
+        Player.this.maxLife += 1
         Player.this.life = Player.this.maxLife
 
-        newLife = Life([100 * i + 50, Instance.windowSize[1] - 50])
+        newLife = Life([100 * Player.this.maxLife + 50, Instance.windowSize[1] - 50])
+        newLife.isActive = True
+        newLife.redFireAni.count = random.randint(0,4)
+
         Player.this.lifeObject.append(newLife)
+        Life.renderList.AddRenderObject(newLife)
+        Life.updateList.append(newLife)
         pass
 
     pass
