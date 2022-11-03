@@ -4,7 +4,7 @@ from Scripts.Object.Skill.SkillContain import *
 from Scripts.Object.Player.Player import *
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby
-import  Scripts.State.LevelUp_State as LevelUp
+import Scripts.State.LevelUp_State as LevelUp
 
 # Timer
 start = None
@@ -89,12 +89,15 @@ def enter():
         for pool in mobAttackObj.pool:
             ObjectUpdateList += pool.attackObject
 
+    Life.updateList = UIUpdateList
+
     UIUpdateList += player.lifeObject
     UIUpdateList += [player.skillBox, player.skill]
 
     # Render 초기화
     #   Object
     endlessTile.render = TileRender
+    Life.renderList = LifeUIRender
     PlayerRender.AddRenderObject(player)
 
     for mobPool in monsterPools:
@@ -210,7 +213,11 @@ def ChagneSkillBox():
     global UIUpdateList
     global SkillUIRender
 
-    UIUpdateList[-1] = Player.this.skill
+    # UIUpdateList[-1] = Player.this.skill
     SkillUIRender.RendererObjectList[-1] = Player.this.skill
+    pass
+
+def Add_UIUpdateList(obj):
+    UIUpdateList.append(obj)
     pass
 
