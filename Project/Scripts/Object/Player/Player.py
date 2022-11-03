@@ -1,14 +1,19 @@
 from Scripts.Object.Player.Life import *
 from Scripts.Object.Skill.SkillBox import *
 from Scripts.Object.Skill.Skill import Skill
+from Scripts.Object.Player.Animation.PlayerAnimationController import *
+from Scripts.Object.Player.Animation.Player_Static_State import key_event_table
 
-class keyType(Enum):
-    Left = 0
-    Right = 1
-    UP = 2
-    Down = 3
-    pass
+# class keyType(Enum):
+#     Left = 0
+#     Right = 1
+#     UP = 2
+#     Down = 3
+#     pass
 
+event_Name = ['null',
+              'Right Key Down', 'Left Key Down', 'Up Key Down', 'Down Key Down',
+              'Right Key Up', 'Left Key Up', 'Up Key Up', 'Down Key Up']
 
 class Player(Object):
     this = None
@@ -20,10 +25,15 @@ class Player(Object):
         self.maxLife = 3
         self.life = self.maxLife
         self.speed = 150
+        self.addSpeed = 0
         self.idle = dict()
         self.events = []
 
-        for key in keyType:
+        self.isGot = False
+        self.gotTime = 0
+        self.gotDurationTime = 0
+
+        for key in range(4):
             self.idle[key] = False
 
         # Life 초기화
@@ -58,7 +68,17 @@ class Player(Object):
         self.workingAni.frame = 7
         self.workingAni.countSpeed = 10
 
+        self.dashAni = Animation()
+        self.dashAni.image = load_image('image/player/Player_Dash.png')
+        self.dashAni.image_type = [0, 0, 22, 20]
+        self.dashAni.frame = 5
+        self.dashAni.countSpeed = 20
+
         self.mainAnimation = self.idleAni
+
+        self.q = []
+        self.cur_state = Player_Idle
+        self.cur_state.enter(self, None)
         pass
 
     def __del__(self):
@@ -69,7 +89,19 @@ class Player(Object):
             return
 
         self.Handle_Event()
-        self.Movement()
+
+        self.cur_state.do(self)
+        if self.q:  # 리스트에 무언가 들어있으면
+            event = self.q.pop()    # 이벤트 확인
+            self.cur_state.exit(self)   # 현재 이벤트 탈출
+            try:
+                self.cur_state = next_state[self.cur_state][event]
+            except KeyError:
+                print(f'Error: Boy_state {self.cur_state.__name__}, Event: {event_Name[event]}')
+            self.cur_state.enter(self, event)  # 다음 이벤트 호출
+            pass
+
+        self.GodMode()
         self.OnAnimation()
         self.time.start = time.time()
         pass
@@ -77,56 +109,22 @@ class Player(Object):
         for event in self.events:
             self.skill.Handle_Event(event)
 
-            if event.type == SDL_KEYUP:
-                if event.key == SDLK_LEFT:
-                    self.idle[keyType.Left] = False
-                if event.key == SDLK_RIGHT:
-                    self.idle[keyType.Right] = False
-                if event.key == SDLK_UP:
-                    self.idle[keyType.UP] = False
-                if event.key == SDLK_DOWN:
-                    self.idle[keyType.Down] = False
-
-                if any(self.idle.values()) == False:
-                    self.mainAnimation = self.idleAni
-                else:
-                    pass
-                pass
-
-            if event.type == SDL_KEYDOWN:
-                if event.key == SDLK_LEFT:
-                    self.idle[keyType.Left] = True
-                    self.image_dir = 'None'
-                    self.mainAnimation = self.workingAni
-                if event.key == SDLK_RIGHT:
-                    self.idle[keyType.Right] = True
-                    self.image_dir = 'h'
-                    self.mainAnimation = self.workingAni
-                if event.key == SDLK_UP:
-                    self.idle[keyType.UP] = True
-                    self.mainAnimation = self.workingAni
-                if event.key == SDLK_DOWN:
-                    self.idle[keyType.Down] = True
-                    self.mainAnimation = self.workingAni
-                pass
+            if (event.type, event.key) in key_event_table:
+                key_event = key_event_table[(event.type, event.key)]
+                self.q.insert(0, key_event)
 
             pass
         pass
 
-    def Movement(self):
-        moveDir = numpy.array([0, 0], dtype= float)
+    def GodMode(self):  # 무적 상태
+        if self.isGot is False:
+            return
 
-        if self.idle[keyType.Left]:
-            moveDir[0] -= self.speed * self.time.OneFrameTime()
-        if self.idle[keyType.Right]:
-            moveDir[0] += self.speed * self.time.OneFrameTime()
-        if self.idle[keyType.UP]:
-            moveDir[1] += self.speed * self.time.OneFrameTime()
-        if self.idle[keyType.Down]:
-            moveDir[1] -= self.speed * self.time.OneFrameTime()
+        gtime = time.time() - self.gotTime
 
-        self.transform.direction = moveDir
-        self.transform.Position += moveDir
+        if self.gotDurationTime <= gtime:
+            self.collider.isCollide = True
+            self.isGot = False
         pass
 
     def OnCollide(self):
@@ -139,6 +137,7 @@ class Player(Object):
                 pass
             if collider.tag == "Monster":
                 # 맞았을때 스프라이트 해주기
+                self.lifeObject[self.life].blueFireAni.count = self.lifeObject[self.life].redFireAni.count
                 self.lifeObject[self.life].mainAnimation = self.lifeObject[self.life].blueFireAni
                 if self.life > 0:
                     self.life -= 1
@@ -158,7 +157,7 @@ class Player(Object):
         pass
 
     def InitHandle(self):
-        for key in keyType:
+        for key in range(4):
             self.idle[key] = False
         pass
 
