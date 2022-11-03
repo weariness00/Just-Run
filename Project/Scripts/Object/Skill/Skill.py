@@ -5,11 +5,14 @@ class Skill(Object):
     def __init__(self):
         super(Skill, self).__init__()
         # 객체 초기화
-        self.name = 'Skill'
+        self.isSkillOn = False
         self.collTime = 5
         self.range = 0  # skill을 사용할 범위
         self.level = 0
         self.skill_Type = None    # Active, Passive
+
+        self.name = 'Skill'
+
 
         # Transform
         self.transform.Scale *= 3
