@@ -11,6 +11,9 @@ class SkillContain:
         self.array.append(Clone_Techniqu())
         self.array.append(Dash())
         SkillContain.maxIndex = len(self.array)
+
+        for skill in SkillContain.array:
+            skill.LevelUp()
         pass
 
     @staticmethod
