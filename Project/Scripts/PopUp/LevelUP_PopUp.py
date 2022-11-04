@@ -9,7 +9,7 @@ class LevelUP_PopUp(Object):
         # 객체 초기화
         self.count = 2
 
-        SkillContain.array[0].skillName.transform.Position += [800, 450]
+        SkillContain.array[0].nameText.transform.Position += [800, 450]
         self.skillIndex = 0
 
         # Box UI 컬러
@@ -53,14 +53,14 @@ class LevelUP_PopUp(Object):
             if count >= 3:
                 break
             index = SkillContain.RandomIndex()
-            if self.skillIndex == index:
+            if any(self.skillIndex[i] is index for i in range(3)):
                 continue
             self.skillIndex[count] = index
             count += 1
             pass
 
         for i in range(3):
-            self.boxText[0].append(SkillContain.array[self.skillIndex[i]].skillName.Copy())
+            self.boxText[0].append(SkillContain.array[self.skillIndex[i]].nameText.Copy())
             self.boxText[0][i].transform.Position = self.textBoxObject[i].transform.Position + [-280, 50]
             self.boxText[0][i].color = (1, 1, 1)
             pass
