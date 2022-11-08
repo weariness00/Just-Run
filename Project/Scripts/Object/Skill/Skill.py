@@ -6,13 +6,13 @@ class Skill(Object):
         super(Skill, self).__init__()
         # 객체 초기화
         self.isSkillOn = False
-        self.collTime = 5
+        self.coolTime = 0   # 스킬 쿨타임
+        self.onSkillTime = 0    # 스킬을 켰을때 재는 시간
         self.range = 0  # skill을 사용할 범위
         self.level = 0
         self.skill_Type = None    # Active, Passive
 
         self.name = 'Skill'
-
 
         # Transform
         self.transform.Scale *= 3
@@ -31,9 +31,18 @@ class Skill(Object):
         pass
 
     def OnSkill(self):
+        self.isSkillOn = True
+        self.onSkillTime = time.time()
         pass
 
-    def Handle_Event(self, event):
+    def Handle_Event(self, event): # False 면 Event 실행 안함
+        if time.time() - self.onSkillTime < self.coolTime:
+            return False
+
+        if self.isSkillOn is True:
+            return False
+
+        return True
         pass
 
     def LevelUp(self):

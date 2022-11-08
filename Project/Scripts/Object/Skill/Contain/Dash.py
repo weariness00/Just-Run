@@ -25,17 +25,14 @@ class Dash(Skill):
         pass
 
     def OnSkill(self):
-        self.isSkillOn = True
+        super(Dash, self).OnSkill()
+
         self.dashTime = time.time()
-        self.onSkillTime = time.time()
         Player.this.collider.isCollide = False
         pass
 
     def Handle_Event(self, event):
-        if time.time() - self.onSkillTime < self.coolTime:
-            return
-
-        if self.isSkillOn is True:
+        if super(Dash, self).Handle_Event() is False:
             return
 
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LSHIFT) or \
