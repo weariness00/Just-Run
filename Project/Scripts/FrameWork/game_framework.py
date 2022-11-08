@@ -1,3 +1,5 @@
+import time
+
 import pico2d
 class GameState:
     def __init__(self, state):
@@ -95,6 +97,7 @@ def fill_states(*states):
     for state in states:
         stack.append(state)
 
+from Scripts.FrameWork.FrameTime import FrameTime
 def run(start_state):
     global running, stack
     running = True
@@ -106,12 +109,17 @@ def run(start_state):
 
     stack.append(start_state)
     stack[-1].enter()
+
+    FrameTime.current_TIme = time.time()
     while running:
         stack[-1].handle_events()
         stack[-1].update()
         pico2d.clear_canvas()
         stack[-1].draw()
         pico2d.update_canvas()
+
+        FrameTime.fTime = time.time() - FrameTime.current_Time
+        FrameTime.current_Time += FrameTime.fTime
     # repeatedly delete the top of the stack
     while (len(stack) > 0):
         stack[-1].exit()

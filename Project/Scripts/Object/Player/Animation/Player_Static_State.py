@@ -1,4 +1,5 @@
 from Scripts.Afx import *
+from Scripts.FrameWork.FrameTime import FrameTime
 
 null, RD, LD, UD, DD, RU, LU, UU, DU = range(9)
 
@@ -49,13 +50,13 @@ class Static_State:
         realSpeed = self.speed + self.addSpeed
 
         if self.idle[0]:
-            moveDir[0] += realSpeed * self.time.OneFrameTime()
+            moveDir[0] += realSpeed * FrameTime.fTime
         if self.idle[1]:
-            moveDir[0] -= realSpeed * self.time.OneFrameTime()
+            moveDir[0] -= realSpeed * FrameTime.fTime
         if self.idle[2]:
-            moveDir[1] += realSpeed * self.time.OneFrameTime()
+            moveDir[1] += realSpeed * FrameTime.fTime
         if self.idle[3]:
-            moveDir[1] -= realSpeed * self.time.OneFrameTime()
+            moveDir[1] -= realSpeed * FrameTime.fTime
 
         self.transform.direction = moveDir
         self.transform.Position += moveDir

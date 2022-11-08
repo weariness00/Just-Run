@@ -31,8 +31,6 @@ class AttackBall(Monster):
         super(AttackBall, self).CheckLifeTime()
         if self.isDeath is True:
             self.isActive = False
-
-        self.time.start = time.time()
         pass
 
     def OnCollide(self):

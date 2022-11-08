@@ -5,6 +5,7 @@ from Scripts.Object.Player.Player import *
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby
 import Scripts.State.LevelUp_State as LevelUp
+import Scripts.State.GameOver_State as GameOver
 
 # Timer
 start = None
@@ -144,6 +145,8 @@ def handle_events():
                 game_framework.change_state(lobby)
             if event.key == SDLK_F1: # 디버그용 key
                 game_framework.push_state(LevelUp)
+            elif event.key == SDLK_F2:
+                game_framework.change_state(GameOver)
         pass
 
     pass
@@ -176,6 +179,10 @@ def update():
     # 모든 Object의 OnTrigger을 호출
     for obj in ObjectUpdateList:
         obj.collider.OnTrigger()
+
+    if Player.this.life < 0:
+        player.isActive = False
+        game_framework.push_state(GameOver)
     pass
 
 def draw():
@@ -198,13 +205,10 @@ def pause():
 def resume():
     difTime = time.time() - start
     for obj in ObjectUpdateList:
-        obj.time.start = time.time()
         if obj.collider.tag == 'Monster':
             obj.lifeStart += difTime
         if obj.name == "Player":
             obj.InitHandle()
-    for ui in UIUpdateList:
-        ui.time.start = time.time()
 
     pass
 

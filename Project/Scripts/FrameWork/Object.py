@@ -11,7 +11,6 @@ class Object:
     def __init__(self):
         self.transform = Transform()
         self.collider = None
-        self.time = FrameTime()
 
         # Aniamtion 관련
         self.image = Object.image

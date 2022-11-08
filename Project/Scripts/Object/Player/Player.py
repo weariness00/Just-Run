@@ -22,7 +22,7 @@ class Player(Object):
 
         # 객체 초기화
         self.name = 'Player'
-        self.maxLife = 3
+        self.maxLife = 4
         self.life = self.maxLife
         self.speed = 150
         self.addSpeed = 0
@@ -37,7 +37,7 @@ class Player(Object):
             self.idle[key] = False
 
         # Life 초기화
-        self.lifeObject = [Life([100 * i + 50, Instance.windowSize[1] - 50]) for i in range(self.maxLife + 1)]
+        self.lifeObject = [Life([100 * i + 50, Instance.windowSize[1] - 50]) for i in range(self.maxLife)]
 
         # SKill
         self.skillBox = SkillBox()
@@ -103,7 +103,6 @@ class Player(Object):
 
         self.GodMode()
         self.OnAnimation()
-        self.time.start = time.time()
         pass
     def Handle_Event(self):
         for event in self.events:
@@ -116,15 +115,20 @@ class Player(Object):
             pass
         pass
 
-    def GodMode(self):  # 무적 상태
+    def GodMode(self):  # 무적 상태 Update 구문
         if self.isGot is False:
             return
 
         gtime = time.time() - self.gotTime
 
         if self.gotDurationTime <= gtime:
-            self.collider.isCollide = True
             self.isGot = False
+        pass
+
+    def OnGotMode(self, duration = 1):
+        self.isGot = True
+        self.gotTime = time.time()
+        self.gotDurationTime = duration
         pass
 
     def OnCollide(self):
@@ -136,12 +140,16 @@ class Player(Object):
             if collider.tag == "Tile":
                 pass
             if collider.tag == "Monster":
+                if self.isGot is True:
+                    continue
+
+                if self.life >= 0:
+                    self.life -= 1
                 # 맞았을때 스프라이트 해주기
                 self.lifeObject[self.life].blueFireAni.count = self.lifeObject[self.life].redFireAni.count
                 self.lifeObject[self.life].mainAnimation = self.lifeObject[self.life].blueFireAni
-                if self.life > 0:
-                    self.life -= 1
 
+                self.OnGotMode()
                 print("몬스터와 충돌 _ Player 클래스에")
                 pass
 
@@ -150,7 +158,7 @@ class Player(Object):
         pass
 
     def OnAnimation(self):
-        self.mainAnimation.OnAnimation(self.time.OneFrameTime())
+        self.mainAnimation.OnAnimation(FrameTime.fTime)
 
         self.image = self.mainAnimation.image
         self.image_type = self.mainAnimation.image_type

@@ -1,16 +1,6 @@
 from Scripts.Afx import *
 
 class FrameTime:
-    def __init__(self):
-        self.start = time.time()
-        self.end = None
-        pass
-
-    def __del__(self):
-        pass
-
-    def OneFrameTime(self):
-        fTime = time.time() - self.start
-        return float(fTime)
-        pass
+    current_Time = 0.0
+    fTime = 0.0
     pass

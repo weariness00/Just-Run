@@ -62,7 +62,6 @@ class RedBat(Monster):
         super(RedBat, self).CheckLifeTime()
         super(RedBat, self).OnAnimation()
         self.Attack()
-        self.time.start = time.time()
         pass
 
     def OnCollide(self):
@@ -101,16 +100,12 @@ class RedBat(Monster):
         self.isMoveMent = True
 
         for i in range(self.attackObjectCount):
-            if self.attackObject[i].isActive is True:
-                continue
-
             self.attackObject[i].transform.Position = numpy.array(self.transform.Position)
 
             self.attackObject[i].collider.isCollide = True
             self.attackObject[i].isActive = True
             self.attackObject[i].isMoveMent = True
             self.attackObject[i].lifeStart = time.time()
-            self.attackObject[i].time.start = time.time()
             break
 
         pass

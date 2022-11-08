@@ -44,7 +44,6 @@ class Limbo(Monster):
         super(Limbo, self).MoveMent()
         super(Limbo, self).CheckLifeTime()
         super(Limbo, self).OnAnimation()
-        self.time.start = time.time()
         pass
 
     def OnCollide(self):

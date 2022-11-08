@@ -60,12 +60,12 @@ class Monster(Object):
                 self.attackTimer = time.time()
                 return
 
-        realspeed = self._speed * self.time.OneFrameTime()
+        realspeed = self._speed * FrameTime.fTime
         self.transform.LooAtTarget(self._targetPlayer.transform, realspeed)
         pass
 
     def OnAnimation(self):
-        self.mainAnimation.OnAnimation(self.time.OneFrameTime())
+        self.mainAnimation.OnAnimation(FrameTime.fTime)
 
         self.image = self.mainAnimation.image
         self.image_type = self.mainAnimation.image_type

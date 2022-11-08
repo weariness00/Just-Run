@@ -37,11 +37,10 @@ class Life(Object):
 
     def Update(self):
         self.OnAnimation()
-        self.time.start = time.time()
         pass
 
     def OnAnimation(self):
-        self.mainAnimation.OnAnimation(self.time.OneFrameTime())
+        self.mainAnimation.OnAnimation(FrameTime.fTime)
 
         self.image = self.mainAnimation.image
         self.image_type = self.mainAnimation.image_type
