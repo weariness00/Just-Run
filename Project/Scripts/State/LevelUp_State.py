@@ -54,7 +54,6 @@ def enter():
     levelUP_Render.RendererObjectList += levelUp_UI.boxImage
     UI_Render.RendererObjectList += [backGround_UI]
 
-    # for skill in SkillContain.array:
     Text_Render.RendererObjectList += levelUp_UI.boxText[0]
     Text_Render.RendererObjectList += levelUp_UI.boxText[1]
 
@@ -94,6 +93,7 @@ def handle_events():
             elif event.key == SDLK_RETURN:   # 현재 Enter의 값하고 달라서 디버그 돌려서 나온 key value를 임의로 넣어줌
                 levelUp_UI.OnSkill()
                 Game_State.ChagneSkillBox()
+                Player.this.skill.LevelUp()
                 game_framework.pop_state()
             pass
         pass
