@@ -10,6 +10,7 @@ class AttackBall(Monster):
         self.image_type = AttackBall.image_type
         self.isActive = False
         self.isMoveMent = True
+        self.moveDir = [0,0] # 공이 나아가는 방향
         self._speed = 90
 
         # Transform
@@ -28,7 +29,7 @@ class AttackBall(Monster):
         if self.isActive is False:
             return
 
-        super(AttackBall, self).MoveMent()
+        self.MoveMent()
         super(AttackBall, self).CheckLifeTime()
         if self.isDeath is True:
             self.isActive = False
@@ -47,6 +48,24 @@ class AttackBall(Monster):
                 print('Playe 충돌 __ AttackBall 에서')
             pass
         pass
-    pass
+
+    def MoveMent(self):
+        if self.isMoveMent is False:
+            return
+
+        self.transform.Position += self.moveDir
+        pass
+
+    def OnObject(self):   # 오브젝트 활성화 할씨 호출
+        self.collider.isCollide = True
+        self.isActive = True
+        self.isMoveMent = True
+        self.lifeStart = time.time()
+
+        dir = Monster.target.transform.Position - self.transform.Position
+        dir = dir/numpy.linalg.norm(dir)
+
+        self.moveDir = dir
+        pass
 
     pass

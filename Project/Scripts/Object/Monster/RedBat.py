@@ -6,7 +6,7 @@ class RedBat(Monster):
     workImage = load_image('image/Monster/RedBat Monster/Working.png')
     attackImage = load_image('image/Monster/RedBat Monster/Attack.png')
     deathImage = load_image('image/Monster/RedBat Monster/Death.png')
-    image_type = [0, 0, 534, 419]
+
     def __init__(self):
         # Objcet
         super(RedBat, self).__init__()
@@ -26,18 +26,19 @@ class RedBat(Monster):
         # Animation
         frame = 8
         countSpeed = 10
+        image_type = [0, 0, 534, 419]
         self.workingAni.image = RedBat.workImage
-        self.workingAni.image_type = RedBat.image_type
+        self.workingAni.image_type = image_type
         self.workingAni.frame = frame
         self.workingAni.countSpeed = countSpeed
 
         self.attackAni.image = RedBat.attackImage
-        self.attackAni.image_type = RedBat.image_type
+        self.attackAni.image_type = image_type
         self.attackAni.frame = frame
         self.attackAni.countSpeed = 5
 
         self.deathAni.image = RedBat.deathImage
-        self.deathAni.image_type = RedBat.image_type
+        self.deathAni.image_type = image_type
         self.deathAni.frame = frame
         self.deathAni.countSpeed = 8
 
@@ -100,11 +101,7 @@ class RedBat(Monster):
 
         for i in range(self.attackObjectCount):
             self.attackObject[i].transform.Position = numpy.array(self.transform.Position)
-
-            self.attackObject[i].collider.isCollide = True
-            self.attackObject[i].isActive = True
-            self.attackObject[i].isMoveMent = True
-            self.attackObject[i].lifeStart = time.time()
+            self.attackObject[i].OnObject()
             break
 
         pass
