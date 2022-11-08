@@ -8,6 +8,7 @@ class Object:
     image = load_image('image/Bin.png')
     Count = 0
     AllObject = []
+    events = []  # Hadle_Event
     def __init__(self):
         self.transform = Transform()
         self.collider = None
