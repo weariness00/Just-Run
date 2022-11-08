@@ -12,7 +12,7 @@ class StrongStrength(Skill):
         self.skill_Type = 'Passive'
 
         # Text 초기화
-        self.skillName.text = '[강인한 체력]'
+        self.skillName = '[강인한 체력]'
         self.explain.text = '모든 목숨을 회복, 추가로 +1 만큼의 목숨을 얻습니다.'
         # 능력 초기화
         pass
@@ -21,14 +21,14 @@ class StrongStrength(Skill):
         pass
 
     def OnSkill(self):
-        self.level += 1
         for life in Player.this.lifeObject[Player.this.life:]:
             life.mainAnimation = life.redFireAni
 
         Player.this.maxLife += 1
         Player.this.life = Player.this.maxLife
 
-        newLife = Life([100 * Player.this.maxLife + 50, Instance.windowSize[1] - 50])
+        newLife = Life([100 * Player.this.maxLife - 50, Instance.windowSize[1] - 50])
+
         newLife.isActive = True
         newLife.redFireAni.count = random.randint(0,4)
 
@@ -37,4 +37,7 @@ class StrongStrength(Skill):
         Life.updateList.append(newLife)
         pass
 
+    def LevelUp(self):
+        super(StrongStrength, self).LevelUp()
+        pass
     pass

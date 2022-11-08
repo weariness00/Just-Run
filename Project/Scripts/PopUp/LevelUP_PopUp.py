@@ -86,13 +86,14 @@ class LevelUP_PopUp(Object):
         del self.yellowBox, self.redBox, self.blueBox
         pass
 
-    def OnSkill(self):
+    def ChangeSkill(self):
         if SkillContain.array[self.skillIndex[self.count]].skill_Type == 'Passive':
             SkillContain.array[self.skillIndex[self.count]].OnSkill()
+            SkillContain.array[self.skillIndex[self.count]].LevelUp()
         else:
             Player.this.skill = SkillContain.array[self.skillIndex[self.count]]
+            Player.this.skill.LevelUp()
             Player.this.skill.transform.Position = Player.this.skillBox.transform.Position
-            Player.this.skill.transform.Info()
         pass
 
     def ChangeBoxColor(self, color):
