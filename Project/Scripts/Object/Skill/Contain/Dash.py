@@ -13,9 +13,10 @@ class Dash(Skill):
         self.image = load_image('image/UI/Skill/Dash.png')
         self.image_type = [0, 0, 32, 32]
         self.skill_Type = 'Active'
+        self.coolTime = 1
 
         # Text 초기화
-        self.skillName.text = '[돌진]'
+        self.skillName = '[돌진]'
         self.explain.text = 'Level * 100 만큼 돌진 합니다.\n돌진시에는 무적이 됩니다.'
         # 능력 초기화
         pass
@@ -26,13 +27,14 @@ class Dash(Skill):
     def OnSkill(self):
         self.isSkillOn = True
         self.dashTime = time.time()
-        Player.this.isGot = True
+        self.onSkillTime = time.time()
         Player.this.collider.isCollide = False
-        Player.this.gotTime = time.time()
-        Player.this.gotDurationTime = 0.5
         pass
 
     def Handle_Event(self, event):
+        if time.time() - self.onSkillTime < self.coolTime:
+            return
+
         if self.isSkillOn is True:
             return
 
@@ -44,4 +46,7 @@ class Dash(Skill):
             Player.this.cur_state.enter(Player.this, event)  # 다음 이벤트 호출
         pass
 
+    def LevelUp(self):
+        super(Dash, self).LevelUp()
+        pass
     pass

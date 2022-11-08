@@ -21,6 +21,7 @@ class Player_Dash:
         dTime = time.time() - self.skill.dashTime
         if dTime > 0.5:
             self.skill.isSkillOn = False
+            self.collider.isCollide = True
 
             self.cur_state.exit(self)  # 현재 이벤트 탈출
             self.cur_state = Player_Working  # 다음 이벤트 저장
