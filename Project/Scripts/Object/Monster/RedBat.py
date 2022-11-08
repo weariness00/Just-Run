@@ -6,13 +6,13 @@ class RedBat(Monster):
     workImage = load_image('image/Monster/RedBat Monster/Working.png')
     attackImage = load_image('image/Monster/RedBat Monster/Attack.png')
     deathImage = load_image('image/Monster/RedBat Monster/Death.png')
-    def __init__(self, target):
+    image_type = [0, 0, 534, 419]
+    def __init__(self):
         # Objcet
-        super(RedBat, self).__init__(target)
+        super(RedBat, self).__init__()
         self.name = 'RedBat'
         self.isActive = False
         self._speed = 70
-        self._targetPlayer = target
         self.attackRange = 500
         self.attackObjectCount = 2
 
@@ -25,20 +25,19 @@ class RedBat(Monster):
 
         # Animation
         frame = 8
-        image_type = [0, 0, 534, 419]
         countSpeed = 10
         self.workingAni.image = RedBat.workImage
-        self.workingAni.image_type = image_type
+        self.workingAni.image_type = RedBat.image_type
         self.workingAni.frame = frame
         self.workingAni.countSpeed = countSpeed
 
         self.attackAni.image = RedBat.attackImage
-        self.attackAni.image_type = image_type
+        self.attackAni.image_type = RedBat.image_type
         self.attackAni.frame = frame
         self.attackAni.countSpeed = 5
 
         self.deathAni.image = RedBat.deathImage
-        self.deathAni.image_type = image_type
+        self.deathAni.image_type = RedBat.image_type
         self.deathAni.frame = frame
         self.deathAni.countSpeed = 8
 
@@ -46,7 +45,7 @@ class RedBat(Monster):
 
         # Attack Object
         for i in range(self.attackObjectCount):
-            self.attackObject += [AttackBall(target)]
+            self.attackObject += [AttackBall()]
 
         pass
 
@@ -111,6 +110,6 @@ class RedBat(Monster):
         pass
 
     def Copy(self):
-        return RedBat(self._targetPlayer)
+        return RedBat()
 
     pass

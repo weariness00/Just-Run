@@ -2,12 +2,12 @@ from Scripts.FrameWork.Object import *
 from Scripts.FrameWork.Animation import *
 
 class Monster(Object):
-    def __init__(self, target):
+    target = None
+    def __init__(self):
         super(Monster, self).__init__()
 
         self.__idle = dict()
         self._speed = None
-        self._targetPlayer = target
         self.isMoveMent = True
         self.isDeath = False    # 현재 죽은 상태인지
 
@@ -48,7 +48,7 @@ class Monster(Object):
         if self.isMoveMent is False:
             return
 
-        distance = Instance.Distance(self._targetPlayer.transform.Position, self.transform.Position)
+        distance = Instance.Distance(Monster.target.transform.Position, self.transform.Position)
 
         if self.attackRange >= 0:
             attackTime = time.time() - self.attackTimer
@@ -61,7 +61,7 @@ class Monster(Object):
                 return
 
         realspeed = self._speed * FrameTime.fTime
-        self.transform.LooAtTarget(self._targetPlayer.transform, realspeed)
+        self.transform.LooAtTarget(Monster.target.transform, realspeed)
         pass
 
     def OnAnimation(self):

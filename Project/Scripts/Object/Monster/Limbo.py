@@ -1,13 +1,15 @@
 from Scripts.Object.Monster.Monster import *
 
 class Limbo(Monster):
-    def __init__(self, target):
+    workingImage = load_image('image/Monster/Limbo Monster/Working.png')
+    deathImage = load_image('image/Monster/Limbo Monster/Death.png')
+    image_type = [0, 0, 305, 280]
+    def __init__(self):
         # Objcet
-        super(Limbo, self).__init__(target)
+        super(Limbo, self).__init__()
         self.name = 'Limbo'
         self.isActive = False
         self._speed = 150
-        self._targetPlayer = target
 
         # Transform
         self.transform.Scale = self.transform.Scale * 0.2
@@ -19,14 +21,13 @@ class Limbo(Monster):
 
         # Animation
         frame = 2
-        image_type =[0, 0, 305, 280]
-        self.workingAni.image = load_image('image/Monster/Limbo Monster/Working.png')
-        self.workingAni.image_type = image_type
+        self.workingAni.image = Limbo.workingImage
+        self.workingAni.image_type = Limbo.image_type
         self.workingAni.frame = frame
         self.workingAni.countSpeed = 2.25
 
-        self.deathAni.image = load_image('image/Monster/Limbo Monster/Death.png')
-        self.deathAni.image_type = image_type
+        self.deathAni.image = Limbo.deathImage
+        self.deathAni.image_type = Limbo.image_type
         self.deathAni.frame = frame
         self.deathAni.countSpeed = 4
 
@@ -65,6 +66,6 @@ class Limbo(Monster):
         pass
     pass
     def Copy(self):
-        return Limbo(self._targetPlayer)
+        return Limbo()
 
     pass

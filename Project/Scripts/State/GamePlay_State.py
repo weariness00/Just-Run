@@ -62,12 +62,13 @@ def enter():
     SkillContain()
     player = Player()
     Player.this = player
+    Monster.target = player
 
     endlessTile = EndlessTile(player)
 
     # Monster Pool 객체 생성
-    monsterPools.append(MonsterPool(Limbo(player), 20, 1))
-    monsterPools.append(MonsterPool(RedBat(player), 20, 1))
+    monsterPools.append(MonsterPool(Limbo(), 50, 1))
+    monsterPools.append(MonsterPool(RedBat(), 10, 1))
 
     # Player 초기화
     player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)

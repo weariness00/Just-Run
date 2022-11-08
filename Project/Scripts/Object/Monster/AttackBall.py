@@ -2,11 +2,12 @@ from Scripts.Object.Monster.Monster import *
 
 class AttackBall(Monster):
     image = load_image('image/Monster/RedBat Monster/Ball_Red.png')
-    def __init__(self, target):
-        super(AttackBall, self).__init__(target)
+    image_type = [0, 0, 32, 32]
+    def __init__(self):
+        super(AttackBall, self).__init__()
 
         self.image = AttackBall.image
-        self.image_type = [0, 0, 32, 32]
+        self.image_type = AttackBall.image_type
         self.isActive = False
         self.isMoveMent = True
         self._speed = 90
