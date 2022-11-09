@@ -92,11 +92,14 @@ def enter():
     # UpdateList 초기화
     ObjectUpdateList += [player]
     for mobPool in monsterPools:
+        ObjectUpdateList += [mobPool]
         ObjectUpdateList += mobPool.pool
-
-    for mobAttackObj in monsterPools:
-        for pool in mobAttackObj.pool:
+        for pool in mobPool.pool:
             ObjectUpdateList += pool.attackObject
+
+    # for mobAttackObj in monsterPools:
+    #     for pool in mobAttackObj.pool:
+    #         ObjectUpdateList += pool.attackObject
 
     Life.updateList = UIUpdateList
 
@@ -170,12 +173,12 @@ def update():
 
     endlessTile.UpdateVisibleTerrain()
 
-    for monsterPool in monsterPools:
-        flowTime = time.time() - monsterPool.startTime
-        if flowTime > monsterPool.coolTime:
-            monsterPool.startTime = time.time()
-            monsterPool.Spawn(5)
-        pass
+    # for monsterPool in monsterPools:
+    #     flowTime = time.time() - monsterPool.startTime
+    #     if flowTime > monsterPool.coolTime:
+    #         monsterPool.startTime = time.time()
+    #         monsterPool.Spawn(5)
+    #     pass
 
     # Function Flow
     # 모든 Object의 Update 호출
@@ -188,8 +191,8 @@ def update():
     for obj in ObjectUpdateList:
         obj.OnCollide()
     # 모든 Object의 OnTrigger을 호출
-    for obj in ObjectUpdateList:
-        obj.collider.OnTrigger()
+    for collider in Collide.AllCollider:
+        collider.OnTrigger()
 
     if Player.this.life < 0:
         player.isActive = False

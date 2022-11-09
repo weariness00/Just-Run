@@ -2,15 +2,18 @@ from Scripts.Object.Monster.RedBat import *
 from Scripts.Object.Monster.Limbo import *
 from Scripts.FrameWork.Camera import *
 
-class MonsterPool():
+class MonsterPool(Object):
 
     def __init__(self, monsterType, maxCount, coolTime=5):
         self.type = monsterType
         self.maxCount = maxCount #Pool이 가지고 있는 최대 오브젝트 개수
         self.pool = []
         self.coolTime = coolTime
+        self.spawnCount = 5
 
         self.startTime = time.time()
+
+        self.name = 'Monster Pool'
 
         for i in range(maxCount):
             self.pool.append(self.type.Copy())
@@ -19,6 +22,12 @@ class MonsterPool():
 
     def __del__(self):
         pass
+
+    def Update(self):
+        flowTime = time.time() - self.startTime
+        if flowTime > self.coolTime:
+            self.startTime = time.time()
+            self.Spawn(self.spawnCount)
 
     def Spawn(self, count): # count 만큼 pool에서 비활성화 된 Monster을 활성화
         for monster in self.pool:

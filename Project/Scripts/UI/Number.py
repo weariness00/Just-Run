@@ -26,7 +26,7 @@ class Number(Object):
 
         for i in range(number_count):
             self.numberObjects[i].image = Number.yellow_image
-            self.numberObjects[i].image_type = [numbers[i] * 120, 0, 120, 146]
+            self.numberObjects[i].image_type = [numbers[number_count - i - 1] * 120, 0, 120, 146]
             self.numberObjects[i].transform.Position = self.transform.Position - [i * 50, 0]
             self.numberObjects[i].transform.Scale = self.transform.Scale
             self.numberObjects[i].name = self.name
