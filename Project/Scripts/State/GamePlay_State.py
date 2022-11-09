@@ -97,10 +97,6 @@ def enter():
         for pool in mobPool.pool:
             ObjectUpdateList += pool.attackObject
 
-    # for mobAttackObj in monsterPools:
-    #     for pool in mobAttackObj.pool:
-    #         ObjectUpdateList += pool.attackObject
-
     Life.updateList = UIUpdateList
 
     UIUpdateList += player.lifeObject
@@ -160,6 +156,19 @@ def handle_events():
             if event.key == SDLK_F1: # 디버그용 key
                 game_framework.push_state(LevelUp)
             elif event.key == SDLK_F2:
+                if Player.this.life <= 0:
+                    continue
+                Player.this.life -= 1
+                Player.this.lifeObject[Player.this.life].blueFireAni.count = Player.this.lifeObject[Player.this.life].redFireAni.count
+                Player.this.lifeObject[Player.this.life].mainAnimation = Player.this.lifeObject[Player.this.life].blueFireAni
+            elif event.key == SDLK_F3:
+                if Player.this.life >= Player.this.maxLife:
+                    continue
+
+                Player.this.lifeObject[Player.this.life].redFireAni.count = Player.this.lifeObject[Player.this.life].blueFireAni.count
+                Player.this.lifeObject[Player.this.life].mainAnimation = Player.this.lifeObject[Player.this.life].redFireAni
+                Player.this.life += 1
+            elif event.key == SDLK_F10:
                 game_framework.change_state(GameOver)
         pass
 
@@ -172,13 +181,6 @@ def update():
     global endlessTile, monsterPools
 
     endlessTile.UpdateVisibleTerrain()
-
-    # for monsterPool in monsterPools:
-    #     flowTime = time.time() - monsterPool.startTime
-    #     if flowTime > monsterPool.coolTime:
-    #         monsterPool.startTime = time.time()
-    #         monsterPool.Spawn(5)
-    #     pass
 
     # Function Flow
     # 모든 Object의 Update 호출
@@ -194,7 +196,7 @@ def update():
     for collider in Collide.AllCollider:
         collider.OnTrigger()
 
-    if Player.this.life < 0:
+    if Player.this.life <= 0:
         player.isActive = False
         game_framework.push_state(GameOver)
     pass
@@ -218,11 +220,11 @@ def pause():
 
 def resume():
     difTime = time.time() - start
-    for obj in ObjectUpdateList:
-        if obj.collider.tag == 'Monster':
-            obj.lifeStart += difTime
-        if obj.name == "Player":
-            obj.InitHandle()
+    for collider in Collide.AllCollider:
+        if collider.tag == 'Monster':
+            collider.object.lifeStart += difTime
+        if collider.tag == "Player":
+            collider.object.InitHandle()
 
     pass
 
