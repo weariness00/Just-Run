@@ -20,6 +20,7 @@ class PlayTimer(Number):
 
     def Update(self):
         t = math.ceil(time.time() - self.startTime)
+        t += t // 60 * 40
         self.ChangeNumber(t)
 
         if t // self.levelUpLengthTime - self.levelUpCount > 0:
