@@ -51,4 +51,9 @@ class Render:
         self.RendererObjectList += [obj]
         pass
 
+    def RemoveRenderObject(self, obj):
+        if obj in self.RendererObjectList:
+            self.RendererObjectList.remove(obj)
+            del obj
+
     pass
