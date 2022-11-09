@@ -3,9 +3,9 @@ from Scripts.FrameWork.Animation import *
 
 class Monster(Object):
     target = None
+    renderList = None
     def __init__(self):
         super(Monster, self).__init__()
-
         self.__idle = dict()
         self._speed = None
         self.isMoveMent = True
@@ -38,6 +38,8 @@ class Monster(Object):
 
         # Timer
         self.deathStart = time.time()
+
+        Monster.renderList.AddObject(self)
         pass
 
     def __del__(self):

@@ -5,7 +5,8 @@ from Scripts.FrameWork.Render import *
 #Player 포지션에 따른 맵 생성 제대로 되게 하기
 
 class EndlessTile:
-    def __init__(self, Player=Object()):
+    renderList = None
+    def __init__(self, Player):
         self.Player = Player
 
         self.maxViewDistance = 160 * 4
@@ -14,7 +15,6 @@ class EndlessTile:
         self.terrainDictionary = dict()
         self.LastUpdateTerrain = []
         self.VisibleTerrainList = None
-        self.render = None
         pass
 
     def UpdateVisibleTerrain(self):
@@ -45,8 +45,7 @@ class EndlessTile:
                     obj.name = 'tile'
 
                     self.terrainDictionary[viewedTerrainPos] = obj
-                    self.render.AddRenderObject(obj)
-
+                    EndlessTile.renderList.AddObject(obj)
                     pass
 
                 obj.isActive = True

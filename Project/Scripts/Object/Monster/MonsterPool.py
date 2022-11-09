@@ -5,6 +5,7 @@ from Scripts.FrameWork.Camera import *
 class MonsterPool(Object):
 
     def __init__(self, monsterType, maxCount, coolTime=5):
+        super(MonsterPool, self).__init__()
         self.type = monsterType
         self.maxCount = maxCount #Pool이 가지고 있는 최대 오브젝트 개수
         self.pool = []

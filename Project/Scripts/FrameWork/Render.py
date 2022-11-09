@@ -8,6 +8,7 @@ class Render:
         pass
 
     def __del__(self):
+        self.Clear()
         pass
 
     def Draw(self):
@@ -47,13 +48,24 @@ class Render:
                            text.color)
         pass
 
-    def AddRenderObject(self, obj):
-        self.RendererObjectList += [obj]
+    def AddObject(self, obj):
+        self.RendererObjectList.append(obj)
         pass
 
-    def RemoveRenderObject(self, obj):
+    def AddObjects(self, obj):
+        self.RendererObjectList += obj
+        pass
+
+    def RemoveObject(self, obj):
         if obj in self.RendererObjectList:
             self.RendererObjectList.remove(obj)
             del obj
+
+        pass
+
+    def Clear(self):
+        for obj in self.RendererObjectList:
+            del obj
+        del self.RendererObjectList
 
     pass

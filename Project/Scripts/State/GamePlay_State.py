@@ -18,6 +18,7 @@ end = None
 TileRender = None
 PlayerRender = None
 MonsterRender = None
+EffectRender = None
 
 #   UI
 numberRender = None
@@ -42,7 +43,7 @@ UIRenderUpdateList = None
 
 def enter():
     global start, end
-    global TileRender, PlayerRender, MonsterRender, LifeUIRender, SkillUIRender, numberRender
+    global TileRender, PlayerRender, MonsterRender, EffectRender, LifeUIRender, SkillUIRender, numberRender
     global player, endlessTile, playTimer
     global monsterPools
     global ObjectUpdateList, UIUpdateList
@@ -56,14 +57,25 @@ def enter():
     ObjectUpdateList = []
     UIUpdateList = []
 
+    Object.updateList = ObjectUpdateList
+
     # 객채 생성
     TileRender = Render()
     PlayerRender = Render()
     MonsterRender = Render()
+    EffectRender = Render()
 
     numberRender = Render()
     LifeUIRender = Render()
     SkillUIRender = Render()
+
+    EndlessTile.renderList = TileRender
+    Life.renderList = LifeUIRender
+    Number.renderList = numberRender
+
+    Effect.renderList = EffectRender
+    Monster.renderList = MonsterRender
+
 
     SkillContain()
 
@@ -89,34 +101,9 @@ def enter():
     for pool in monsterPools:
         pool.Spawn(5)
 
-    # UpdateList 초기화
-    ObjectUpdateList += [player]
-    for mobPool in monsterPools:
-        ObjectUpdateList += [mobPool]
-        ObjectUpdateList += mobPool.pool
-        for pool in mobPool.pool:
-            ObjectUpdateList += pool.attackObject
-
-    Life.updateList = UIUpdateList
-
-    UIUpdateList += player.lifeObject
-    UIUpdateList += [playTimer]
-    UIUpdateList += [player.skillBox, player.skill]
-
     # Render 초기화
     #   Object
-    endlessTile.render = TileRender
-    Life.renderList = LifeUIRender
-    Number.renderList = numberRender
-
-    PlayerRender.AddRenderObject(player)
-
-    for mobPool in monsterPools:
-        MonsterRender.RendererObjectList += mobPool.pool
-
-    for mobAttackObj in monsterPools:
-        for pool in mobAttackObj.pool:
-            MonsterRender.RendererObjectList += pool.attackObject
+    PlayerRender.AddObject(player)
 
     RenderUpdateList = [TileRender, PlayerRender, MonsterRender]
 
@@ -130,11 +117,11 @@ def enter():
 # finalization code
 def exit():
     global start, end
-    global TileRender, PlayerRender, MonsterRender
+    global TileRender, PlayerRender, MonsterRender, EffectRender
     global player, monsterPools
     global endlessTile
     global ObjectUpdateList, RenderUpdateList
-    del TileRender, PlayerRender, MonsterRender
+    del TileRender, PlayerRender, MonsterRender, EffectRender
     del ObjectUpdateList, RenderUpdateList
     del endlessTile
     del player, monsterPools
@@ -180,14 +167,16 @@ def update():
     global start, end, poolStartTime
     global endlessTile, monsterPools
 
+    if Player.this.life <= 0:
+        player.isActive = False
+        game_framework.push_state(GameOver)
+
     endlessTile.UpdateVisibleTerrain()
 
     # Function Flow
     # 모든 Object의 Update 호출
     for obj in ObjectUpdateList:
         obj.Update()
-    for ui in UIUpdateList:
-        ui.Update()
     # 모든 Object의 OnCollider을 호출
     Collide.SortAllCollide()
     for obj in ObjectUpdateList:
@@ -195,10 +184,6 @@ def update():
     # 모든 Object의 OnTrigger을 호출
     for collider in Collide.AllCollider:
         collider.OnTrigger()
-
-    if Player.this.life <= 0:
-        player.isActive = False
-        game_framework.push_state(GameOver)
     pass
 
 def draw():
@@ -236,8 +221,3 @@ def ChagneSkillBox():
     # UIUpdateList[-1] = Player.this.skill
     SkillUIRender.RendererObjectList[-1] = Player.this.skill
     pass
-
-def Add_UIUpdateList(obj):
-    UIUpdateList.append(obj)
-    pass
-

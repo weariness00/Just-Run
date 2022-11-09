@@ -1,5 +1,6 @@
 from Scripts.Object.Monster.Monster import *
 from Scripts.Object.Monster.AttackBall import *
+from Scripts.FrameWork.Effect import Effect
 
 
 class RedBat(Monster):
@@ -7,6 +8,7 @@ class RedBat(Monster):
     attackImage = load_image('image/Monster/RedBat Monster/Attack.png')
     deathImage = load_image('image/Monster/RedBat Monster/Death.png')
 
+    effectImage = load_image('Effect/Fire/fire7_64.png')
     def __init__(self):
         # Objcet
         super(RedBat, self).__init__()
@@ -48,6 +50,13 @@ class RedBat(Monster):
         for i in range(self.attackObjectCount):
             self.attackObject += [AttackBall()]
 
+        # Effect
+        self.effect = Effect()
+        self.effect.image = RedBat.effectImage
+        self.effect.image_type = [0,0,64,64]
+        self.effect.frame_X, self.effect.frame_Y = 10, 6
+        self.effect.countSpeed = 5
+
         pass
 
     def __del__(self):
@@ -79,6 +88,7 @@ class RedBat(Monster):
                 self.mainAnimation = self.deathAni
                 self.attackAni.count = 0
                 self.deathStart = time.time()
+                self.effect.OnEffect()
             if collider.tag == 'Tile':
                 self.collider.isTrigger = False
             if collider.tag == 'Monster Attack':

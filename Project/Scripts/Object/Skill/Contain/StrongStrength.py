@@ -33,8 +33,7 @@ class StrongStrength(Skill):
         newLife.redFireAni.count = random.randint(0,4)
 
         Player.this.lifeObject.append(newLife)
-        Life.renderList.AddRenderObject(newLife)
-        Life.updateList.append(newLife)
+        Life.renderList.AddObject(newLife)
         pass
 
     def LevelUp(self):

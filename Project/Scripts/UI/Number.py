@@ -16,7 +16,7 @@ class Number(Object):
 
     def ChangeNumber(self, number):
         for obj in self.numberObjects:
-            Number.renderList.RemoveRenderObject(obj)
+            Number.renderList.RemoveObject(obj)
 
         number_str = number.__str__()
         number_count = len(number_str)
