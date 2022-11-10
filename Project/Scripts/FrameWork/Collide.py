@@ -69,13 +69,12 @@ class Collide:
             return onColliderList
 
         # n * n 크기만큼만 Collider 검사
-        maxNum = [len(Collide.AllColliderX), len(Collide.AllColliderY)]
         collides = []
-        for i in range(1, 6 + 1):
+        for i in range(1, 3 + 1):
             collides.append(Collide.AllColliderX[self.index[0] - i])
             collides.append(Collide.AllColliderY[self.index[1] - i])
-            collides.append(Collide.AllColliderX[(self.index[0] + i) % maxNum[0]])
-            collides.append(Collide.AllColliderY[(self.index[1] + i) % maxNum[1]])
+            collides.append(Collide.AllColliderX[(self.index[0] + i) % len(Collide.AllColliderX)])
+            collides.append(Collide.AllColliderY[(self.index[1] + i) % len(Collide.AllColliderY)])
             pass
 
         if len(collides) == 0:
@@ -85,31 +84,27 @@ class Collide:
         for i in range(0, len(collides) - 1):
             for n in range(i + 1, len(collides)):
                 if collides[i].object.ID == collides[n].object.ID:
-                    del collides[n]
+                    collides.remove(collides[n])
                     break
 
         cameraPos = -Collide.MainCamera.transform.Position + Instance.windowSize//2
-        this_Pos = self.Pivot * self.transform.Scale + self.transform.Position + cameraPos
-        thisRDis = self.rDistance * self.transform.Scale
+        thisBox = self.colliderBox * self.transform.Scale + self.transform.Position + cameraPos
 
-        self.onColliderList += collides
         for collider in collides:
             if collider.object.isActive is False or collider.isCollide is False:
                 continue
 
-            other_Pos = collider.Pivot * collider.transform.Scale + collider.transform.Position + cameraPos
-            otherRDis = collider.rDistance * collider.transform.Scale
+            otherBox = collider.colliderBox * collider.transform.Scale + collider.transform.Position + cameraPos
 
-            xAB_Distance = Instance.Distance(this_Pos, [other_Pos[0], this_Pos[1]])
-            yAB_Distance = Instance.Distance(this_Pos, [this_Pos[0], other_Pos[1]])
-            ABDis = numpy.array([xAB_Distance, yAB_Distance], dtype=float)
+            if thisBox[0][0] > otherBox[1][0]: continue
+            if thisBox[1][0] < otherBox[0][0]: continue
+            if thisBox[1][1] < otherBox[0][1]: continue
+            if thisBox[0][1] > otherBox[1][1]: continue
 
-            if (ABDis > otherRDis + thisRDis).any():
-                continue
-            onColliderList.append(collider)
+            self.onColliderList.append(collider)
             pass
         del collides
-        return onColliderList
+        return self.onColliderList
         pass
 
     def OnTrigger(self):
@@ -153,7 +148,6 @@ class Collide:
                     self.transform.Position[1] += gapDistance[1] + 1
             pass
         pass
-
 
     @staticmethod
     def AllBoxDraw():
