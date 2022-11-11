@@ -3,6 +3,7 @@ from Scripts.UI.Number import Number
 import Scripts.State.LevelUp_State as LevelUP
 import Scripts.FrameWork.game_framework as game_framework
 
+
 class PlayTimer(Number):
 
     def __init__(self):
