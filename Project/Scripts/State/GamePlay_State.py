@@ -2,8 +2,11 @@ from Scripts.Object.Tile.EndlessTile import *
 from Scripts.Object.Monster.MonsterPool import *
 from Scripts.Object.Skill.SkillContain import *
 from Scripts.Object.Player.Player import *
-from Scripts.Object.PlayTimer import PlayTimer
 from Scripts.UI.Number import Number
+from Scripts.Object.Item.ItemContain import *
+
+from Scripts.Manager.GameManager import GameManager
+
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby
 import Scripts.State.LevelUp_State as LevelUp
@@ -19,18 +22,21 @@ TileRender = None
 PlayerRender = None
 MonsterRender = None
 EffectRender = None
+ItemRender = None
 
 #   UI
+uiRender = None
 numberRender = None
 LifeUIRender = None
 SkillUIRender = None
 
 # Objcet
+gameManager = None
+
 player = None
 endlessTile = None
-playTimer = None
 
-# pool
+# pool & contain
 monsterPools = None
 
 # Update List
@@ -43,8 +49,9 @@ UIRenderUpdateList = None
 
 def enter():
     global start, end
-    global TileRender, PlayerRender, MonsterRender, EffectRender, LifeUIRender, SkillUIRender, numberRender
-    global player, endlessTile, playTimer
+    global TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
+    global uiRender, LifeUIRender, SkillUIRender, numberRender
+    global gameManager, player, endlessTile
     global monsterPools
     global ObjectUpdateList, UIUpdateList
     global RenderUpdateList, UIRenderUpdateList
@@ -64,27 +71,32 @@ def enter():
     PlayerRender = Render()
     MonsterRender = Render()
     EffectRender = Render()
+    ItemRender = Render()
 
+    uiRender = Render()
     numberRender = Render()
     LifeUIRender = Render()
     SkillUIRender = Render()
 
-    EndlessTile.renderList = TileRender
+    GameManager.uiRenderList = uiRender
+    Player.renderList = PlayerRender
     Life.renderList = LifeUIRender
+    Skill.renderList = SkillUIRender
     Number.renderList = numberRender
 
+    EndlessTile.renderList = TileRender
     Effect.renderList = EffectRender
     Monster.renderList = MonsterRender
-
+    Item.renderList = ItemRender
 
     SkillContain()
 
+    gameManager = GameManager()
     player = Player()
     Player.this = player
     Monster.target = player
 
     endlessTile = EndlessTile(player)
-    playTimer = PlayTimer()
 
     # Monster Pool 객체 생성
     monsterPools.append(MonsterPool(Limbo(), 50, 1))
@@ -103,35 +115,32 @@ def enter():
 
     # Render 초기화
     #   Object
-    PlayerRender.AddObject(player)
-
-    RenderUpdateList = [TileRender, PlayerRender, MonsterRender]
+    RenderUpdateList = [TileRender, PlayerRender, ItemRender, MonsterRender, EffectRender]
 
     #   UI
     LifeUIRender.RendererObjectList += player.lifeObject
-    SkillUIRender.RendererObjectList += [player.skillBox, player.skill]
+    SkillUIRender.RendererObjectList.insert(0, player.skillBox)
 
-    UIRenderUpdateList = [numberRender, LifeUIRender, SkillUIRender]
+    UIRenderUpdateList = [uiRender, numberRender, LifeUIRender, SkillUIRender]
     pass
 
 # finalization code
 def exit():
     global start, end
-    global TileRender, PlayerRender, MonsterRender, EffectRender
-    global player, monsterPools
-    global endlessTile
-    global ObjectUpdateList, RenderUpdateList
-    del TileRender, PlayerRender, MonsterRender, EffectRender
-    del ObjectUpdateList, RenderUpdateList
-    del endlessTile
-    del player, monsterPools
-    del Collide.AllCollider
+    global TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
+    global uiRender, LifeUIRender, SkillUIRender, numberRender
+    global ObjectUpdateList, UIUpdateList
+    global RenderUpdateList, UIRenderUpdateList
+    del TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
+    del uiRender, LifeUIRender, SkillUIRender, numberRender
+    del ObjectUpdateList, RenderUpdateList, UIUpdateList, UIRenderUpdateList
     pass
 
 def handle_events():
-    global player
+    global player, gameManager
     events = get_events()
     Object.events = events
+    gameManager.Handle_Event(events.copy())
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
@@ -156,7 +165,8 @@ def handle_events():
                 Player.this.lifeObject[Player.this.life].mainAnimation = Player.this.lifeObject[Player.this.life].redFireAni
                 Player.this.life += 1
             elif event.key == SDLK_F10:
-                game_framework.change_state(GameOver)
+                player.isActive = False
+                game_framework.push_state(GameOver)
         pass
 
     pass
@@ -194,7 +204,7 @@ def draw():
     for UIRender in UIRenderUpdateList:
         UIRender.UIDraw()
 
-    # Collide.AllBoxDraw()
+    Collide.AllBoxDraw()
 
     pass
 
@@ -213,11 +223,3 @@ def resume():
 
     pass
 
-
-def ChagneSkillBox():
-    global UIUpdateList
-    global SkillUIRender
-
-    # UIUpdateList[-1] = Player.this.skill
-    SkillUIRender.RendererObjectList[-1] = Player.this.skill
-    pass

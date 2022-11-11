@@ -29,18 +29,21 @@ def enter():
     global ui_Render, text_Render
     global objectUpdateList, uiRenderList, textRenderList
 
+    # Init
+    uiRenderList = []
+    textRenderList = []
+    objectUpdateList = []
+
+    Object.updateList = objectUpdateList
+
+    # 객체 초기화
+    ButtonInit()
+
     background = Object()
     background.image = load_image('image/FirePunch.png')
     background.image_type = [0, 0, 32, 32]
     background.transform.Position += [Instance.windowSize[0]/2, Instance.windowSize[1]/2]
     background.transform.Scale += [Instance.windowSize[0]//32, Instance.windowSize[1]//32]
-
-    # 객체 초기화
-    uiRenderList = []
-    textRenderList = []
-    objectUpdateList = []
-
-    ButtonInit()
 
     # Render 초기화
     ui_Render = Render()
@@ -53,7 +56,7 @@ def enter():
     textRenderList += [text_Render]
 
     # List 초기화
-    objectUpdateList += [background, start_Button, exit_Button]
+    # objectUpdateList += [background, start_Button, exit_Button]
 
     pass
 
@@ -64,12 +67,13 @@ def exit():
     global ui_Render
     global uiRenderList, objectUpdateList
     del background
-    del start_Button, exit_Button
     del ui_Render
     del uiRenderList, objectUpdateList
     pass
 
 def handle_events():
+    ButtonLogic()
+
     events = get_events()
     Object.events = events
     for event in events:
@@ -88,8 +92,6 @@ def handle_events():
 def update():
     for obj in objectUpdateList:
         obj.Update()
-
-    ButtonLogic()
     pass
 
 def draw():
@@ -110,6 +112,9 @@ def resume():
 def ButtonLogic():
     if start_Button.isClick is True:
         game_framework.change_state(game_state)
+    elif exit_Button.isClick is True:
+        game_framework.quit()
+
     pass
 
 def ButtonInit():

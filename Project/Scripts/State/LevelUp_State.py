@@ -92,7 +92,6 @@ def handle_events():
                 levelUp_UI.ChangeBoxColor('Red')
             elif event.key == SDLK_RETURN:   # 현재 Enter의 값하고 달라서 디버그 돌려서 나온 key value를 임의로 넣어줌
                 levelUp_UI.ChangeSkill()
-                Game_State.ChagneSkillBox()
                 game_framework.pop_state()
             pass
         pass

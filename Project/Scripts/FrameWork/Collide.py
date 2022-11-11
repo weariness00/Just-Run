@@ -30,11 +30,9 @@ class Collide:
         pass
 
     def __del__(self):
-        # del self.colliderBox, self.colliderSize
-        # del self.Piovt, self.rPos
-        # del self.object
-        # del self.image
-        # del self
+        del self.image
+        Collide.AllCollider.remove(self)
+        del self
         pass
 
     def InitTransform(self, transform):
@@ -70,7 +68,7 @@ class Collide:
 
         # n * n 크기만큼만 Collider 검사
         collides = []
-        for i in range(1, 3 + 1):
+        for i in range(1, 4 + 1):
             collides.append(Collide.AllColliderX[self.index[0] - i])
             collides.append(Collide.AllColliderY[self.index[1] - i])
             collides.append(Collide.AllColliderX[(self.index[0] + i) % len(Collide.AllColliderX)])

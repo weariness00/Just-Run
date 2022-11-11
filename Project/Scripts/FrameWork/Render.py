@@ -18,11 +18,9 @@ class Render:
 
             pos = obj.transform.Position - Camera.MainCamera.transform.Position + Instance.windowSize//2
             scale = obj.transform.Scale * numpy.array([obj.image_type[2], obj.image_type[3]])
-            obj.image.clip_composite_draw(obj.image_type[0], obj.image_type[1],
-                                obj.image_type[2], obj.image_type[3],
+            obj.image.clip_composite_draw(*obj.image_type,
                                 obj.image_radian, obj.image_dir,
-                                pos[0], pos[1],
-                                scale[0], scale[1])
+                                *pos, *scale)
             pass
         pass
 
@@ -33,27 +31,22 @@ class Render:
 
             pos = obj.transform.Position
             scale = obj.transform.Scale * numpy.array([obj.image_type[2], obj.image_type[3]])
-            obj.image.clip_composite_draw(obj.image_type[0], obj.image_type[1],
-                                obj.image_type[2], obj.image_type[3],
+            obj.image.clip_composite_draw(*obj.image_type,
                                 obj.image_radian, obj.image_dir,
-                                pos[0], pos[1],
-                                scale[0], scale[1])
+                                *pos, *scale)
             pass
         pass
 
     def TextDraw(self):
         for text in self.RendererObjectList:
-            text.font.draw(text.transform.Position[0], text.transform.Position[1],
+            text.font.draw(*text.transform.Position,
                            text.text,
                            text.color)
         pass
 
     def AddObject(self, obj):
-        self.RendererObjectList.append(obj)
-        pass
-
-    def AddObjects(self, obj):
-        self.RendererObjectList += obj
+        if type(obj) == list: self.RendererObjectList += obj
+        else: self.RendererObjectList.append(obj)
         pass
 
     def RemoveObject(self, obj):
