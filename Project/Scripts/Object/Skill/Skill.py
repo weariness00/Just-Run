@@ -2,6 +2,7 @@ from Scripts.FrameWork.Text import *
 from Scripts.Object.Player.Player import *
 
 class Skill(Object):
+    renderList = None
     def __init__(self):
         super(Skill, self).__init__()
         # 객체 초기화
@@ -24,11 +25,16 @@ class Skill(Object):
         self.explain = Text()  # skill을 설명할 Text
         self.explain.font = self.explain.font_Explain
 
-        # Timer
+        Skill.renderList.AddObject(self)
         pass
 
     def __del__(self):
         pass
+
+    def Update(self):
+        skillTime = time.time() - self.onSkillTime
+        if skillTime >= self.coolTime:
+            self.isSkillOn = False
 
     def OnSkill(self):
         self.isSkillOn = True
