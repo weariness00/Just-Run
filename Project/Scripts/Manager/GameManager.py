@@ -31,3 +31,8 @@ class GameManager(Object):
     def Update(self):
 
         pass
+
+    def Handle_Event(self, events):
+        for event in events:
+            if (event.type, event.key) == (SDL_KEYDOWN, SDLK_EQUALS):
+                self.playTimer.startTime -= 1
