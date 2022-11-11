@@ -23,6 +23,9 @@ class PlayTimer(Number):
         t = math.ceil(time.time() - self.startTime)
         t += t // 60 * 40
         self.ChangeNumber(t)
+        if t % 100 >= 50:
+            for number in self.numberObjects:
+                number.image = Number.red_image
 
         if t // self.levelUpLengthTime - self.levelUpCount > 0:
             self.levelUpCount += 1
