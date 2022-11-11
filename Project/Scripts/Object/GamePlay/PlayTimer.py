@@ -1,6 +1,7 @@
 from Scripts.FrameWork.Object import *
 from Scripts.UI.Number import Number
 import Scripts.State.LevelUp_State as LevelUP
+import Scripts.State.GameWInner_State as GameWinner
 import Scripts.FrameWork.game_framework as game_framework
 
 
@@ -9,6 +10,7 @@ class PlayTimer(Number):
     def __init__(self):
         super(PlayTimer, self).__init__()
         self.startTime = 0
+        self.winTime = 20
         self.levelUpLengthTime = 60
         self.levelUpCount = 0
 
@@ -30,6 +32,9 @@ class PlayTimer(Number):
         if t // self.levelUpLengthTime - self.levelUpCount > 0:
             self.levelUpCount += 1
             game_framework.push_state(LevelUP)
+
+        if t >= self.winTime:
+            game_framework.change_state(GameWinner)
 
         pass
 
