@@ -1,7 +1,7 @@
 from Scripts.FrameWork.Transform import *
 
 class Text:
-    list = ['Name', 'Explain', 'KR_HSGyeoulNoonkot', 'EN_Bafora']
+    list = ['Name', 'Explain', 'KR_HSGyeoulNoonkot', 'EN_Bafora', 'Stone_Head']
     renderList = None
     def __init__(self, size = 20):
         # 객체 초기화
@@ -27,6 +27,11 @@ class Text:
                 font = load_font('Font/' + Text.list[i] + '.ttf', size)
                 self.font = font
 
+        pass
+
+    def Info(self):
+        print(self.text)
+        print(self.color)
         pass
 
     def Copy(self):
