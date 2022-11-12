@@ -13,6 +13,7 @@ background = None
 
 # Render
 objectRender = None
+uiRender = None
 
 #list
 updateList = None
@@ -22,11 +23,12 @@ uiRenderList = None
 
 def enter():
     global background
-    global objectRender
+    global objectRender, uiRender
     global updateList, objectRenderList, uiRenderList
 
     # Render
     objectRender = Render()
+    uiRender = Render()
 
     # List
     updateList = []
@@ -34,6 +36,7 @@ def enter():
     uiRenderList = []
 
     objectRenderList += [objectRender]
+    uiRenderList += [uiRender]
 
     Object.updateList = updateList
 
@@ -43,7 +46,7 @@ def enter():
     background.transform.Scale *= Instance.windowSize / [1920, 1100]
     background.transform.Position += Instance.windowSize//2
 
-    objectRender.AddObject(background)
+    uiRender.AddObject(background)
 
     pass
 
@@ -57,6 +60,10 @@ def handle_events():
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
+
+        elif event.type == SDL_KEYDOWN:
+            if event.key == SDLK_SPACE:
+                game_framework.change_state(Lobby_State)
     pass
 
 
