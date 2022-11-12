@@ -29,28 +29,52 @@ def enter():
     global ui_Render, text_Render
     global objectUpdateList, uiRenderList, textRenderList
 
+    load_image('image/FirePunch.png').draw_now(*Instance.windowSize//2, *Instance.windowSize)
+    delay(1)
+
     # Init
     uiRenderList = []
     textRenderList = []
     objectUpdateList = []
+
+    ui_Render = Render()
+    Button.renderList = ui_Render
+
+    text_Render = Render()
+    Text.renderList = text_Render
 
     Object.updateList = objectUpdateList
 
     # 객체 초기화
     ButtonInit()
 
+    frame = Object()
+    frame.image = load_image('image/UI/Frame_White.png')
+    frame.image_type = [0, 0, 600, 600]
+    frame.transform.Position += Instance.windowSize/2
+    frame.transform.Scale *= 1.2
+
     background = Object()
-    background.image = load_image('image/FirePunch.png')
-    background.image_type = [0, 0, 32, 32]
-    background.transform.Position += [Instance.windowSize[0]/2, Instance.windowSize[1]/2]
-    background.transform.Scale += [Instance.windowSize[0]//32, Instance.windowSize[1]//32]
+    background.image = load_image('image/Background/Forest.png')
+    background.image_type = [0, 450, 1024, 450]
+    background.transform.Position += Instance.windowSize/2
+    background.transform.Scale *= Instance.windowSize / [background.image_type[2],background.image_type[3]]
+
+    banner = Text(120)
+    banner.text = '그냥 튀어!'
+    banner.color = [62,62,62]
+    banner.font = banner.fontList['KR_HSGyeoulNoonkot']
+    banner.transform.Position = Instance.windowSize//2 + [-300, 200]
+    subBanner = Text(40)
+    subBanner.text = 'Just Run!'
+    subBanner.color = [62,62,62]
+    subBanner.transform.Position = banner.transform.Position + [185, -100]
 
     # Render 초기화
-    ui_Render = Render()
-    ui_Render.RendererObjectList += [background, start_Button, exit_Button]
 
-    text_Render = Render()
-    text_Render.RendererObjectList += [start_Button.text, exit_Button.text]
+    ui_Render.RendererObjectList.insert(0, background)
+    ui_Render.RendererObjectList.insert(1, frame)
+
 
     uiRenderList += [ui_Render]
     textRenderList += [text_Render]
@@ -90,6 +114,7 @@ def handle_events():
 
 
 def update():
+
     for obj in objectUpdateList:
         obj.Update()
     pass
@@ -123,17 +148,17 @@ def ButtonInit():
     # Start
     start_Button = Button()
     start_Button.transform.Scale *= 2
-    start_Button.transform.Position += [Instance.windowSize[0]//2- 300, 200]
+    start_Button.transform.Position += [Instance.windowSize[0]//2, 300]
     start_Button.text = Text(40)
     start_Button.text.text = '시작'
-    start_Button.text.transform.Position += [Instance.windowSize[0]//2 - 340, 200]
+    start_Button.text.transform.Position += start_Button.transform.Position + [-40, 0]
 
     # Exit
     exit_Button = Button()
     exit_Button.transform.Scale *= 2
-    exit_Button.transform.Position += [Instance.windowSize[0]//2 + 300, 200]
+    exit_Button.transform.Position += [Instance.windowSize[0]//2, 200]
     exit_Button.text = Text(40)
     exit_Button.text.text = '종료'
-    exit_Button.text.transform.Position += [Instance.windowSize[0]//2 + 260, 200]
+    exit_Button.text.transform.Position += exit_Button.transform.Position + [-40, 0]
 
     pass
