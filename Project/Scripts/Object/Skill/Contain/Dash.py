@@ -9,6 +9,7 @@ class Dash(Skill):
         super(Dash, self).__init__()
         # 객체 초기화
         self.dashTime = 0
+        self.speed = -100
 
         self.image = load_image('image/UI/Skill/Dash.png')
         self.image_type = [0, 0, 32, 32]
@@ -17,7 +18,11 @@ class Dash(Skill):
 
         # Text 초기화
         self.skillName = '[돌진]'
-        self.explain.text = 'Level * 100 만큼 돌진 합니다.\n돌진시에는 무적이 됩니다.'
+        self.explain[0].text = 'Level * 100 만큼 돌진 합니다.'
+        self.explain.append(Text())
+        self.explain[1].font = self.explain[1].fontList['Explain']
+        self.explain[1].text = '돌진시에는 무적이 됩니다.'
+
         # 능력 초기화
         pass
 
@@ -45,5 +50,13 @@ class Dash(Skill):
 
     def LevelUp(self):
         super(Dash, self).LevelUp()
+
+        if self.isSkillOn is True:
+            Player.this.speed -= self.speed
+            self.speed += 100
+            Player.this.speed += self.speed
+        else:
+            self.speed += 100
+
         pass
     pass

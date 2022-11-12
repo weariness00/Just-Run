@@ -1,4 +1,5 @@
 # 분신술
+from Scripts.FrameWork.Text import Text
 from Scripts.Object.Player.Player import *
 
 class Clone_Techniqu(Skill):
@@ -6,8 +7,10 @@ class Clone_Techniqu(Skill):
     def __init__(self):
         super(Clone_Techniqu, self).__init__()
         # 객체 초기화
+        self.cloneCount = -1
+
         self.skill_Type = 'Active'
-        self.coolTime = 1
+        self.coolTime = 10
 
         self.image = load_image('image/UI/Skill/Clone_Techniqu.png')
         self.image_type = [0, 0, 64, 64]
@@ -17,15 +20,29 @@ class Clone_Techniqu(Skill):
 
         # Text 초기화
         self.skillName = '[분신술]'
-        self.explain.text = 'Level 만큼의 숫자의 분신을 소환합니다\n분신들은 Player 주변을 맴돕니다.'
+        self.explain[0].text = 'Level 만큼의 숫자의 분신을 소환할 수 있습니다'
+        self.explain.append(Text())
+        self.explain[1].font = self.explain[1].fontList['Explain']
+        self.explain[1].text = '분신들은 Player의 행동에 영향을 받습니다.'
+
         # 능력 초기화
         pass
 
     def __del__(self):
         pass
 
+    def Update(self):
+        if time.time() - self.onSkillTime >= self.coolTime:
+            self.onSkillTime = time.time()
+            if self.cloneCount > 0:
+                self.cloneCount -= 1
+        pass
+
     def OnSkill(self):
-        super(Clone_Techniqu, self).OnSkill()
+        if self.cloneCount == 0:
+            self.onSkillTime = time.time()
+
+        self.cloneCount += 1
 
         newClone = Player()
         Object.events = get_events()
@@ -44,11 +61,15 @@ class Clone_Techniqu(Skill):
         pass
 
     def Handle_Event(self, event):
-        if super(Clone_Techniqu, self).Handle_Event(event) is False:
+        if self.level <= self.cloneCount + 1:
             return
 
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_q):
             self.OnSkill()
+        pass
+
+    def LevelUp(self):
+        super(Clone_Techniqu, self).LevelUp()
         pass
 
     pass

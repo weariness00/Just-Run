@@ -62,12 +62,14 @@ class LevelUP_PopUp(Object):
         for i in range(3):
             self.boxText[0].append(SkillContain.array[self.skillIndex[i]].nameText.Copy())
             self.boxText[0][i].transform.Position = self.textBoxObject[i].transform.Position + [-280, 50]
-            self.boxText[0][i].color = (1, 1, 1)
+            self.boxText[0][i].color = [84, 0, 33]
             pass
         for i in range(3):
-            self.boxText[1].append(SkillContain.array[self.skillIndex[i]].explain.Copy())
-            self.boxText[1][i].transform.Position = self.textBoxObject[i].transform.Position + [-260, 0]
-            self.boxText[1][i].color = (1, 1, 1)
+            self.boxText[1].append([])
+            for index, explain in enumerate(SkillContain.array[self.skillIndex[i]].explain):
+                self.boxText[1][i].append(explain.Copy())
+                self.boxText[1][i][index].transform.Position = self.textBoxObject[i].transform.Position + [-260, -30 * index]
+                self.boxText[1][i][index].color = (35, 35, 35)
             pass
 
         self.boxImage = [Object() for i in range(3)]

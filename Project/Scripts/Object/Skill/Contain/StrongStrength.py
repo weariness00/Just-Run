@@ -1,5 +1,6 @@
 # 강인한 체력
 from Scripts.Object.Player.Player import *
+from Scripts.FrameWork.Text import Text
 
 
 class StrongStrength(Skill):
@@ -13,7 +14,11 @@ class StrongStrength(Skill):
 
         # Text 초기화
         self.skillName = '[강인한 체력]'
-        self.explain.text = '모든 목숨을 회복, 추가로 +1 만큼의 목숨을 얻습니다.'
+        self.explain[0].text = '모든 목숨을 회복'
+        self.explain.append(Text())
+        self.explain[1].font = self.explain[1].fontList['Explain']
+        self.explain[1].text = '추가로 +1 만큼의 목숨을 얻습니다.'
+
         # 능력 초기화
         pass
 

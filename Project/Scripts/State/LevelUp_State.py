@@ -39,6 +39,7 @@ def enter():
     levelUP_Render = Render()
     UI_Render = Render()
     Text_Render = Render()
+    Text.renderList = Text_Render
 
     levelUp_UI = LevelUP_PopUp()
 
@@ -54,8 +55,8 @@ def enter():
     levelUP_Render.RendererObjectList += levelUp_UI.boxImage
     UI_Render.RendererObjectList += [backGround_UI]
 
-    Text_Render.RendererObjectList += levelUp_UI.boxText[0]
-    Text_Render.RendererObjectList += levelUp_UI.boxText[1]
+    # Text_Render.RendererObjectList += levelUp_UI.boxText[0]
+    # Text_Render.RendererObjectList += levelUp_UI.boxText[1]
 
     # Update List 초기화
     UIUpdateList += [levelUp_UI]
