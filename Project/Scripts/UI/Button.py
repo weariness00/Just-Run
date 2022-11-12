@@ -2,6 +2,7 @@ from Scripts.FrameWork.Object import *
 
 class Button(Object):
     image = load_image('image/UI/Button.png')
+    renderList = None
     def __init__(self):
         super(Button, self).__init__()
         self.isClick = False
@@ -9,6 +10,8 @@ class Button(Object):
         self.image = Button.image
         self.image_type = [0, 0, 167, 48]
         self.frameCount = 0
+
+        Button.renderList.AddObject(self)
         pass
 
     def __del__(self):
