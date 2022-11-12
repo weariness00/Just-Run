@@ -29,9 +29,6 @@ def enter():
     global ui_Render, text_Render
     global objectUpdateList, uiRenderList, textRenderList
 
-    load_image('image/FirePunch.png').draw_now(*Instance.windowSize//2, *Instance.windowSize)
-    delay(1)
-
     # Init
     uiRenderList = []
     textRenderList = []
@@ -63,12 +60,12 @@ def enter():
     banner = Text(120)
     banner.text = '그냥 튀어!'
     banner.color = [62,62,62]
-    banner.font = banner.fontList['KR_HSGyeoulNoonkot']
-    banner.transform.Position = Instance.windowSize//2 + [-300, 200]
+    banner.font = banner.fontList['Explain']
+    banner.transform.Position = Instance.windowSize//2 + [-230, 200]
     subBanner = Text(40)
     subBanner.text = 'Just Run!'
     subBanner.color = [62,62,62]
-    subBanner.transform.Position = banner.transform.Position + [185, -100]
+    subBanner.transform.Position = banner.transform.Position + [130, -100]
 
     # Render 초기화
 
@@ -104,11 +101,6 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
 
-        if event.type == SDL_KEYDOWN:
-            if event.key == SDLK_ESCAPE:
-                game_framework.quit()
-            if event.key == SDLK_SPACE:
-                game_framework.change_state(game_state)
         pass
     pass
 

@@ -29,6 +29,7 @@ class Skill(Object):
         pass
 
     def __del__(self):
+        super(Skill, self).__del__()
         pass
 
     def Update(self):

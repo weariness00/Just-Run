@@ -76,16 +76,10 @@ class Limbo(Monster):
         onColliderList = self.collider.OnCollider()
 
         for collider in onColliderList:
+            super(Limbo, self).OnCollide(collider)
             if collider.tag == "Player":
-                self.collider.isCollide = False
-                self.isMoveMent = False
-                self.isDeath = True
-                self.mainAnimation = self.deathAni
-                self.deathStart = time.time()
                 self.effect.OnEffect(self.transform)
                 self.effect.transform.Position[1] += 30
-            if collider.tag == 'Monster Attack':
-                self.collider.isTrigger = False
             pass
         pass
     pass

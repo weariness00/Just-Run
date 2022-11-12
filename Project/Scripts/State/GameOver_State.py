@@ -28,6 +28,8 @@ def enter():
     global updateList
     global objectRenderList, uiRenderList, textRenderList
 
+    Game_State.gameManager.bgm.stop()
+
     objectRender = Render()
     uiRender = Render()
     textRender = Render()
@@ -67,7 +69,9 @@ def enter():
 
     updateList.append(p)
     updateList.append(back_Button)
-    objectRender.AddObject(p)
+
+    uiRender.AddObject(p)
+
     objectRenderList += [objectRender]
     uiRenderList += [uiRender]
     textRenderList += [textRender]

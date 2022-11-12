@@ -74,11 +74,7 @@ class Worm(Monster):
         onColliderList = self.collider.OnCollider()
 
         for collider in onColliderList:
-            if collider.tag == "Player":
-                self.collider.isCollide = False
-                self.isDeath = True
-                self.mainAnimation = self.deathAni
-                self.deathStart = time.time()
+            super(Worm, self).OnCollide(collider)
         pass
     pass
 

@@ -22,7 +22,7 @@ class GameManager(Object):
     def __init__(self):
         super(GameManager, self).__init__()
         self.bgm = load_music('Music/Background/GamePlayBGM_0' + random.randint(1,2).__str__() + '.mp3')
-        self.bgm.set_volume(100)
+        self.bgm.set_volume(10)
         self.bgm.repeat_play()
 
         self.playTimer = PlayTimer()    # 게임 진행 시간
@@ -38,18 +38,18 @@ class GameManager(Object):
         self.itemNumber.ChangeNumber(12)
         GameManager.uiRenderList.AddObject(self.item)
 
-        SkillContain()
-
         self.player = Player()
         Player.this = self.player
         Monster.target = self.player
 
+        self.skillContain = SkillContain()
+
         endlessTile = EndlessTile(self.player)
 
         # Monster Pool 객체 생성
-        self.LimboPool = MonsterPool(Limbo(), 50, 5, 1)
-        self.RedBatPool = MonsterPool(RedBat(), 10, 2, 3)
-        self.WormPool = MonsterPool(Worm(), 5, 1, 5)
+        self.LimboPool = MonsterPool(Limbo(), 60, 5, 1)
+        self.RedBatPool = MonsterPool(RedBat(), 20, 0, 3)
+        self.WormPool = MonsterPool(Worm(), 10, 0, 5)
 
         # Player 초기화
         self.player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
@@ -63,13 +63,22 @@ class GameManager(Object):
         pass
 
     def __del__(self):
-        super(GameManager, self).__del__()
+        print('GameManager 소멸')
+        self.skillContain.__del__()
+        self.bgm.stop()
         pass
 
     def Update(self):
         if Player.this.life <= 0:
             self.player.isActive = False
             game_framework.push_state(GameOver)
+
+        if self.playTimer.isLevelUp is True:
+            self.playTimer.isLevelUp = False
+            self.LimboPool.spawnCount += 1
+            if self.playTimer.levelUpCount == 1:
+                self.RedBatPool.spawnCount += 3
+                self.WormPool.spawnCount += 3
 
 
         pass

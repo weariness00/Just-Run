@@ -22,11 +22,15 @@ class Dash(Skill):
         self.explain.append(Text())
         self.explain[1].font = self.explain[1].fontList['Explain']
         self.explain[1].text = '돌진시에는 무적이 됩니다.'
+        self.explain.append(Text())
+        self.explain[2].font = self.explain[2].fontList['Explain']
+        self.explain[2].text = '(Shift)를 누르면 발동합니다.'
 
         # 능력 초기화
         pass
 
     def __del__(self):
+        super(Dash, self).__del__()
         pass
 
     def OnSkill(self):

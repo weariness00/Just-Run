@@ -3,22 +3,25 @@ from Scripts.Object.Player.Animation.Player_Working import Player_Working
 
 
 class Player_Dash:
-
+    Dash_Skill = None
     @staticmethod
     def enter(self, event):
+        if Player_Dash.Dash_Skill is None:
+            Player_Dash.Dash_Skill = self.skill
+
         Static_State.enter(self, event)
         self.mainAnimation = self.dashAni
-        self.speed += 300
+        self.speed += Player_Dash.Dash_Skill.speed
         pass
 
     @staticmethod
     def exit(self):
-        self.speed -= 300
+        self.speed -= Player_Dash.Dash_Skill.speed
         pass
 
     @staticmethod
     def do(self):
-        dTime = time.time() - self.skill.dashTime
+        dTime = time.time() - Player_Dash.Dash_Skill.dashTime
         if dTime > 0.5:
             self.skill.isSkillOn = False
             self.collider.isCollide = True

@@ -90,7 +90,7 @@ def exit():
     global gameManager
     global TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
     global uiRender, LifeUIRender, SkillUIRender, numberRender
-    del gameManager.bgm
+    gameManager.__del__()
     del TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
     del uiRender, LifeUIRender, SkillUIRender, numberRender
     pass

@@ -68,7 +68,7 @@ class LevelUP_PopUp(Object):
             self.boxText[1].append([])
             for index, explain in enumerate(SkillContain.array[self.skillIndex[i]].explain):
                 self.boxText[1][i].append(explain.Copy())
-                self.boxText[1][i][index].transform.Position = self.textBoxObject[i].transform.Position + [-260, -30 * index]
+                self.boxText[1][i][index].transform.Position = self.textBoxObject[i].transform.Position + [-260, 15 -30 * index]
                 self.boxText[1][i][index].color = (35, 35, 35)
             pass
 

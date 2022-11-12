@@ -2,11 +2,15 @@ from Scripts.FrameWork.Object import *
 from Scripts.FrameWork.Animation import *
 
 class Monster(Object):
+    HitSound = load_wav('Music/Monster/Hit/Default.wav')
+
     target = None
     renderList = None
     def __init__(self):
         super(Monster, self).__init__()
-        self._speed = None
+        self._speed = 0
+        self.hitSound = Monster.HitSound
+        self.hitSound.set_volume(30)
 
         self.isActive = False
         self.isMoveMent = True
@@ -106,5 +110,18 @@ class Monster(Object):
             self.mainAnimation = self.deathAni
             self.deathStart = time.time()
             pass
+        pass
+
+    def OnCollide(self, collider):
+
+        if collider.tag == "Player":
+            self.collider.isCollide = False
+            self.isMoveMent = False
+            self.isDeath = True
+            self.hitSound.play(1)
+            self.mainAnimation = self.deathAni
+            self.deathStart = time.time()
+        elif collider.tag == 'Monster Attack':
+            self.collider.isTrigger = False
         pass
     pass

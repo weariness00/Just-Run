@@ -24,11 +24,15 @@ class Clone_Techniqu(Skill):
         self.explain.append(Text())
         self.explain[1].font = self.explain[1].fontList['Explain']
         self.explain[1].text = '분신들은 Player의 행동에 영향을 받습니다.'
+        self.explain.append(Text())
+        self.explain[2].font = self.explain[2].fontList['Explain']
+        self.explain[2].text = '(Q)를 누르면 발동합니다.'
 
         # 능력 초기화
         pass
 
     def __del__(self):
+        super(Clone_Techniqu, self).__del__()
         pass
 
     def Update(self):
@@ -57,7 +61,10 @@ class Clone_Techniqu(Skill):
 
         lifeCount = len(newClone.lifeObject)
         if lifeCount < newClone.life:
-            newClone.lifeObject += [Life([100 * (i + lifeCount) + 50, Instance.windowSize[1] - 50]) for i in newClone.life - lifeCount]
+            newClone.lifeObject += [Life([100 * (i + lifeCount) + 50, Instance.windowSize[1] - 50]) for i in range(newClone.life - lifeCount)]
+
+        for life in newClone.lifeObject:
+            life.SetActive(False)
         pass
 
     def Handle_Event(self, event):

@@ -93,17 +93,11 @@ class RedBat(Monster):
         onColliderList = self.collider.OnCollider()
 
         for collider in onColliderList:
+            super(RedBat, self).OnCollide(collider)
             if collider.tag == "Player":
-                self.collider.isCollide = False
-                self.isMoveMent = False
-                self.isDeath = True
-                self.mainAnimation = self.deathAni
-                self.attackAni.count = 0
                 self.deathStart = time.time()
                 self.effect.OnEffect(self.transform)
             if collider.tag == 'Tile':
-                self.collider.isTrigger = False
-            if collider.tag == 'Monster Attack':
                 self.collider.isTrigger = False
 
             pass

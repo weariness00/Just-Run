@@ -23,6 +23,7 @@ class StrongStrength(Skill):
         pass
 
     def __del__(self):
+        super(StrongStrength, self).__del__()
         pass
 
     def OnSkill(self):
