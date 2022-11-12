@@ -1,27 +1,32 @@
 from Scripts.FrameWork.Transform import *
 
 class Text:
+    list = ['Name', 'Explain', 'KR_HSGyeoulNoonkot', 'EN_Bafora']
+    renderList = None
     def __init__(self, size = 20):
         # 객체 초기화
         self.transform = Transform()
         self.text = 'None'
 
-        self.font_Name = load_font('Font/Name.ttf', size)
-        self.font_Explain = load_font('Font/Explain.ttf', size)
-        self.font = self.font_Name
+        self.fontList = dict()
+        for font in Text.list:
+            self.fontList[font] = load_font('Font/' + font + '.ttf', size)
+
+        self.font = self.fontList[Text.list[0]]
         self.color = [255, 255, 255]
+
+        Text.renderList.AddObject(self)
         pass
 
     def __del__(self):
         pass
 
     def ReSize(self, size):
-        del self.font_Name, self.font_Explain
+        for i, font in enumerate(self.fontList):
+            if font == self.font:
+                font = load_font('Font/' + Text.list[i] + '.ttf', size)
+                self.font = font
 
-        self.font_Name = load_font('Font/Name.ttf', size)
-        self.font_Explain = load_font('Font/Explain.ttf', size)
-
-        self.font = self.font_Name
         pass
 
     def Copy(self):
