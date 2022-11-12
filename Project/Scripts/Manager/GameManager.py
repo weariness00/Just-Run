@@ -47,8 +47,9 @@ class GameManager(Object):
         endlessTile = EndlessTile(self.player)
 
         # Monster Pool 객체 생성
-        self.limboPool = MonsterPool(Limbo(), 50, 5, 1)
+        self.LimboPool = MonsterPool(Limbo(), 50, 5, 1)
         self.RedBatPool = MonsterPool(RedBat(), 10, 2, 3)
+        self.WormPool = MonsterPool(Worm(), 5, 1, 5)
 
         # Player 초기화
         self.player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
