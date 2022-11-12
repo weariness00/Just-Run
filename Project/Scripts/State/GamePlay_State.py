@@ -87,11 +87,10 @@ def enter():
 
 # finalization code
 def exit():
-    global start, end
+    global gameManager
     global TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
     global uiRender, LifeUIRender, SkillUIRender, numberRender
-    global ObjectUpdateList, UIUpdateList
-    global RenderUpdateList, UIRenderUpdateList
+    del gameManager.bgm
     del TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
     del uiRender, LifeUIRender, SkillUIRender, numberRender
     pass
@@ -156,6 +155,17 @@ def pause():
     pass
 
 def resume():
+    GameManager.uiRenderList = uiRender
+    Player.renderList = PlayerRender
+    Life.renderList = LifeUIRender
+    Skill.renderList = SkillUIRender
+    Number.renderList = numberRender
+
+    EndlessTile.renderList = TileRender
+    Effect.renderList = EffectRender
+    Monster.renderList = MonsterRender
+    Item.renderList = ItemRender
+
     difTime = time.time() - start
     for collider in Collide.AllCollider:
         if collider.tag == 'Monster':

@@ -3,22 +3,40 @@ from Scripts.FrameWork.Object import Object
 from Scripts.FrameWork.Animation import Animation
 from Scripts.FrameWork.Render import Render
 from Scripts.FrameWork.FrameTime import FrameTime
+from Scripts.FrameWork.Text import Text
+from Scripts.UI.Button import Button
 
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.GamePlay_State as Game_State
 import Scripts.State.Lobby_State as Lobby_State
 
 p = None
+back_Button = None
+
+objectRender = None
+uiRender = None
+textRender = None
+
 updateList = None
-renderList = None
+objectRenderList = None
+uiRenderList = None
+textRenderList = None
 
 def enter():
-    global p
-    global render
-    global updateList, renderList
+    global p, back_Button
+    global objectRender, uiRender, textRender
+    global updateList
+    global objectRenderList, uiRenderList, textRenderList
+
+    objectRender = Render()
+    uiRender = Render()
+    textRender = Render()
+
+    Button.renderList = uiRender
+    Text.renderList = textRender
 
     p = Object()
-    p.transform.Position += [Instance.windowSize[0]//2, Instance.windowSize[1]//2]
+    p.transform.Position += Instance.windowSize//2
     p.transform.Scale *= 2
     p.ani = Animation()
     p.ani.image = load_image('image/GameOver/Player_GameOver.png')
@@ -28,25 +46,47 @@ def enter():
     p.image = p.ani.image
     p.image_type = p.ani.image_type
 
-    render = Render()
-    render.AddObject(p)
+    gameover = Text(200)
+    gameover.font = gameover.fontList['Stone_Head']
+    gameover.text = 'GAME OVER'
+    gameover.color = [255,0,0]
+    gameover.transform.Position += Instance.windowSize//2 + [-420, 100]
+
+    back_Button = Button()
+    back_Button.transform.Scale *= 2
+    back_Button.transform.Position += Instance.windowSize//2 + [0, -150]
+    back_Button.text = Text(40)
+    back_Button.text.text = '로비'
+    back_Button.text.transform.Position += back_Button.transform.Position + [-40, 0]
+    # uiRender.AddObject(gameover)
 
     updateList = []
-    renderList = []
+    objectRenderList = []
+    uiRenderList = []
+    textRenderList = []
 
     updateList.append(p)
-    renderList += [render]
+    updateList.append(back_Button)
+    objectRender.AddObject(p)
+    objectRenderList += [objectRender]
+    uiRenderList += [uiRender]
+    textRenderList += [textRender]
     pass
 
 # finalization code
 def exit():
-    global render
-    del render
+    global objectRender, uiRender
+    del objectRender, uiRender
     Game_State.exit()
     pass
 
 def handle_events():
+
+    if back_Button.isClick is True:
+        game_framework.change_state(Lobby_State)
+
     events = get_events()
+    Object.events = events
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
@@ -70,11 +110,17 @@ def update():
     pass
 
 def draw():
-    global renderList
+    global objectRenderList, uiRenderList, textRenderList
     Game_State.draw()
 
-    for obj in renderList:
-        obj.UIDraw()
+    for obj in objectRenderList:
+        obj.Draw()
+
+    for ui in uiRenderList:
+        ui.UIDraw()
+
+    for text in textRenderList:
+        text.TextDraw()
     pass
 
 def pause():
