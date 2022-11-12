@@ -1,14 +1,16 @@
 from Scripts.Object.Monster.Monster import *
+from Scripts.FrameWork.Effect import Effect
 
 class Limbo(Monster):
     workingImage = load_image('image/Monster/Limbo Monster/Working.png')
     deathImage = load_image('image/Monster/Limbo Monster/Death.png')
 
+    effectImage = load_image('Effect/Sparkling/fireball-small-wind.png')
+
     def __init__(self):
         # Objcet
         super(Limbo, self).__init__()
         self.name = 'Limbo'
-        self.isActive = False
         self._speed = 150
 
         # Transform
@@ -33,10 +35,29 @@ class Limbo(Monster):
         self.deathAni.countSpeed = 4
 
         self.mainAnimation = self.workingAni
+
+        # Effect
+        self.effect = Effect()
+        self.effect.image = Limbo.effectImage
+        self.effect.image_type = [0,0,2048//8,1792//7]
+        self.effect.frame_X, self.effect.frame_Y = 8, 6
+        self.effect.countSpeed = 100
+        self.effect.isOneCycle = True
         pass
 
     def __del__(self):
         super(Limbo, self).__del__()
+        pass
+
+    def Enable(self):
+        self.mainAnimation = self.workingAni
+        self.lifeTime = random.randint(7, 12 + 1)
+        self.lifeStart = time.time()
+        pass
+
+    def Disable(self):
+        super(Limbo, self).Disable()
+
         pass
 
     def Update(self):
@@ -61,6 +82,8 @@ class Limbo(Monster):
                 self.isDeath = True
                 self.mainAnimation = self.deathAni
                 self.deathStart = time.time()
+                self.effect.OnEffect(self.transform)
+                self.effect.transform.Position[1] += 30
             if collider.tag == 'Monster Attack':
                 self.collider.isTrigger = False
             pass

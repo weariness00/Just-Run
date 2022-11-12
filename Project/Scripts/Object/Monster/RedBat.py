@@ -8,12 +8,11 @@ class RedBat(Monster):
     attackImage = load_image('image/Monster/RedBat Monster/Attack.png')
     deathImage = load_image('image/Monster/RedBat Monster/Death.png')
 
-    effectImage = load_image('Effect/Fire/fire7_64.png')
+    effectImage = load_image('Effect/Fire/fire1_64.png')
     def __init__(self):
         # Objcet
         super(RedBat, self).__init__()
         self.name = 'RedBat'
-        self.isActive = False
         self._speed = 70
         self.attackRange = 500
         self.attackObjectCount = 2
@@ -56,11 +55,24 @@ class RedBat(Monster):
         self.effect.image_type = [0,0,64,64]
         self.effect.frame_X, self.effect.frame_Y = 10, 6
         self.effect.countSpeed = 5
+        self.effect.isOneCycle = True
 
         pass
 
     def __del__(self):
         super(RedBat, self).__del__()
+        pass
+
+    def Enable(self):
+        self.mainAnimation = self.workingAni
+        self.lifeTime = random.randint(7, 12 + 1)
+        self.lifeStart = time.time()
+        self.attackTimer = time.time()
+        pass
+
+    def Disable(self):
+        super(RedBat, self).Disable()
+        self.attackAni.count = 0
         pass
 
     def Update(self):
@@ -88,7 +100,7 @@ class RedBat(Monster):
                 self.mainAnimation = self.deathAni
                 self.attackAni.count = 0
                 self.deathStart = time.time()
-                self.effect.OnEffect()
+                self.effect.OnEffect(self.transform)
             if collider.tag == 'Tile':
                 self.collider.isTrigger = False
             if collider.tag == 'Monster Attack':
@@ -111,7 +123,7 @@ class RedBat(Monster):
 
         for i in range(self.attackObjectCount):
             self.attackObject[i].transform.Position = numpy.array(self.transform.Position)
-            self.attackObject[i].OnObject()
+            self.attackObject[i].SetActive(True)
             break
 
         pass

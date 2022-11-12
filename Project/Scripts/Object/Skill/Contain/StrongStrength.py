@@ -29,7 +29,6 @@ class StrongStrength(Skill):
 
         newLife = Life([100 * Player.this.maxLife - 50, Instance.windowSize[1] - 50])
 
-        newLife.isActive = True
         newLife.redFireAni.count = random.randint(0,4)
 
         Player.this.lifeObject.append(newLife)

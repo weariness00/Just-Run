@@ -13,7 +13,11 @@ class SkillContain:
         SkillContain.maxIndex = len(self.array)
 
         for skill in SkillContain.array:
+            skill.SetActive(False)
             skill.LevelUp()
+        pass
+
+    def __del__(self):
         pass
 
     @staticmethod

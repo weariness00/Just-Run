@@ -32,7 +32,7 @@ class Dash(Skill):
         pass
 
     def Handle_Event(self, event):
-        if super(Dash, self).Handle_Event() is False:
+        if super(Dash, self).Handle_Event(event) is False:
             return
 
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LSHIFT) or \

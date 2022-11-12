@@ -33,6 +33,21 @@ class Object:
     def __del__(self):
         pass
 
+    def SetActive(self, value):
+        if self.isActive is False and value is True:
+            self.Enable()
+        elif self.isActive is True and value is False:
+            self.Disable()
+        self.isActive = value
+
+        pass
+
+    def Enable(self):   # 오브젝트를 활성화 할때 한 번 호출
+        pass
+
+    def Disable(self):
+        pass
+
     def Update(self):
         pass
 

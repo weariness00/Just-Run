@@ -17,6 +17,7 @@ event_Name = ['null',
 
 class Player(Object):
     this = None
+    renderList = None
     def __init__(self):
         super(Player, self).__init__()
 
@@ -27,7 +28,6 @@ class Player(Object):
         self.speed = 150
         self.addSpeed = 0
         self.idle = dict()
-        self.events = []
 
         self.isGot = False
         self.gotTime = 0
@@ -79,9 +79,19 @@ class Player(Object):
         self.q = []
         self.cur_state = Player_Idle
         self.cur_state.enter(self, None)
+
+        Player.renderList.AddObject(self)
         pass
 
     def __del__(self):
+        del self.idle
+        del self.q
+        self.collider.__del__()
+        self.idleAni.__del__()
+        self.workingAni.__del__()
+
+        Object.updateList.remove(self)
+        Player.renderList.RemoveObject(self)
         pass
 
     def Update(self):
@@ -105,7 +115,7 @@ class Player(Object):
         self.OnAnimation()
         pass
     def Handle_Event(self):
-        for event in self.events:
+        for event in Object.events.copy():
             self.skill.Handle_Event(event)
 
             if (event.type, event.key) in key_event_table:
@@ -135,11 +145,12 @@ class Player(Object):
         if self.collider.isCollide is False:
             return
 
+        self.collider.isTrigger = True
         onColliderList = self.collider.OnCollider()
         for collider in onColliderList:
             if collider.tag == "Tile":
                 pass
-            if collider.tag == "Monster":
+            elif collider.tag == "Monster":
                 if self.isGot is True:
                     continue
 
@@ -151,9 +162,12 @@ class Player(Object):
 
                 self.OnGotMode()
                 print("몬스터와 충돌 _ Player 클래스에")
+                if self.name == "Player Clone" and self.life <= 0:
+                    self.__del__()
+
                 pass
-
-
+            elif collider.tag == "Player":
+                self.collider.isTrigger = False
             pass
         pass
 

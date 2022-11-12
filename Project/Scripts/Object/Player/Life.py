@@ -3,7 +3,6 @@ from Scripts.FrameWork.Animation import *
 
 class Life(Object):
     renderList = None  # 동적할당해주는 것들은 자체적으로 렌더를 가짐
-    updateList = None
     def __init__(self, position):
         super(Life, self).__init__()
         self.name = 'Life'
@@ -29,6 +28,8 @@ class Life(Object):
         self.blueFireAni.countSpeed = 5
 
         self.mainAnimation = self.redFireAni
+
+        Life.renderList.AddObject(self)
         pass
     
     def __del__(self):

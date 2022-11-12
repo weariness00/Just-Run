@@ -6,8 +6,9 @@ class Monster(Object):
     renderList = None
     def __init__(self):
         super(Monster, self).__init__()
-        self.__idle = dict()
         self._speed = None
+
+        self.isActive = False
         self.isMoveMent = True
         self.isDeath = False    # 현재 죽은 상태인지
 
@@ -46,6 +47,18 @@ class Monster(Object):
         super(Monster, self).__del__()
         pass
 
+    def Enable(self):
+
+        pass
+
+    def Disable(self):
+        self.isDeath = False
+        self.collider.isCollide = True
+        self.isMoveMent = True
+        # self.attackAni.count = 0
+        # self.mainAnimation = self.workingAni
+        pass
+
     def MoveMent(self):
         if self.isMoveMent is False:
             return
@@ -75,15 +88,10 @@ class Monster(Object):
         if self.transform.direction[0] > 0:
             self.image_dir = 'None'
         elif self.transform.direction[0] < 0:
-            self.image_dir = 'hd'
+            self.image_dir = 'h'
 
         if self.isDeath is True and time.time() - self.deathStart > 1:
-            self.isActive = False
-            self.isDeath = False
-            self.collider.isCollide = True
-            self.isMoveMent = True
-            self.attackAni.count = 0
-            self.mainAnimation = self.workingAni
+            self.SetActive(False)
         pass
 
     def CheckLifeTime(self):  # 생명주기 체크

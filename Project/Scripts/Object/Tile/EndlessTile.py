@@ -4,9 +4,10 @@ from Scripts.FrameWork.Render import *
 #타입에 따른 타일 만들기
 #Player 포지션에 따른 맵 생성 제대로 되게 하기
 
-class EndlessTile:
+class EndlessTile(Object):
     renderList = None
     def __init__(self, Player):
+        super(EndlessTile, self).__init__()
         self.Player = Player
 
         self.maxViewDistance = 160 * 4
@@ -17,10 +18,14 @@ class EndlessTile:
         self.VisibleTerrainList = None
         pass
 
+
+    def Update(self):
+        self.UpdateVisibleTerrain()
+        pass
     def UpdateVisibleTerrain(self):
         #현재 Active중인 타일 전부 False
         for obj in self.LastUpdateTerrain:
-            obj.isActive = False
+            obj.SetActive(False)
             pass
         self.LastUpdateTerrain = []
 
@@ -48,7 +53,7 @@ class EndlessTile:
                     EndlessTile.renderList.AddObject(obj)
                     pass
 
-                obj.isActive = True
+                obj.SetActive(True)
                 self.LastUpdateTerrain.append(obj)
                 pass
             pass
