@@ -7,5 +7,6 @@ from pico2d import *
 from enum import Enum, auto
 import time
 import random
+import copy
 
 import Scripts.Static as Instance

@@ -23,7 +23,7 @@ class Skill(Object):
         self.skillName = None
         self.nameText = Text(30)
         self.explain = Text()  # skill을 설명할 Text
-        self.explain.font = self.explain.font_Explain
+        self.explain.font = self.explain.fontList['Explain']
 
         Skill.renderList.AddObject(self)
         pass

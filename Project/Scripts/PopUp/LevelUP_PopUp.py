@@ -91,11 +91,11 @@ class LevelUP_PopUp(Object):
             SkillContain.array[self.skillIndex[self.count]].OnSkill()
             SkillContain.array[self.skillIndex[self.count]].LevelUp()
         else:
-            Player.this.skill.isActive = False
+            Player.this.skill.SetActive(False)
             Player.this.skill = SkillContain.array[self.skillIndex[self.count]]
             Player.this.skill.LevelUp()
             Player.this.skill.transform.Position = Player.this.skillBox.transform.Position
-            Player.this.skill.isActive = True
+            Player.this.skill.SetActive(True)
         pass
 
     def ChangeBoxColor(self, color):
