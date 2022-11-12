@@ -37,7 +37,6 @@ class Worm(Monster):
         self.deathAni.countSpeed = 8
 
         self.mainAnimation = self.spawnAni
-
         pass
 
     def __del__(self):
@@ -63,6 +62,7 @@ class Worm(Monster):
                 self.mainAnimation = self.workingAni
             pass
 
+        self.transform.LookAt(0)
         super(Worm, self).CheckLifeTime()
         super(Worm, self).OnAnimation()
         pass
