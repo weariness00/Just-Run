@@ -26,7 +26,7 @@ class Clone_Techniqu(Skill):
         self.explain[1].text = '분신들은 Player의 행동에 영향을 받습니다.'
         self.explain.append(Text())
         self.explain[2].font = self.explain[2].fontList['Explain']
-        self.explain[2].text = '(Q)를 누르면 발동합니다.'
+        self.explain[2].text = '(Q)를 누르면 발동합니다. 최대 Level 2'
 
         # 능력 초기화
         pass
@@ -77,6 +77,8 @@ class Clone_Techniqu(Skill):
 
     def LevelUp(self):
         super(Clone_Techniqu, self).LevelUp()
+        if self.level >= 2:
+            self.isMaxLevel = True
         pass
 
     pass

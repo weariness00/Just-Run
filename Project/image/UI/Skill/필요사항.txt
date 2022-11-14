@@ -2,3 +2,5 @@ Skill 이미지의 기본 크기 : 32 x 32 이다.
 Skill Box의 크기가 96 x 96 이다.
 
 스킬 박스 크기에 맞추기위해 skill 이미지 크기는 32의 배수로 한다.
+
+IntenceFlame 64

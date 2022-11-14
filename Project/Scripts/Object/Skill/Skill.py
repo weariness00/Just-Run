@@ -7,11 +7,12 @@ class Skill(Object):
         super(Skill, self).__init__()
         # 객체 초기화
         self.isSkillOn = False
+        self.isMaxLevel = False # 최대 레벨이 되면 레벨업 화면에 안뜨게함
         self.coolTime = 0   # 스킬 쿨타임
         self.onSkillTime = 0    # 스킬을 켰을때 재는 시간
         self.range = 0  # skill을 사용할 범위
         self.level = -1
-        self.skill_Type = None    # Active, Passive
+        self.skill_Type = "None"    # Active, Passive
 
         self.name = 'Skill'
 
@@ -20,7 +21,7 @@ class Skill(Object):
 
         # 스킬에 대한 능력치 관련
         # 스킬에 쓸 떄 사용할 이미지 -> 이거는 skill들 만들떄 거기서 초기화
-        self.skillName = None
+        self.skillName = "None"
         self.nameText = Text(30)
         self.explain = [Text()]  # skill을 설명할 Text
         self.explain[0].font = self.explain[0].fontList['Explain']
