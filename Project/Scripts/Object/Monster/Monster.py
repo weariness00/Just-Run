@@ -1,11 +1,17 @@
 from Scripts.FrameWork.Object import *
 from Scripts.FrameWork.Animation import *
+from Scripts.Object.Item.ItemContain import *
+from Scripts.Object.Item.ItemLoot import LootTable
 
 class Monster(Object):
+    AllMonster = []
+
     HitSound = load_wav('Music/Monster/Hit/Default.wav')
 
     target = None
     renderList = None
+
+    addLifeTime = 0
     def __init__(self):
         super(Monster, self).__init__()
         self._speed = 0
@@ -15,7 +21,6 @@ class Monster(Object):
         self.isActive = False
         self.isMoveMent = True
         self.isDeath = False    # 현재 죽은 상태인지
-
 
         # Attack 관련 멤버
         self.attackSpeed = 5
@@ -44,6 +49,11 @@ class Monster(Object):
         # Timer
         self.deathStart = time.time()
 
+        # LootTable
+        self.lootTable = LootTable(self.transform)
+        self.lootTable.AddItem_Table(FireJewelry(), 100, [1, 1])    # 임시 값
+
+        Monster.AllMonster.append(self)
         Monster.renderList.AddObject(self)
         pass
 
@@ -56,6 +66,7 @@ class Monster(Object):
         pass
 
     def Disable(self):
+        self.lootTable.Drop()
         self.isDeath = False
         self.collider.isCollide = True
         self.isMoveMent = True
@@ -103,7 +114,7 @@ class Monster(Object):
             return
 
         lTime = time.time() - self.lifeStart
-        if lTime > self.lifeTime:
+        if lTime + Monster.addLifeTime > self.lifeTime:
             self.collider.isCollide = False
             self.isMoveMent = False
             self.isDeath = True
@@ -122,6 +133,8 @@ class Monster(Object):
             self.mainAnimation = self.deathAni
             self.deathStart = time.time()
         elif collider.tag == 'Monster Attack':
+            self.collider.isTrigger = False
+        elif collider.tag == "Item":
             self.collider.isTrigger = False
         pass
     pass
