@@ -3,15 +3,16 @@ from Scripts.FrameWork.Object import *
 class Button(Object):
     image = load_image('image/UI/Button.png')
     renderList = None
-    def __init__(self):
+    def __init__(self, death=0):
         super(Button, self).__init__()
         self.isClick = False
 
+        self.name = "Button"
         self.image = Button.image
         self.image_type = [0, 0, 167, 48]
         self.frameCount = 0
 
-        Button.renderList.AddObject(self)
+        Button.renderList.AddObject(self, death)
         pass
 
     def __del__(self):

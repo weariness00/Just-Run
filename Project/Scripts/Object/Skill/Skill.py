@@ -1,4 +1,4 @@
-from Scripts.FrameWork.Text import *
+from Scripts.UI.Text import *
 from Scripts.Object.Player.Player import *
 
 class Skill(Object):
@@ -26,7 +26,7 @@ class Skill(Object):
         self.explain = [Text()]  # skill을 설명할 Text
         self.explain[0].font = self.explain[0].fontList['Explain']
 
-        Skill.renderList.AddObject(self)
+        Skill.renderList.AddObject(self, 2)
         pass
 
     def __del__(self):

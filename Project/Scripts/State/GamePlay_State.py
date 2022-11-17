@@ -10,86 +10,62 @@ start = None
 end = None
 
 # Render
-#   Object
-TileRender = None
-PlayerRender = None
-MonsterRender = None
-EffectRender = None
-ItemRender = None
-
-#   UI
+ObjectRender = None
 uiRender = None
-numberRender = None
-LifeUIRender = None
-SkillUIRender = None
+textRender = None
 
 # Objcet
 gameManager = None
 
-# Update List
-ObjectUpdateList = None
-UIUpdateList = None
-
-# Render List
-RenderUpdateList = None
-UIRenderUpdateList = None
 
 def enter():
     global start, end
-    global TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
-    global uiRender, LifeUIRender, SkillUIRender, numberRender
+    global ObjectRender, uiRender, textRender
     global gameManager
-    global ObjectUpdateList, UIUpdateList
-    global RenderUpdateList, UIRenderUpdateList
     start = time.time()
     end = None
 
-    # Init
-    Collide.AllCollider = []
-    ObjectUpdateList = []
-    UIUpdateList = []
-
     # 객채 생성
-    TileRender = Render()
-    PlayerRender = Render()
-    MonsterRender = Render()
-    EffectRender = Render()
-    ItemRender = Render()
-
+    ObjectRender = Render()
+    ObjectRender.name += " : Object - GamePlay"
     uiRender = Render()
-    numberRender = Render()
-    LifeUIRender = Render()
-    SkillUIRender = Render()
+    uiRender.name += " : ui - GamePlay"
+    textRender = Render()
+    textRender.name += " : Text - GamePlay"
 
     GameManager.uiRenderList = uiRender
-    Player.renderList = PlayerRender
-    Life.renderList = LifeUIRender
-    Skill.renderList = SkillUIRender
-    Number.renderList = numberRender
 
-    EndlessTile.renderList = TileRender
-    Effect.renderList = EffectRender
-    Monster.renderList = MonsterRender
-    Item.renderList = ItemRender
+    Player.renderList = ObjectRender
+    EndlessTile.renderList = ObjectRender
+    Effect.renderList = ObjectRender
+    Monster.renderList = ObjectRender
+    Item.renderList = ObjectRender
+
+    Life.renderList = uiRender
+    Skill.renderList = uiRender
+    Number.renderList = uiRender
+    Button.renderList = uiRender
+
+    Text.renderList = textRender
 
     gameManager = GameManager()
 
-
-    # Render 초기화
-    #   Object
-    RenderUpdateList = [TileRender, PlayerRender, ItemRender, MonsterRender, EffectRender]
-
-    UIRenderUpdateList = [uiRender, numberRender, LifeUIRender, SkillUIRender]
     pass
 
 # finalization code
 def exit():
     global gameManager
-    global TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
-    global uiRender, LifeUIRender, SkillUIRender, numberRender
+    global ObjectRender, uiRender, textRender
+    Object.AllObject.clear()
+    Monster.AllMonster.clear()
+    Collide.AllCollider.clear()
+    Collide.AllColliderX.clear()
+    Collide.AllColliderY.clear()
+
     gameManager.__del__()
-    del TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
-    del uiRender, LifeUIRender, SkillUIRender, numberRender
+    ObjectRender.__del__()
+    uiRender.__del__()
+    textRender.__del__()
     pass
 
 def handle_events():
@@ -118,8 +94,6 @@ def handle_events():
 
 
 def update():
-    global ObjectUpdateList
-
     # Function Flow
     # 모든 Object의 Update 호출
     for obj in Object.AllObject:
@@ -138,12 +112,9 @@ def update():
     pass
 
 def draw():
-    global RenderUpdateList, UIRenderUpdateList
-    for render in RenderUpdateList:
-        render.Draw()
+    ObjectRender.Draw()
 
-    for UIRender in UIRenderUpdateList:
-        UIRender.UIDraw()
+    uiRender.UIDraw()
 
     Collide.AllBoxDraw()
     Lay.DrawLayCast()
@@ -156,16 +127,15 @@ def pause():
     pass
 
 def resume():
-    GameManager.uiRenderList = uiRender
-    Player.renderList = PlayerRender
-    Life.renderList = LifeUIRender
-    Skill.renderList = SkillUIRender
-    Number.renderList = numberRender
+    Player.renderList = ObjectRender
+    EndlessTile.renderList = ObjectRender
+    Effect.renderList = ObjectRender
+    Monster.renderList = ObjectRender
+    Item.renderList = ObjectRender
 
-    EndlessTile.renderList = TileRender
-    Effect.renderList = EffectRender
-    Monster.renderList = MonsterRender
-    Item.renderList = ItemRender
+    Life.renderList = uiRender
+    Skill.renderList = uiRender
+    Number.renderList = uiRender
 
     difTime = time.time() - start
     for collider in Collide.AllCollider:

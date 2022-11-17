@@ -1,6 +1,6 @@
 # 강인한 체력
 from Scripts.Object.Player.Player import *
-from Scripts.FrameWork.Text import Text
+from Scripts.UI.Text import Text
 
 
 class StrongStrength(Skill):

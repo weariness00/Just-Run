@@ -18,6 +18,10 @@ class EndlessTile(Object):
         self.VisibleTerrainList = None
         pass
 
+    def __del__(self):
+        super(EndlessTile, self).__del__()
+
+        pass
 
     def Update(self):
         self.UpdateVisibleTerrain()

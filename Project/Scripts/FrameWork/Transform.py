@@ -11,11 +11,10 @@ class Transform:
         pass
 
     def __del__(self):
-        # del self.Position
-        # del self.Rotation
-        # del self.Scale
-        # del self.movePos
-        # del self
+        del self.Position
+        del self.Rotation
+        del self.Scale
+        del self.direction
         pass
 
     def LookAt(self, speed):

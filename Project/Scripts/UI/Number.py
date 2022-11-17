@@ -30,7 +30,7 @@ class Number(Object):
             self.numberObjects[i].transform.Scale = self.transform.Scale
             self.numberObjects[i].name = self.name
 
-        Number.renderList.RendererObjectList += self.numberObjects
+        Number.renderList.AddObject(self.numberObjects)
         pass
 
     pass

@@ -2,7 +2,7 @@ from Scripts.Afx import *
 from Scripts.FrameWork.Object import Object
 from Scripts.UI.Button import Button
 from Scripts.FrameWork.Render import Render
-from Scripts.FrameWork.Text import Text
+from Scripts.UI.Text import Text
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.GamePlay_State as game_state
 
@@ -17,26 +17,17 @@ exit_Button = None
 ui_Render = None
 text_Render = None
 
-# Update List / Render List
-objectUpdateList = None
-
-uiRenderList = None
-textRenderList = None
-
 def enter():
     global background
     global start_Button, exit_Button
     global ui_Render, text_Render
-    global uiRenderList, textRenderList
-
-    # Init
-    uiRenderList = []
-    textRenderList = []
 
     ui_Render = Render()
+    ui_Render.name += " : UI - Lobby"
     Button.renderList = ui_Render
 
     text_Render = Render()
+    text_Render.name += " : Text - Lobby"
     Text.renderList = text_Render
 
     # 객체 초기화
@@ -66,27 +57,17 @@ def enter():
 
     # Render 초기화
 
-    ui_Render.RendererObjectList.insert(0, background)
-    ui_Render.RendererObjectList.insert(1, frame)
+    ui_Render.AddObject(background, 0)
+    ui_Render.AddObject(frame, 0)
 
-
-    uiRenderList += [ui_Render]
-    textRenderList += [text_Render]
-
-    # List 초기화
-    # objectUpdateList += [background, start_Button, exit_Button]
 
     pass
 
 # finalization code
 def exit():
-    global background
-    global start_Button, exit_Button
-    global ui_Render
-    global uiRenderList
-    del background
-    del ui_Render
-    del uiRenderList
+    global ui_Render, text_Render
+    ui_Render.__del__();
+    text_Render.__del__();
     pass
 
 def handle_events():
@@ -103,17 +84,16 @@ def handle_events():
 
 
 def update():
-
     for obj in Object.AllObject:
         obj.Update()
+
     pass
 
 def draw():
-    for ui in uiRenderList:
-        ui.UIDraw()
 
-    for text in textRenderList:
-        text.TextDraw()
+    ui_Render.UIDraw()
+
+    text_Render.TextDraw()
 
     pass
 
@@ -125,7 +105,7 @@ def resume():
 
 def ButtonLogic():
     if start_Button.isClick is True:
-        game_framework.change_state(game_state)
+       game_framework.change_state(game_state)
     elif exit_Button.isClick is True:
         game_framework.quit()
 
@@ -135,7 +115,7 @@ def ButtonInit():
     global start_Button, exit_Button
 
     # Start
-    start_Button = Button()
+    start_Button = Button(1)
     start_Button.transform.Scale *= 2
     start_Button.transform.Position += [Instance.windowSize[0]//2, 300]
     start_Button.text = Text(40)
@@ -143,7 +123,7 @@ def ButtonInit():
     start_Button.text.transform.Position += start_Button.transform.Position + [-40, 0]
 
     # Exit
-    exit_Button = Button()
+    exit_Button = Button(1)
     exit_Button.transform.Scale *= 2
     exit_Button.transform.Position += [Instance.windowSize[0]//2, 200]
     exit_Button.text = Text(40)

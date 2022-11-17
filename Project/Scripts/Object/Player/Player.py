@@ -26,7 +26,7 @@ class Player(Object):
         self.name = 'Player'
         self.maxLife = 4
         self.life = self.maxLife
-        self.speed = 150
+        self.speed = 300
         self.addSpeed = 0
         self.idle = dict()
 
@@ -84,13 +84,12 @@ class Player(Object):
         self.cur_state = Player_Idle
         self.cur_state.enter(self, None)
 
-        Player.renderList.AddObject(self)
+        Player.renderList.AddObject(self, 1)
         pass
 
     def __del__(self):
         del self.idle
         del self.q
-        self.collider.__del__()
         self.idleAni.__del__()
         self.workingAni.__del__()
 

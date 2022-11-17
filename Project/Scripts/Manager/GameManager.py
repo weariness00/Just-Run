@@ -11,6 +11,8 @@ from Scripts.Object.Tile.EndlessTile import EndlessTile
 from Scripts.Object.Player.Life import Life
 from Scripts.FrameWork.Effect import Effect
 from Scripts.UI.Number import Number
+from Scripts.UI.Text import Text
+from Scripts.UI.Button import Button
 
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.GameOver_State as GameOver
@@ -45,7 +47,7 @@ class GameManager(Object):
 
         self.skillContain = SkillContain()
 
-        endlessTile = EndlessTile(self.player)
+        self.endlessTile = EndlessTile(self.player)
 
         # Monster Pool 객체 생성
         self.LimboPool = MonsterPool(Limbo(), 60, 5, 1)
@@ -59,7 +61,7 @@ class GameManager(Object):
         Camera.MainCamera = Camera(self.player.transform)
         Collide.MainCamera = Camera.MainCamera
 
-        Skill.renderList.RendererObjectList.insert(0, self.player.skillBox)
+        Skill.renderList.AddObject(self.player.skillBox, 0)
 
         pass
 

@@ -1,4 +1,5 @@
 from Scripts.FrameWork.Object import *
+from Scripts.UI.Text import Text
 from Scripts.Object.Player.Player import Player
 
 class Item(Object):
@@ -17,10 +18,18 @@ class Item(Object):
         self.collider.InitTransform(self.transform)
         self.collider.SetCollideBox(numpy.array([[0, 0], [32, 32]]))
 
-        Item.renderList.AddObject(self)
+        # Text
+        self.name = Text(30)
+        self.explain = [Text()]
+
+        self.name.text = "None"
+        self.explain[0].text = "None"
+
+        Item.renderList.AddObject(self, 2)
         pass
 
     def __del__(self):
+        self.collider.__del__()
         super(Item, self).__del__()
         pass
 

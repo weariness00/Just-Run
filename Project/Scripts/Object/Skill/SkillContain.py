@@ -25,8 +25,7 @@ class SkillContain:
 
     def __del__(self):
         for skill in SkillContain.array:
-            del skill
-        SkillContain.array = []
+            SkillContain.array.remove(skill)
         pass
 
     @staticmethod

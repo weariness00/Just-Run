@@ -3,10 +3,11 @@ from Scripts.FrameWork.Transform import *
 class Text:
     list = ['Name', 'Explain', 'KR_HSGyeoulNoonkot', 'EN_Bafora', 'Stone_Head']
     renderList = None
-    def __init__(self, size = 20):
+    def __init__(self, size = 20, death=0):
         # 객체 초기화
         self.transform = Transform()
-        self.text = 'None'
+        self.text = 'Text'
+        self.isActive = True
 
         self.fontList = dict()
         for font in Text.list:
@@ -15,7 +16,7 @@ class Text:
         self.font = self.fontList[Text.list[0]]
         self.color = [255, 255, 255]
 
-        Text.renderList.AddObject(self)
+        Text.renderList.AddObject(self, death)
         pass
 
     def __del__(self):

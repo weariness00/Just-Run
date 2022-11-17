@@ -9,6 +9,8 @@ class Object:
     Count = 0
     AllObject = []
     events = []  # Hadle_Event
+
+    updateList = None
     def __init__(self):
         self.transform = Transform()
 
@@ -24,9 +26,12 @@ class Object:
         self.ID = Object.Count
         Object.Count += 1
         Object.AllObject.append(self)
+        if Object.updateList is not None:
+            Object.updateList.append(self)
         pass
 
     def __del__(self):
+        del self.transform
         pass
 
     def SetActive(self, value):

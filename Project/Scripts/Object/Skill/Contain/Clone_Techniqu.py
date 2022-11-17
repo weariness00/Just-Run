@@ -1,5 +1,5 @@
 # 분신술
-from Scripts.FrameWork.Text import Text
+from Scripts.UI.Text import Text
 from Scripts.Object.Player.Player import *
 
 class Clone_Techniqu(Skill):

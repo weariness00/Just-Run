@@ -5,6 +5,8 @@ class Collide:
     AllColliderX = None
     AllColliderY = None
     MainCamera = None
+
+    image = load_image('colliderBox.png')
     def __init__(self):
         self.colliderBox = None
         self.colliderSize = None
@@ -24,14 +26,12 @@ class Collide:
 
         self.tag = None
 
-        self.image = load_image('colliderBox.png')
+        self.image = Collide.image
 
         Collide.AllCollider.append(self)
         pass
 
     def __del__(self):
-        del self.image
-        Collide.AllCollider.remove(self)
         del self
         pass
 

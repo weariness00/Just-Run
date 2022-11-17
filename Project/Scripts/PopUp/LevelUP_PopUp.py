@@ -3,13 +3,15 @@ from Scripts.Object.Skill.Skill import *
 from Scripts.Object.Player.Player import Player
 
 class LevelUP_PopUp(Object):
-
+    objectRender = None
+    uiRender = None
+    textRender = None
     def __init__(self):
         super(LevelUP_PopUp, self).__init__()
         # 객체 초기화
         self.count = 2
 
-        SkillContain.array[0].nameText.transform.Position += [800, 450]
+        # SkillContain.array[0].nameText.transform.Position += [800, 450]
         self.skillIndex = 0
 
         # Box UI 컬러
@@ -47,17 +49,24 @@ class LevelUP_PopUp(Object):
         self.ChangeBoxColor('Red')
         # Box 에 들어갈 스킬 image와 text
         self.boxText = [[], []]
-        self.skillIndex = [-1,-1,-1]
-        count = 0
+        maxLevelSkillCount = 0
+        for skill in SkillContain.array:
+            if skill.isMaxLevel is True:
+                 maxLevelSkillCount += 1
+
+        setIndex = set()
         while True:
-            if count >= 3:
+            if len(setIndex) >= 3:
                 break
+
             index = SkillContain.RandomIndex()
-            if any(self.skillIndex[i] is index for i in range(3)):
+            # maxLevel인 스킬 제외
+            if SkillContain.array[index].isMaxLevel is True:
                 continue
-            self.skillIndex[count] = index
-            count += 1
+
+            setIndex.add(index)
             pass
+        self.skillIndex = list(setIndex)
 
         for i in range(3):
             self.boxText[0].append(SkillContain.array[self.skillIndex[i]].nameText.Copy())
@@ -80,6 +89,11 @@ class LevelUP_PopUp(Object):
             imageObj.transform.Position += self.imageBoxObject[i].transform.Position
             imageObj.transform.Scale = SkillContain.array[self.skillIndex[i]].transform.Scale
             pass
+
+        LevelUP_PopUp.uiRender.AddObject(self.textBoxObject, 1)
+        LevelUP_PopUp.uiRender.AddObject(self.imageBoxObject, 1)
+        LevelUP_PopUp.uiRender.AddObject(self.boxImage, 2)
+
         pass
 
     def __del__(self):

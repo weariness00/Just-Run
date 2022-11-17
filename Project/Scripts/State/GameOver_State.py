@@ -3,7 +3,7 @@ from Scripts.FrameWork.Object import Object
 from Scripts.FrameWork.Animation import Animation
 from Scripts.FrameWork.Render import Render
 from Scripts.FrameWork.FrameTime import FrameTime
-from Scripts.FrameWork.Text import Text
+from Scripts.UI.Text import Text
 from Scripts.UI.Button import Button
 
 import Scripts.FrameWork.game_framework as game_framework
@@ -17,22 +17,19 @@ objectRender = None
 uiRender = None
 textRender = None
 
-updateList = None
-objectRenderList = None
-uiRenderList = None
-textRenderList = None
-
 def enter():
     global p, back_Button
     global objectRender, uiRender, textRender
-    global updateList
-    global objectRenderList, uiRenderList, textRenderList
-
     Game_State.gameManager.bgm.stop()
 
+    Object.updateList = []
+
     objectRender = Render()
+    objectRender.name += " : Object - GameOver"
     uiRender = Render()
+    uiRender.name += " : UI - GameOver"
     textRender = Render()
+    textRender.name += " : Text - GameOver"
 
     Button.renderList = uiRender
     Text.renderList = textRender
@@ -61,31 +58,21 @@ def enter():
     back_Button.text.text = '로비'
     back_Button.text.transform.Position += back_Button.transform.Position + [-40, 0]
     # uiRender.AddObject(gameover)
-
-    updateList = []
-    objectRenderList = []
-    uiRenderList = []
-    textRenderList = []
-
-    updateList.append(p)
-    updateList.append(back_Button)
+    # updateList.append(p)
+    # updateList.append(back_Button)
 
     uiRender.AddObject(p)
-
-    objectRenderList += [objectRender]
-    uiRenderList += [uiRender]
-    textRenderList += [textRender]
     pass
 
 # finalization code
 def exit():
-    global objectRender, uiRender
-    del objectRender, uiRender
     Game_State.exit()
+    objectRender.__del__()
+    uiRender.__del__()
+    textRender.__del__()
     pass
 
 def handle_events():
-
     if back_Button.isClick is True:
         game_framework.change_state(Lobby_State)
 
@@ -105,26 +92,19 @@ def handle_events():
 
 
 def update():
-    global updateList
-
     if p.ani.count < p.ani.frame:
         p.ani.OnAnimation(FrameTime.fTime)
-    for obj in updateList:
+    for obj in Object.updateList:
         obj.Update()
     pass
 
 def draw():
-    global objectRenderList, uiRenderList, textRenderList
     Game_State.draw()
 
-    for obj in objectRenderList:
-        obj.Draw()
+    objectRender.Draw()
+    uiRender.UIDraw()
+    textRender.TextDraw()
 
-    for ui in uiRenderList:
-        ui.UIDraw()
-
-    for text in textRenderList:
-        text.TextDraw()
     pass
 
 def pause():
