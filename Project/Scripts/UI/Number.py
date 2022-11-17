@@ -19,15 +19,13 @@ class Number(Object):
         for obj in self.numberObjects:
             Number.renderList.RemoveObject(obj)
 
-        number_str = number.__str__()
-        number_count = len(number_str)
-        numbers = [int(number_str[i]) for i in range(number_count)]
+        number_list = list(map(int, str(number)))
 
-        self.numberObjects = [Object() for i in range(number_count)]
+        self.numberObjects = [Object() for i in range(len(number_list))]
 
-        for i in range(number_count):
+        for i, num in enumerate(number_list):
             self.numberObjects[i].image = Number.yellow_image
-            self.numberObjects[i].image_type = [numbers[i] * 120, 0, 120, 146]
+            self.numberObjects[i].image_type = [num * 120, 0, 120, 146]
             self.numberObjects[i].transform.Position = self.transform.Position + [i * 100, 0] * self.transform.Scale
             self.numberObjects[i].transform.Scale = self.transform.Scale
             self.numberObjects[i].name = self.name

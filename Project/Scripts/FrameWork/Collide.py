@@ -106,7 +106,7 @@ class Collide:
         pass
 
     def OnTrigger(self):
-        if self.isCollide is False or self.object.isActive is False or self.isTrigger is False:
+        if self.isCollide is False or self.object.isActive is False:
             return
 
         cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize//2

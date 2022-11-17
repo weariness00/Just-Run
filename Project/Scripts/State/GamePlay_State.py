@@ -38,8 +38,7 @@ def enter():
     global start, end
     global TileRender, PlayerRender, MonsterRender, EffectRender, ItemRender
     global uiRender, LifeUIRender, SkillUIRender, numberRender
-    global gameManager, player, endlessTile
-    global monsterPools
+    global gameManager
     global ObjectUpdateList, UIUpdateList
     global RenderUpdateList, UIRenderUpdateList
     start = time.time()
@@ -49,8 +48,6 @@ def enter():
     Collide.AllCollider = []
     ObjectUpdateList = []
     UIUpdateList = []
-
-    Object.updateList = ObjectUpdateList
 
     # 객채 생성
     TileRender = Render()
@@ -96,7 +93,7 @@ def exit():
     pass
 
 def handle_events():
-    global player, gameManager
+    global gameManager
     events = get_events()
     Object.events = events
     for event in events:
@@ -122,18 +119,21 @@ def handle_events():
 
 def update():
     global ObjectUpdateList
-    global endlessTile, monsterPools
 
     # Function Flow
     # 모든 Object의 Update 호출
-    for obj in ObjectUpdateList:
+    for obj in Object.AllObject:
+        if obj.isActive is False:
+            continue
         obj.Update()
     # 모든 Object의 OnCollider을 호출
     Collide.SortAllCollide()
-    for obj in ObjectUpdateList:
+    for obj in Object.AllObject:
         obj.OnCollide()
     # 모든 Object의 OnTrigger을 호출
     for collider in Collide.AllCollider:
+        if collider.isTrigger is False:
+            continue
         collider.OnTrigger()
     pass
 
@@ -146,6 +146,7 @@ def draw():
         UIRender.UIDraw()
 
     Collide.AllBoxDraw()
+    Lay.DrawLayCast()
 
     pass
 

@@ -49,12 +49,10 @@ class Clone_Techniqu(Skill):
         self.cloneCount += 1
 
         newClone = Player()
-        Object.events = get_events()
-        Object.updateList.remove(newClone)
-        Object.updateList.insert(1, newClone)
         newClone.name = 'Player Clone'
         newClone.speed += 100
         newClone.transform.Position += Player.this.transform.Position
+        newClone.circleLay.SetActive(False)
 
         newClone.maxLife = Player.this.maxLife
         newClone.life = newClone.maxLife

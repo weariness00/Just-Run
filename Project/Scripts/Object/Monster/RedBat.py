@@ -76,9 +76,6 @@ class RedBat(Monster):
         pass
 
     def Update(self):
-        if self.isActive is False:
-            return
-
         super(RedBat, self).MoveMent()
         super(RedBat, self).CheckLifeTime()
         super(RedBat, self).OnAnimation()

@@ -1,6 +1,7 @@
 from Scripts.Object.Item.ItemContain import *
 from Scripts.Object.Monster.MonsterPool import *
 from Scripts.Object.Skill.SkillContain import *
+from Scripts.FrameWork.LayCast import Lay
 
 from Scripts.FrameWork.Render import Render
 from Scripts.Object.GamePlay.PlayTimer import PlayTimer

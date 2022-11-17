@@ -9,11 +9,8 @@ class Object:
     Count = 0
     AllObject = []
     events = []  # Hadle_Event
-
-    updateList = None
     def __init__(self):
         self.transform = Transform()
-        self.collider = None
 
         # Aniamtion 관련
         self.image = Object.image
@@ -27,7 +24,6 @@ class Object:
         self.ID = Object.Count
         Object.Count += 1
         Object.AllObject.append(self)
-        Object.updateList += [self]
         pass
 
     def __del__(self):

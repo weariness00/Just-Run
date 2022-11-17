@@ -168,10 +168,12 @@ class Player(Object):
                 pass
             elif collider.tag == "Player":
                 self.collider.isTrigger = False
-            elif collider.tag == "Item":
-                collider.object.SetActive(False)
             pass
         del onColliderList
+
+        # Lay 충돌 처리
+        if self.circleLay.isActive is False:
+            return
 
         onColliderList = self.circleLay.OnLayCast()
         for collider in onColliderList:

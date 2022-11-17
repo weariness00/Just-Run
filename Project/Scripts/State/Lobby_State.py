@@ -27,20 +27,17 @@ def enter():
     global background
     global start_Button, exit_Button
     global ui_Render, text_Render
-    global objectUpdateList, uiRenderList, textRenderList
+    global uiRenderList, textRenderList
 
     # Init
     uiRenderList = []
     textRenderList = []
-    objectUpdateList = []
 
     ui_Render = Render()
     Button.renderList = ui_Render
 
     text_Render = Render()
     Text.renderList = text_Render
-
-    Object.updateList = objectUpdateList
 
     # 객체 초기화
     ButtonInit()
@@ -86,10 +83,10 @@ def exit():
     global background
     global start_Button, exit_Button
     global ui_Render
-    global uiRenderList, objectUpdateList
+    global uiRenderList
     del background
     del ui_Render
-    del uiRenderList, objectUpdateList
+    del uiRenderList
     pass
 
 def handle_events():
@@ -107,7 +104,7 @@ def handle_events():
 
 def update():
 
-    for obj in objectUpdateList:
+    for obj in Object.AllObject:
         obj.Update()
     pass
 

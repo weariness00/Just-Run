@@ -54,9 +54,6 @@ class Worm(Monster):
         pass
 
     def Update(self):
-        if self.isActive is False:
-            return
-
         if self.mainAnimation == self.spawnAni:
             if self.mainAnimation.count >= self.mainAnimation.frame:
                 self.mainAnimation = self.workingAni

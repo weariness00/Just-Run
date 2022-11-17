@@ -61,9 +61,6 @@ class Limbo(Monster):
         pass
 
     def Update(self):
-        if self.isActive is False:
-            return
-
         super(Limbo, self).MoveMent()
         super(Limbo, self).CheckLifeTime()
         super(Limbo, self).OnAnimation()
