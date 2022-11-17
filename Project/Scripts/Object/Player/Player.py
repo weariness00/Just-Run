@@ -3,6 +3,7 @@ from Scripts.Object.Skill.SkillBox import *
 from Scripts.Object.Skill.Skill import Skill
 from Scripts.Object.Player.Animation.PlayerAnimationController import *
 from Scripts.Object.Player.Animation.Player_Static_State import key_event_table
+from Scripts.FrameWork.LayCast import CircleLay
 
 # class keyType(Enum):
 #     Left = 0
@@ -45,6 +46,9 @@ class Player(Object):
 
         #Transform 초긱화
         self.transform.Scale *= 2
+
+        # Lay 초기화
+        self.circleLay = CircleLay(self.transform, 150)
 
         #Collde 초기화
         self.collider = Collide()
@@ -95,9 +99,6 @@ class Player(Object):
         pass
 
     def Update(self):
-        if self.isActive is False:
-            return
-
         self.Handle_Event()
 
         self.cur_state.do(self)
@@ -161,14 +162,22 @@ class Player(Object):
                 self.lifeObject[self.life].mainAnimation = self.lifeObject[self.life].blueFireAni
 
                 self.OnGotMode()
-                print("몬스터와 충돌 _ Player 클래스에")
                 if self.name == "Player Clone" and self.life <= 0:
                     self.__del__()
 
                 pass
             elif collider.tag == "Player":
                 self.collider.isTrigger = False
+            elif collider.tag == "Item":
+                collider.object.SetActive(False)
             pass
+        del onColliderList
+
+        onColliderList = self.circleLay.OnLayCast()
+        for collider in onColliderList:
+            if collider.tag == 'Item':
+                collider.object.isMoveMent = True
+                collider.isCollide = False
         pass
 
     def OnAnimation(self):
