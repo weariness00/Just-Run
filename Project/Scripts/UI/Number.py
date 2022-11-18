@@ -1,7 +1,6 @@
-from Scripts.FrameWork.Object import *
+from Scripts.FrameWork.UI import *
 
-class Number(Object):
-    renderList = None
+class Number(UI):
     yellow_image = load_image('image/Number/Yellow_Number.png')
     red_image = load_image('image/Number/Red_Number.png')
     def __init__(self):
@@ -17,7 +16,7 @@ class Number(Object):
 
     def ChangeNumber(self, number):
         for obj in self.numberObjects:
-            Number.renderList.RemoveObject(obj)
+            UI.renderList.RemoveObject(obj)
 
         number_list = list(map(int, str(number)))
 
@@ -30,7 +29,7 @@ class Number(Object):
             self.numberObjects[i].transform.Scale = self.transform.Scale
             self.numberObjects[i].name = self.name
 
-        Number.renderList.AddObject(self.numberObjects)
+        UI.renderList.AddObject(self.numberObjects)
         pass
 
     pass

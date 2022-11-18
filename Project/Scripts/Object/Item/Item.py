@@ -25,7 +25,7 @@ class Item(Object):
         self.name.text = "None"
         self.explain[0].text = "None"
 
-        Item.renderList.AddObject(self, 2)
+        Object.renderList.AddObject(self, 2)
         pass
 
     def __del__(self):

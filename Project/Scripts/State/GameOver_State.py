@@ -3,6 +3,7 @@ from Scripts.FrameWork.Object import Object
 from Scripts.FrameWork.Animation import Animation
 from Scripts.FrameWork.Render import Render
 from Scripts.FrameWork.FrameTime import FrameTime
+from Scripts.FrameWork.UI import UI
 from Scripts.UI.Text import Text
 from Scripts.UI.Button import Button
 
@@ -31,7 +32,7 @@ def enter():
     textRender = Render()
     textRender.name += " : Text - GameOver"
 
-    Button.renderList = uiRender
+    UI.renderList = uiRender
     Text.renderList = textRender
 
     p = Object()
@@ -57,9 +58,6 @@ def enter():
     back_Button.text = Text(40)
     back_Button.text.text = '로비'
     back_Button.text.transform.Position += back_Button.transform.Position + [-40, 0]
-    # uiRender.AddObject(gameover)
-    # updateList.append(p)
-    # updateList.append(back_Button)
 
     uiRender.AddObject(p)
     pass

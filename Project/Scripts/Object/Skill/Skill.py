@@ -1,8 +1,8 @@
 from Scripts.UI.Text import *
 from Scripts.Object.Player.Player import *
+from Scripts.FrameWork.UI import UI
 
 class Skill(Object):
-    renderList = None
     def __init__(self):
         super(Skill, self).__init__()
         # 객체 초기화
@@ -26,7 +26,7 @@ class Skill(Object):
         self.explain = [Text()]  # skill을 설명할 Text
         self.explain[0].font = self.explain[0].fontList['Explain']
 
-        Skill.renderList.AddObject(self, 2)
+        UI.renderList.AddObject(self, 2)
         pass
 
     def __del__(self):

@@ -11,6 +11,7 @@ class Object:
     events = []  # Hadle_Event
 
     updateList = None
+    renderList = None
     def __init__(self):
         self.transform = Transform()
 

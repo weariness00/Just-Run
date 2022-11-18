@@ -54,7 +54,7 @@ class Monster(Object):
         self.lootTable.AddItem_Table(FireJewelry(), 100, [1, 1])    # 임시 값
 
         Monster.AllMonster.append(self)
-        Monster.renderList.AddObject(self, 3)
+        Object.renderList.AddObject(self, 3)
         pass
 
     def __del__(self):

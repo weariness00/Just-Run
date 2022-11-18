@@ -66,8 +66,8 @@ def enter():
 # finalization code
 def exit():
     global ui_Render, text_Render
-    ui_Render.__del__();
-    text_Render.__del__();
+    ui_Render.__del__()
+    text_Render.__del__()
     pass
 
 def handle_events():

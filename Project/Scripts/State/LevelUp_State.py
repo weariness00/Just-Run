@@ -1,4 +1,5 @@
 from Scripts.FrameWork.Render import *
+from Scripts.FrameWork.UI import UI
 from Scripts.PopUp.LevelUP_PopUp import *
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.GamePlay_State as Game_State
@@ -25,9 +26,8 @@ def enter():
     UIRender = Render()
     TextRender = Render()
 
-    LevelUP_PopUp.objectRender = ObjectRender
-    LevelUP_PopUp.uiRender = UIRender
-    Skill.renderList = UIRender
+    Object.objectRender = ObjectRender
+    UI.renderList = UIRender
     Text.renderList = TextRender
 
     levelUp = LevelUP_PopUp()

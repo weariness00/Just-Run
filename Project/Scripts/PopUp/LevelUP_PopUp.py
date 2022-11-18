@@ -1,11 +1,9 @@
 from Scripts.Object.Skill.SkillContain import *
 from Scripts.Object.Skill.Skill import *
 from Scripts.Object.Player.Player import Player
+from Scripts.FrameWork.UI import UI
 
 class LevelUP_PopUp(Object):
-    objectRender = None
-    uiRender = None
-    textRender = None
     def __init__(self):
         super(LevelUP_PopUp, self).__init__()
         # 객체 초기화
@@ -90,9 +88,9 @@ class LevelUP_PopUp(Object):
             imageObj.transform.Scale = SkillContain.array[self.skillIndex[i]].transform.Scale
             pass
 
-        LevelUP_PopUp.uiRender.AddObject(self.textBoxObject, 1)
-        LevelUP_PopUp.uiRender.AddObject(self.imageBoxObject, 1)
-        LevelUP_PopUp.uiRender.AddObject(self.boxImage, 2)
+        UI.renderList.AddObject(self.textBoxObject, 1)
+        UI.renderList.AddObject(self.imageBoxObject, 1)
+        UI.renderList.AddObject(self.boxImage, 2)
 
         pass
 

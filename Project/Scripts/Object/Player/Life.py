@@ -1,5 +1,6 @@
 from Scripts.FrameWork.Object import *
 from Scripts.FrameWork.Animation import *
+from Scripts.FrameWork.UI import UI
 
 class Life(Object):
     renderList = None  # 동적할당해주는 것들은 자체적으로 렌더를 가짐
@@ -29,7 +30,7 @@ class Life(Object):
 
         self.mainAnimation = self.redFireAni
 
-        Life.renderList.AddObject(self)
+        UI.renderList.AddObject(self)
         pass
     
     def __del__(self):

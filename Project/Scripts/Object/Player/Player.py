@@ -84,7 +84,7 @@ class Player(Object):
         self.cur_state = Player_Idle
         self.cur_state.enter(self, None)
 
-        Player.renderList.AddObject(self, 1)
+        Object.renderList.AddObject(self, 1)
         pass
 
     def __del__(self):
@@ -92,9 +92,6 @@ class Player(Object):
         del self.q
         self.idleAni.__del__()
         self.workingAni.__del__()
-
-        Object.updateList.remove(self)
-        Player.renderList.RemoveObject(self)
         pass
 
     def Update(self):

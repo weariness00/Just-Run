@@ -10,6 +10,7 @@ from Scripts.Object.Skill.Skill import Skill
 from Scripts.Object.Tile.EndlessTile import EndlessTile
 from Scripts.Object.Player.Life import Life
 from Scripts.FrameWork.Effect import Effect
+from Scripts.FrameWork.UI import UI
 from Scripts.UI.Number import Number
 from Scripts.UI.Text import Text
 from Scripts.UI.Button import Button
@@ -20,8 +21,6 @@ import Scripts.State.GameWInner_State as GameWin
 
 
 class GameManager(Object):
-    uiRenderList = None
-
     def __init__(self):
         super(GameManager, self).__init__()
         self.bgm = load_music('Music/Background/GamePlayBGM_0' + random.randint(1,2).__str__() + '.mp3')
@@ -39,7 +38,7 @@ class GameManager(Object):
         self.itemNumber.transform.Scale *= 0.35
         self.itemNumber.transform.Position += Instance.windowSize + [-150, -70]
         self.itemNumber.ChangeNumber(12)
-        GameManager.uiRenderList.AddObject(self.item)
+        UI.uiRenderList.AddObject(self.item)
 
         self.player = Player()
         Player.this = self.player

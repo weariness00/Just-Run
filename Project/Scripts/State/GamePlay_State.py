@@ -1,7 +1,7 @@
 from Scripts.Manager.GameManager import *
 
-
-import Scripts.State.Lobby_State as lobby
+import Scripts.State.PlayStop as Stop
+import Scripts.State.Lobby_State as Lobby
 import Scripts.State.LevelUp_State as LevelUp
 
 
@@ -17,15 +17,22 @@ textRender = None
 # Objcet
 gameManager = None
 
+# list
+UpdateList = None
+
 
 def enter():
     global start, end
     global ObjectRender, uiRender, textRender
     global gameManager
+    global UpdateList
     start = time.time()
     end = None
 
     # 객채 생성
+    UpdateList = []
+    Object.updateList = UpdateList
+
     ObjectRender = Render()
     ObjectRender.name += " : Object - GamePlay"
     uiRender = Render()
@@ -33,19 +40,8 @@ def enter():
     textRender = Render()
     textRender.name += " : Text - GamePlay"
 
-    GameManager.uiRenderList = uiRender
-
-    Player.renderList = ObjectRender
-    EndlessTile.renderList = ObjectRender
-    Effect.renderList = ObjectRender
-    Monster.renderList = ObjectRender
-    Item.renderList = ObjectRender
-
-    Life.renderList = uiRender
-    Skill.renderList = uiRender
-    Number.renderList = uiRender
-    Button.renderList = uiRender
-
+    Object.renderList = ObjectRender
+    UI.renderList = uiRender
     Text.renderList = textRender
 
     gameManager = GameManager()
@@ -57,6 +53,7 @@ def exit():
     global gameManager
     global ObjectRender, uiRender, textRender
     Object.AllObject.clear()
+    Object.updateList.clear()
     Monster.AllMonster.clear()
     Collide.AllCollider.clear()
     Collide.AllColliderX.clear()
@@ -77,9 +74,9 @@ def handle_events():
             game_framework.quit()
         if event.type == SDL_KEYDOWN:
             if event.key == SDLK_ESCAPE:
-                game_framework.quit()
+                game_framework.push_state(Stop)
             if event.key == SDLK_SPACE:
-                game_framework.change_state(lobby)
+                game_framework.change_state(Lobby)
             if event.key == SDLK_F1:
                 game_framework.push_state(LevelUp)
             elif event.key == SDLK_F10:
@@ -96,13 +93,13 @@ def handle_events():
 def update():
     # Function Flow
     # 모든 Object의 Update 호출
-    for obj in Object.AllObject:
+    for obj in UpdateList:
         if obj.isActive is False:
             continue
         obj.Update()
     # 모든 Object의 OnCollider을 호출
     Collide.SortAllCollide()
-    for obj in Object.AllObject:
+    for obj in UpdateList:
         obj.OnCollide()
     # 모든 Object의 OnTrigger을 호출
     for collider in Collide.AllCollider:

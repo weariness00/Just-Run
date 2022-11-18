@@ -1,8 +1,7 @@
-from Scripts.FrameWork.Object import *
+from Scripts.FrameWork.UI import *
 
-class Button(Object):
+class Button(UI):
     image = load_image('image/UI/Button.png')
-    renderList = None
     def __init__(self, death=0):
         super(Button, self).__init__()
         self.isClick = False
@@ -12,7 +11,7 @@ class Button(Object):
         self.image_type = [0, 0, 167, 48]
         self.frameCount = 0
 
-        Button.renderList.AddObject(self, death)
+        UI.renderList.AddObject(self, death)
         pass
 
     def __del__(self):
