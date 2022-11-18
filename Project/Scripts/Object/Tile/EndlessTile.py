@@ -54,7 +54,7 @@ class EndlessTile(Object):
                     obj.name = 'tile'
 
                     self.terrainDictionary[viewedTerrainPos] = obj
-                    EndlessTile.renderList.AddObject(obj)
+                    Object.renderList.AddObject(obj)
                     pass
 
                 obj.SetActive(True)

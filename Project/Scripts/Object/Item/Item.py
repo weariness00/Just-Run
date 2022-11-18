@@ -38,6 +38,10 @@ class Item(Object):
         self.isMoveMent = False
         pass
 
+    def Disable(self):
+        Object.renderList.RemoveObject(self)
+        pass
+
     def Update(self):
         self.MoveMent()
         pass
@@ -46,7 +50,7 @@ class Item(Object):
         if self.isMoveMent is False:
             return
 
-        self.transform.LooAtTarget(Player.this.transform, 500 * FrameTime.fTime)
+        self.transform.LooAtTarget(Player.this.transform.Position, 500 * FrameTime.fTime)
 
         dis = Instance.Distance(Player.this.transform.Position, self.transform.Position)
         if  dis <= 10:

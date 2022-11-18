@@ -19,10 +19,6 @@ class FireJewelry(Item):
         super(FireJewelry, self).__del__()
         pass
 
-    def Disable(self):
-        Item.renderList.RemoveObject(self)
-        pass
-
     def Update(self):
         super(FireJewelry, self).Update()
         pass

@@ -18,19 +18,22 @@ class Effect(Object):
         self.countSpeed = 0
 
         self.name = 'Effect'
-        self.isActive = False
+        self.SetActive(False)
 
-        Effect.renderList.AddObject(self)
+        Object.renderList.AddObject(self, 4)
         pass
 
     def __del__(self):
         super(Effect, self).__del__()
         pass
 
-    def Update(self):
-        if self.isActive is False:
-            return
+    def Enable(self):
+        self.startTime = time.time()
+        self.count_X = 0
+        self.count_Y = 0
+        pass
 
+    def Update(self):
         if self.count_X >= self.frame_X:
             self.count_X = 0
             self.count_Y += 1
@@ -42,22 +45,17 @@ class Effect(Object):
 
         if self.isOneCycle is True:
             if self.count_Y == self.frame_Y:
-                self.isActive = False
+                self.SetActive(False)
             pass
         elif self.isLifeCycle is True:
             t = time.time() - self.startTime
             if t >= self.lifeTime:
-                self.isActive = False
+                self.SetActive(False)
             pass
-
-        if self.count_Y == self.frame_Y:
-            self.count_Y = 0
-
         pass
 
     def OnEffect(self, transform):
-        self.isActive = True
-        self.startTime = time.time()
+        self.SetActive(True)
 
         self.transform.Position = numpy.copy(transform.Position)
         pass

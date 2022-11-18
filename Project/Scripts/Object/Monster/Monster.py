@@ -14,7 +14,8 @@ class Monster(Object):
     addLifeTime = 0
     def __init__(self):
         super(Monster, self).__init__()
-        self._speed = 0
+        self.speed = 0
+        self.addSpeed = 0
         self.hitSound = Monster.HitSound
         self.hitSound.set_volume(30)
 
@@ -63,7 +64,7 @@ class Monster(Object):
         pass
 
     def Enable(self):
-
+        self.addSpeed = 0
         pass
 
     def Disable(self):
@@ -71,8 +72,6 @@ class Monster(Object):
         self.isDeath = False
         self.collider.isCollide = True
         self.isMoveMent = True
-        # self.attackAni.count = 0
-        # self.mainAnimation = self.workingAni
         pass
 
     def MoveMent(self):
@@ -91,8 +90,8 @@ class Monster(Object):
                 self.attackTimer = time.time()
                 return
 
-        realspeed = self._speed * FrameTime.fTime
-        self.transform.LooAtTarget(Monster.target.transform, realspeed)
+        realspeed = (self.speed + self.addSpeed) * FrameTime.fTime
+        self.transform.LooAtTarget(Monster.target.transform.Position, realspeed)
         pass
 
     def OnAnimation(self):

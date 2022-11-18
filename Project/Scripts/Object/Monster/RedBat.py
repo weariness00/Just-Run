@@ -13,7 +13,7 @@ class RedBat(Monster):
         # Objcet
         super(RedBat, self).__init__()
         self.name = 'RedBat'
-        self._speed = 70
+        self.speed = 70
         self.attackRange = 500
         self.attackObjectCount = 2
 

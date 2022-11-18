@@ -38,7 +38,7 @@ class GameManager(Object):
         self.itemNumber.transform.Scale *= 0.35
         self.itemNumber.transform.Position += Instance.windowSize + [-150, -70]
         self.itemNumber.ChangeNumber(12)
-        UI.uiRenderList.AddObject(self.item)
+        UI.renderList.AddObject(self.item)
 
         self.player = Player()
         Player.this = self.player
@@ -66,7 +66,7 @@ class GameManager(Object):
 
     def __del__(self):
         print('GameManager 소멸')
-        self.skillContain.__del__()
+        del self.skillContain
         self.bgm.stop()
         pass
 

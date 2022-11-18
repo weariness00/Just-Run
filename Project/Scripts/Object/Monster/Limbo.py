@@ -11,7 +11,7 @@ class Limbo(Monster):
         # Objcet
         super(Limbo, self).__init__()
         self.name = 'Limbo'
-        self._speed = 150
+        self.speed = 150
 
         # Transform
         self.transform.Scale = self.transform.Scale * 0.2

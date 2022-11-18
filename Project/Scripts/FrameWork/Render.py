@@ -17,7 +17,7 @@ class Render:
     def Draw(self):
         for layer in self.RendererObjectList:
             for obj in layer:
-                if not obj.isActive:
+                if not obj.isActive or not obj.isDraw:
                     continue
 
                 pos = obj.transform.Position - Camera.MainCamera.transform.Position + Instance.windowSize // 2
@@ -32,7 +32,7 @@ class Render:
     def UIDraw(self):
         for layer in self.RendererObjectList:
             for ui in layer:
-                if not ui.isActive:
+                if not ui.isActive or not ui.isDraw:
                     continue
                 pos = ui.transform.Position
                 scale = ui.transform.Scale * numpy.array([ui.image_type[2], ui.image_type[3]])
@@ -46,7 +46,7 @@ class Render:
     def TextDraw(self):
         for layer in self.RendererObjectList:
             for text in layer:
-                if text.isActive is False:
+                if not text.isActive or not text.isDraw:
                     continue
 
                 text.font.draw(*text.transform.Position,

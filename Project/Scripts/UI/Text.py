@@ -8,6 +8,7 @@ class Text:
         self.transform = Transform()
         self.text = 'Text'
         self.isActive = True
+        self.isDraw = True
 
         self.fontList = dict()
         for font in Text.list:

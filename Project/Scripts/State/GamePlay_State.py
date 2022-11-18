@@ -63,6 +63,7 @@ def exit():
     ObjectRender.__del__()
     uiRender.__del__()
     textRender.__del__()
+    Lay.RemoveAll()
     pass
 
 def handle_events():
@@ -124,15 +125,9 @@ def pause():
     pass
 
 def resume():
-    Player.renderList = ObjectRender
-    EndlessTile.renderList = ObjectRender
-    Effect.renderList = ObjectRender
-    Monster.renderList = ObjectRender
-    Item.renderList = ObjectRender
-
-    Life.renderList = uiRender
-    Skill.renderList = uiRender
-    Number.renderList = uiRender
+    Object.renderList = ObjectRender
+    UI.renderList = uiRender
+    Text.renderList = textRender
 
     difTime = time.time() - start
     for collider in Collide.AllCollider:

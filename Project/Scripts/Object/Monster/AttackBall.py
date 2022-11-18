@@ -9,7 +9,7 @@ class AttackBall(Monster):
         self.image = AttackBall.image
         self.image_type = AttackBall.image_type
         self.moveDir = [0,0] # 공이 나아가는 방향
-        self._speed = 90
+        self.speed = 90
 
         # Transform
         self.transform.Scale *= 0.7

@@ -20,6 +20,7 @@ class Object:
         self.image_type = [0, 0, 0, 0]
         self.image_dir = 'None'
         self.image_radian = 0
+        self.isDraw = True
 
         self.isActive = True
 

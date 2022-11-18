@@ -1,6 +1,7 @@
 from Scripts.Afx import *
 from Scripts.FrameWork.Object import Object
 from Scripts.FrameWork.Render import Render
+from Scripts.FrameWork.UI import UI
 from Scripts.UI.Text import Text
 from Scripts.UI.Button import Button
 import Scripts.FrameWork.game_framework as game_framework
@@ -35,6 +36,9 @@ def enter():
 
     text_Render = Render()
     text_Render.name += " : Text - Lobby"
+    Text.renderList = text_Render
+
+    UI.renderList = ui_Render
     Text.renderList = text_Render
 
     backGround_UI = Object()

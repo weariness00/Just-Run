@@ -10,7 +10,7 @@ class Worm(Monster):
         super(Worm, self).__init__()
         self.name = 'RedBat'
         self.isActive = False
-        self._speed = 70
+        self.speed = 70
 
         # Transform
         self.transform.Scale *= 0.2

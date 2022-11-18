@@ -1,5 +1,6 @@
 from Scripts.FrameWork.Object import *
 from Scripts.FrameWork.Animation import *
+from Scripts.FrameWork.UI import UI
 
 class SkillBox(Object):
 
@@ -13,7 +14,7 @@ class SkillBox(Object):
 
         # Transform
         self.transform.Position += [Instance.windowSize[0]//2, 100]
-
+        UI.renderList.AddObject(self, 1)
         pass
 
     def __del__(self):

@@ -5,13 +5,6 @@ from Scripts.Object.Player.Animation.PlayerAnimationController import *
 from Scripts.Object.Player.Animation.Player_Static_State import key_event_table
 from Scripts.FrameWork.LayCast import CircleLay
 
-# class keyType(Enum):
-#     Left = 0
-#     Right = 1
-#     UP = 2
-#     Down = 3
-#     pass
-
 event_Name = ['null',
               'Right Key Down', 'Left Key Down', 'Up Key Down', 'Down Key Down',
               'Right Key Up', 'Left Key Up', 'Up Key Up', 'Down Key Up']
@@ -48,7 +41,7 @@ class Player(Object):
         self.transform.Scale *= 2
 
         # Lay 초기화
-        self.circleLay = CircleLay(self.transform, 150)
+        self.circleLay = CircleLay(self.transform, 300)
 
         #Collde 초기화
         self.collider = Collide()

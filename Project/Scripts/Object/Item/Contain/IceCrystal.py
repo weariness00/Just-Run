@@ -14,10 +14,6 @@ class IceCrystal(Item):
         super(IceCrystal, self).__del__()
         pass
 
-    def Disable(self):
-        Item.renderList.RemoveObject(self)
-        pass
-
     def Update(self):
         super(IceCrystal, self).Update()
         pass

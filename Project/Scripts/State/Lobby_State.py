@@ -1,7 +1,8 @@
 from Scripts.Afx import *
+from Scripts.FrameWork.UI import UI
 from Scripts.FrameWork.Object import Object
-from Scripts.UI.Button import Button
 from Scripts.FrameWork.Render import Render
+from Scripts.UI.Button import Button
 from Scripts.UI.Text import Text
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.GamePlay_State as game_state
@@ -24,7 +25,7 @@ def enter():
 
     ui_Render = Render()
     ui_Render.name += " : UI - Lobby"
-    Button.renderList = ui_Render
+    UI.renderList = ui_Render
 
     text_Render = Render()
     text_Render.name += " : Text - Lobby"

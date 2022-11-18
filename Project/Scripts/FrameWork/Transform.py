@@ -23,11 +23,11 @@ class Transform:
         self.Position += movePos
         pass
 
-    def LooAtTarget(self, target, speed):
-        if self.Position[0] == target.Position[0] and self.Position[1] == target.Position[1]:
+    def LooAtTarget(self, targetPos, speed):
+        if Instance.Distance(targetPos, self.Position) <= 1:
             return
 
-        dir = target.Position - self.Position
+        dir = targetPos - self.Position
         dir = dir/numpy.linalg.norm(dir)
 
         self.direction = speed * dir
