@@ -95,9 +95,6 @@ class LevelUP_PopUp(Object):
         pass
 
     def __del__(self):
-        del self.textBoxObject, self.imageBoxObject
-        del self.boxImage, self.boxText
-        del self.yellowBox, self.redBox, self.blueBox
         pass
 
     def ChangeSkill(self):

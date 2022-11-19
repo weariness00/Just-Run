@@ -26,8 +26,6 @@ class SkillContain:
         pass
 
     def __del__(self):
-        for skill in SkillContain.array:
-            SkillContain.array.remove(skill)
         pass
 
     @staticmethod

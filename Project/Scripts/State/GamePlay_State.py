@@ -50,14 +50,15 @@ def enter():
 
 # finalization code
 def exit():
-    global gameManager
+    global gameManager,UpdateList
     global ObjectRender, uiRender, textRender
     Object.AllObject.clear()
-    Object.updateList.clear()
+    UpdateList.clear()
     Monster.AllMonster.clear()
     Collide.AllCollider.clear()
     Collide.AllColliderX.clear()
     Collide.AllColliderY.clear()
+    SkillContain.array.clear()
 
     gameManager.__del__()
     ObjectRender.__del__()

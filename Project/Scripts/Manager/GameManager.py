@@ -60,13 +60,11 @@ class GameManager(Object):
         Camera.MainCamera = Camera(self.player.transform)
         Collide.MainCamera = Camera.MainCamera
 
-        Skill.renderList.AddObject(self.player.skillBox, 0)
+        UI.renderList.AddObject(self.player.skillBox, 0)
 
         pass
 
     def __del__(self):
-        print('GameManager 소멸')
-        del self.skillContain
         self.bgm.stop()
         pass
 
