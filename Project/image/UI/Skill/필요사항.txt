@@ -6,3 +6,4 @@ Skill Box의 크기가 96 x 96 이다.
 IntenceFlame 64
 Bottled_Fire 512
 Volcano 512
+MischievousFlame 244 525
