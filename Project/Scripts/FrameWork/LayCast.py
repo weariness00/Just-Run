@@ -13,10 +13,20 @@ class Lay(Object):
         super(Lay, self).__del__()
         pass
 
+    def RemoveLay(self):
+        Lay.AllLay.remove(self)
+        del self
+        pass
+
+    @staticmethod
+    def RemoveAll():
+        for lay in Lay.AllLay:
+            lay.RemoveLay()
+        pass
     @staticmethod
     def DrawLayCast():
         for lay in Lay.AllLay:
-            if lay.isActive is False:
+            if not lay.isActive:
                 continue
 
             lay.Draw()
@@ -29,9 +39,9 @@ class CircleLay(Lay):
     def __init__(self, transform, distance):
         super(CircleLay, self).__init__()
         self.distance = distance
-
         self.transform = transform
-
+        self.cameraType = 'Object'
+        self.colliderList = []
         pass
 
     def __del__(self):
@@ -39,30 +49,29 @@ class CircleLay(Lay):
         pass
 
     def OnLayCast(self):
-        colliderList = []
+        self.colliderList.clear()
 
-        cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize // 2
+        cameraPos = -Collide.MainCamera.transform.Position + Instance.windowSize // 2
         this_Pos = self.transform.Position + cameraPos
 
         for collider in Collide.AllCollider:
-            if collider.isCollide is False or collider.object.isActive is False:
+            if not collider.isCollide or not collider.object.isActive:
                 continue
 
             other_Pos = collider.transform.Position + cameraPos
 
             dis = Instance.Distance(this_Pos, other_Pos)
             if dis <= self.distance:
-                colliderList.append(collider)
+                self.colliderList.append(collider)
 
             pass
-        return colliderList
+        return self.colliderList
         pass
 
     def Draw(self):
-        cameraPos = - Collide.MainCamera.transform.Position + Instance.windowSize // 2
-
+        cameraPos = -Collide.MainCamera.transform.Position + Instance.windowSize // 2
         CircleLay.image.clip_draw(*[0,0,229,220],
                                   *(self.transform.Position + cameraPos),
-                                 *(self.transform.Scale * self.distance))
+                                  self.distance * 2,self.distance * 2)
         pass
     pass

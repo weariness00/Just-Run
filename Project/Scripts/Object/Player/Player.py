@@ -41,7 +41,7 @@ class Player(Object):
         self.transform.Scale *= 2
 
         # Lay 초기화
-        self.circleLay = CircleLay(self.transform, 300)
+        self.circleLay = CircleLay(self.transform, 100)
 
         #Collde 초기화
         self.collider = Collide()
@@ -164,8 +164,8 @@ class Player(Object):
         if self.circleLay.isActive is False:
             return
 
-        onColliderList = self.circleLay.OnLayCast()
-        for collider in onColliderList:
+        layColliderList = self.circleLay.OnLayCast()
+        for collider in layColliderList:
             if collider.tag == 'Item':
                 collider.object.isMoveMent = True
                 collider.isCollide = False
