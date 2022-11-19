@@ -47,13 +47,13 @@ class Item(Object):
         pass
 
     def MoveMent(self):
-        if self.isMoveMent is False:
+        if not self.isMoveMent:
             return
 
         self.transform.LooAtTarget(Player.this.transform.Position, 500 * FrameTime.fTime)
 
         dis = Instance.Distance(Player.this.transform.Position, self.transform.Position)
-        if  dis <= 10:
+        if dis <= 10:
             self.SetActive(False)
         pass
 

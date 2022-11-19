@@ -126,6 +126,8 @@ def pause():
     pass
 
 def resume():
+    Object.updateList = UpdateList
+
     Object.renderList = ObjectRender
     UI.renderList = uiRender
     Text.renderList = textRender

@@ -18,7 +18,7 @@ class Collide:
 
         self.isCollide = True # 현재 콜라이더 박스가 켜진 상태인지
 
-        self.onColliderList = None
+        self.onColliderList = []
         self.index = [-1, -1]
 
         self.isTrigger = False #이게 켜진 Objcet가 충돌하면 충돌한 거리만큼 뒤로 간다.
@@ -59,12 +59,10 @@ class Collide:
         pass
 
     def OnCollider(self):
-        del self.onColliderList
-        self.onColliderList = []
-        onColliderList = []
+        self.onColliderList.clear()
 
         if self.isCollide is False or self.object.isActive is False:
-            return onColliderList
+            return self.onColliderList
 
         # n * n 크기만큼만 Collider 검사
         collides = []
@@ -76,7 +74,7 @@ class Collide:
             pass
 
         if len(collides) == 0:
-            return onColliderList
+            return self.onColliderList
 
         # 중복되는것들 제거
         for i in range(0, len(collides) - 1):
@@ -114,7 +112,7 @@ class Collide:
         thisRDis = self.rDistance * self.transform.Scale
 
         for collider in self.onColliderList:
-            if collider.object.isActive is False or collider.isCollide is False:
+            if not collider.object.isActive or not collider.isCollide:
                 continue
             # 두 개의 콜라이더의 피봇끼리의 거리를 구한 후  (선분)AB
             # 각 콜라이더의 피봇이 다른 콜라이더의 피봇을 향해 백터 방향으로 증가하다가 자신의 박스 경계선을 만나는 곳과의 거리 계산후 r(A) r(B)

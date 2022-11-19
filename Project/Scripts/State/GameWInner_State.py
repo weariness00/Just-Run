@@ -14,30 +14,25 @@ background = None
 # Render
 objectRender = None
 uiRender = None
+textRender = None
 
 #list
 updateList = None
-objectRenderList = None
-uiRenderList = None
 
 
 def enter():
     global background
-    global objectRender, uiRender
-    global updateList, objectRenderList, uiRenderList
+    global objectRender, uiRender, textRender
+    global updateList
+
 
     # Render
     objectRender = Render()
     uiRender = Render()
+    textRender = Render()
 
     # List
     updateList = []
-    objectRenderList = []
-    uiRenderList = []
-
-    objectRenderList += [objectRender]
-    uiRenderList += [uiRender]
-
     Object.updateList = updateList
 
     background = Object()
@@ -52,6 +47,13 @@ def enter():
 
 # finalization code
 def exit():
+    global objectRender, uiRender, textRender
+
+    Object.updateList.clear()
+
+    objectRender.__del__()
+    uiRender.__del__()
+    textRender.__del__()
 
     pass
 
@@ -75,12 +77,10 @@ def update():
     pass
 
 def draw():
-    global objectRenderList, uiRenderList
 
-    for obj in objectRenderList:
-        obj.Draw()
-    for obj in uiRenderList:
-        obj.UIDraw()
+    objectRender.Draw()
+    uiRender.UIDraw()
+    textRender.TextDraw()
     pass
 
 def pause():

@@ -28,8 +28,7 @@ class Object:
         self.ID = Object.Count
         Object.Count += 1
         Object.AllObject.append(self)
-        if Object.updateList is not None:
-            Object.updateList.append(self)
+        Object.updateList.append(self)
         pass
 
     def __del__(self):

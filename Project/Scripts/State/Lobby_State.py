@@ -18,10 +18,16 @@ exit_Button = None
 ui_Render = None
 text_Render = None
 
+updateList = None
+
 def enter():
     global background
     global start_Button, exit_Button
     global ui_Render, text_Render
+    global updateList
+
+    updateList = []
+    Object.updateList = updateList
 
     ui_Render = Render()
     ui_Render.name += " : UI - Lobby"
@@ -67,6 +73,9 @@ def enter():
 # finalization code
 def exit():
     global ui_Render, text_Render
+    Object.AllObject.clear()
+    Object.updateList.clear()
+
     ui_Render.__del__()
     text_Render.__del__()
     pass
@@ -85,7 +94,7 @@ def handle_events():
 
 
 def update():
-    for obj in Object.AllObject:
+    for obj in Object.updateList:
         obj.Update()
 
     pass

@@ -18,6 +18,8 @@ objectRender = None
 uiRender = None
 textRender = None
 
+
+
 def enter():
     global p, back_Button
     global objectRender, uiRender, textRender
@@ -64,10 +66,12 @@ def enter():
 
 # finalization code
 def exit():
-    Game_State.exit()
+    Object.updateList.clear()
     objectRender.__del__()
     uiRender.__del__()
     textRender.__del__()
+
+    Game_State.exit()
     pass
 
 def handle_events():
