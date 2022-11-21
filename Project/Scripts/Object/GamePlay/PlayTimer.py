@@ -15,6 +15,8 @@ class PlayTimer(Number):
         self.levelUpCount = 0
         self.isLevelUp = False # 난이도 상승을 위해 사용하는 임시 변수
 
+        self.alignmentType = "Middle"
+
         self.Init()
         pass
 
@@ -24,8 +26,11 @@ class PlayTimer(Number):
 
     def Update(self):
         t = math.ceil(time.time() - self.startTime)
+
         self.ChangeNumber(t + t // 60 * 40)
+        self.OnMark()
         if t % self.levelUpLengthTime >= self.levelUpLengthTime - 10:
+            self.mark.image = Number.red_image
             for number in self.numberObjects:
                 number.image = Number.red_image
 

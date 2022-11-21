@@ -4,10 +4,10 @@ from Scripts.FrameWork.UI import UI
 
 class Life(Object):
     renderList = None  # 동적할당해주는 것들은 자체적으로 렌더를 가짐
+    updateList = None
     def __init__(self, position):
         super(Life, self).__init__()
         self.name = 'Life'
-
 
         # Transform
         self.transform.Position += position

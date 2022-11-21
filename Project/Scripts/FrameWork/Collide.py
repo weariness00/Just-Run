@@ -66,7 +66,7 @@ class Collide:
 
         # n * n 크기만큼만 Collider 검사
         collides = []
-        for i in range(1, 4 + 1):
+        for i in range(1, 6 + 1):
             collides.append(Collide.AllColliderX[self.index[0] - i])
             collides.append(Collide.AllColliderY[self.index[1] - i])
             collides.append(Collide.AllColliderX[(self.index[0] + i) % len(Collide.AllColliderX)])

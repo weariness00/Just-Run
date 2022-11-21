@@ -70,6 +70,7 @@ class Limbo(Monster):
         if self.collider.isCollide is False:
             return
 
+        self.collider.isTrigger = True
         onColliderList = self.collider.OnCollider()
 
         for collider in onColliderList:

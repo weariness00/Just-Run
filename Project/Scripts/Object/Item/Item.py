@@ -40,6 +40,7 @@ class Item(Object):
 
     def Disable(self):
         Object.renderList.RemoveObject(self)
+        Player.this.itemCount += 1
         pass
 
     def Update(self):

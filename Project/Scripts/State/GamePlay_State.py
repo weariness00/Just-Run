@@ -44,6 +44,9 @@ def enter():
     UI.renderList = uiRender
     Text.renderList = textRender
 
+    Life.renderList = uiRender
+    Life.updateList = UpdateList
+
     gameManager = GameManager()
 
     pass
@@ -60,6 +63,7 @@ def exit():
     Collide.AllColliderY.clear()
     SkillContain.array.clear()
 
+    gameManager.bgm.stop()
     gameManager.__del__()
     ObjectRender.__del__()
     uiRender.__del__()
@@ -115,8 +119,8 @@ def draw():
 
     uiRender.UIDraw()
 
-    Collide.AllBoxDraw()
-    Lay.DrawLayCast()
+    # Collide.AllBoxDraw()
+    # Lay.DrawLayCast()
 
     pass
 
@@ -133,6 +137,8 @@ def resume():
     Text.renderList = textRender
 
     difTime = time.time() - start
+    gameManager.playTimer.startTime += difTime
+    Player.this.skill.onSkillTime += difTime
     for collider in Collide.AllCollider:
         if collider.tag == 'Monster':
             collider.object.lifeStart += difTime

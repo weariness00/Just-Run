@@ -26,6 +26,7 @@ class Player(Object):
         self.isGot = False
         self.gotTime = 0
         self.gotDurationTime = 0
+        self.itemCount = 0
 
         for key in range(4):
             self.idle[key] = False

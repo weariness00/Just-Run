@@ -37,7 +37,7 @@ class GameManager(Object):
         self.itemNumber = Number()
         self.itemNumber.transform.Scale *= 0.35
         self.itemNumber.transform.Position += Instance.windowSize + [-150, -70]
-        self.itemNumber.ChangeNumber(12)
+        self.itemNumber.ChangeNumber(0)
         UI.renderList.AddObject(self.item)
 
         self.player = Player()
@@ -50,8 +50,8 @@ class GameManager(Object):
 
         # Monster Pool 객체 생성
         self.LimboPool = MonsterPool(Limbo(), 60, 5, 1)
-        self.RedBatPool = MonsterPool(RedBat(), 20, 0, 3)
-        self.WormPool = MonsterPool(Worm(), 10, 0, 5)
+        self.RedBatPool = MonsterPool(RedBat(), 20, 2, 3)
+        self.WormPool = MonsterPool(Worm(), 10, 2, 5)
 
         # Player 초기화
         self.player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
@@ -65,13 +65,15 @@ class GameManager(Object):
         pass
 
     def __del__(self):
-        self.bgm.stop()
+        # self.bgm.stop()
         pass
 
     def Update(self):
         if Player.this.life <= 0:
             self.player.isActive = False
             game_framework.push_state(GameOver)
+
+        self.itemNumber.ChangeNumber(Player.this.itemCount)
 
         if self.playTimer.isLevelUp is True:
             self.playTimer.isLevelUp = False
