@@ -7,3 +7,4 @@ IntenceFlame 64
 Bottled_Fire 512
 Volcano 512
 MischievousFlame 244 525
+FireBerirral 512
