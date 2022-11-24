@@ -29,6 +29,7 @@ class GameManager(Object):
 
         self.playTimer = PlayTimer()    # 게임 진행 시간
 
+        # Item 관련 임시 변수들
         self.item = Object()
         self.item.image = FireJewelry.image
         self.item.image_type = [0, 0, 32, 32]
@@ -40,7 +41,9 @@ class GameManager(Object):
         self.itemNumber.ChangeNumber(0)
         UI.renderList.AddObject(self.item)
 
+        # Player
         self.player = Player()
+        self.player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
         Player.this = self.player
         Monster.target = self.player
 
@@ -52,9 +55,6 @@ class GameManager(Object):
         self.LimboPool = MonsterPool(Limbo(), 60, 5, 1)
         self.RedBatPool = MonsterPool(RedBat(), 20, 2, 3)
         self.WormPool = MonsterPool(Worm(), 10, 2, 5)
-
-        # Player 초기화
-        self.player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
 
         # Camera 초기화
         Camera.MainCamera = Camera(self.player.transform)

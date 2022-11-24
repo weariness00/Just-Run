@@ -1,8 +1,10 @@
 from Scripts.Object.Monster.Monster import *
-from Scripts.Object.Monster.RedBat import RedBat
-from Scripts.Object.Monster.Limbo import Limbo
-from Scripts.Object.Monster.Worm import Worm
 from Scripts.FrameWork.Camera import Camera
+
+from Scripts.Object.Monster.Contain.AttackBall import AttackBall
+from Scripts.Object.Monster.Contain.Limbo import Limbo
+from Scripts.Object.Monster.Contain.RedBat import RedBat
+from Scripts.Object.Monster.Contain.Worm import Worm
 
 class MonsterPool(Object):
 

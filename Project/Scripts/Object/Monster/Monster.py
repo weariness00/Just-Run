@@ -55,12 +55,16 @@ class Monster(Object):
         self.lootTable.AddItem_Table(FireJewelry(), 100, [1, 1])    # 임시 값
 
         Monster.AllMonster.append(self)
-        Object.renderList.AddObject(self, 3)
+        Object.renderList.AddObject(self, 4)
         pass
 
     def __del__(self):
         del self.collider
         super(Monster, self).__del__()
+        pass
+
+    def Resume(self):
+        self.lifeTime += FrameTime.diffTime
         pass
 
     def Enable(self):

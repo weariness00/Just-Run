@@ -8,6 +8,7 @@ import Scripts.State.LevelUp_State as LevelUp
 # Timer
 start = None
 end = None
+isDrawColliderBox = None
 
 # Render
 ObjectRender = None
@@ -22,7 +23,7 @@ UpdateList = None
 
 
 def enter():
-    global start, end
+    global start, end, isDrawColliderBox
     global ObjectRender, uiRender, textRender
     global gameManager
     global UpdateList
@@ -72,7 +73,7 @@ def exit():
     pass
 
 def handle_events():
-    global gameManager
+    global gameManager, isDrawColliderBox
     events = get_events()
     Object.events = events
     for event in events:
@@ -81,8 +82,6 @@ def handle_events():
         if event.type == SDL_KEYDOWN:
             if event.key == SDLK_ESCAPE:
                 game_framework.push_state(Stop)
-            if event.key == SDLK_SPACE:
-                game_framework.change_state(Lobby)
             if event.key == SDLK_F1:
                 game_framework.push_state(LevelUp)
             elif event.key == SDLK_F10:
@@ -90,6 +89,8 @@ def handle_events():
                 game_framework.push_state(GameOver)
             elif event.key == SDLK_F11:
                 game_framework.change_state(GameWin)
+            elif event.key == SDLK_DELETE:
+                isDrawColliderBox = not isDrawColliderBox
         pass
 
     gameManager.Handle_Event()
@@ -119,8 +120,9 @@ def draw():
 
     uiRender.UIDraw()
 
-    # Collide.AllBoxDraw()
-    # Lay.DrawLayCast()
+    if isDrawColliderBox:
+        Collide.AllBoxDraw()
+        Lay.DrawLayCast()
 
     pass
 
@@ -136,14 +138,17 @@ def resume():
     UI.renderList = uiRender
     Text.renderList = textRender
 
-    difTime = time.time() - start
-    gameManager.playTimer.startTime += difTime
-    Player.this.skill.onSkillTime += difTime
-    for collider in Collide.AllCollider:
-        if collider.tag == 'Monster':
-            collider.object.lifeStart += difTime
-        if collider.tag == "Player":
-            collider.object.InitHandle()
+    FrameTime.diffTime = time.time() - start
+    for obj in UpdateList:
+        obj.Resume()
+
+    # gameManager.playTimer.startTime += difTime
+    # Player.this.skill.onSkillTime += difTime
+    # for collider in Collide.AllCollider:
+    #     if collider.tag == 'Monster':
+    #         collider.object.lifeStart += difTime
+    #     if collider.tag == "Player":
+    #         collider.object.InitHandle()
 
     pass
 

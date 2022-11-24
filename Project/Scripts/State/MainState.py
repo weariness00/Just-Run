@@ -1,7 +1,7 @@
 from Scripts.Afx import *
 
 Instance.Init()
-open_canvas(Instance.windowSize[0], Instance.windowSize[1])
+open_canvas(*Instance.windowSize)
 
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.Lobby_State as lobby_state

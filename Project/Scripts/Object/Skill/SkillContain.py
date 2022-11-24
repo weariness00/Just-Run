@@ -6,6 +6,7 @@ from Scripts.Object.Skill.Contain.IntenseFlame import IntenseFlame
 from Scripts.Object.Skill.Contain.BottledFire import BottledFire
 from Scripts.Object.Skill.Contain.Volcano import Volcano
 from Scripts.Object.Skill.Contain.MischievousFlame import MischievousFlame
+from Scripts.Object.Skill.Contain.FireBarrier import FireBarrier
 
 class SkillContain:
     array = []
@@ -18,6 +19,7 @@ class SkillContain:
         SkillContain.array.append(BottledFire())
         SkillContain.array.append(Volcano())
         SkillContain.array.append(MischievousFlame())
+        SkillContain.array.append(FireBarrier())
         SkillContain.maxIndex = len(SkillContain.array)
 
         for skill in SkillContain.array:
