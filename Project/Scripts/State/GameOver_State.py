@@ -54,12 +54,18 @@ def enter():
     gameover.color = [255,0,0]
     gameover.transform.Position += Instance.windowSize//2 + [-420, 100]
 
-    back_Button = Button()
+    back_Button = Button(1)
     back_Button.transform.Scale *= 2
     back_Button.transform.Position += Instance.windowSize//2 + [0, -150]
     back_Button.text = Text(40)
     back_Button.text.text = '로비'
     back_Button.text.transform.Position += back_Button.transform.Position + [-40, 0]
+
+    backGround_UI = Object()
+    backGround_UI.image = load_image('image/UI/PopUp/BackGround.png')
+    backGround_UI.image_type = [0,0,1600,900]
+    backGround_UI.transform.Position = Instance.windowSize//2
+    uiRender.AddObject(backGround_UI)
 
     uiRender.AddObject(p)
     pass
