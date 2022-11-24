@@ -33,6 +33,11 @@ class Dash(Skill):
         super(Dash, self).__del__()
         pass
 
+    def Resume(self):
+        super(Dash, self).Resume()
+        self.dashTime += FrameTime.diffTime
+        pass
+
     def OnSkill(self):
         super(Dash, self).OnSkill()
 

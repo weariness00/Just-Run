@@ -33,6 +33,10 @@ class Skill(Object):
         super(Skill, self).__del__()
         pass
 
+    def Resume(self):
+        self.onSkillTime += FrameTime.diffTime
+        pass
+
     def Update(self):
         skillTime = time.time() - self.onSkillTime
         if skillTime >= self.coolTime:

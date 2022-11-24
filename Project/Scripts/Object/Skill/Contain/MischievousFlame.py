@@ -49,6 +49,11 @@ class FlameFlower(Object):
         super(FlameFlower, self).__del__()
         pass
 
+    def Resume(self):
+        self.startTime += FrameTime.diffTime
+        self.endTime += FrameTime.diffTime
+        pass
+
     def Enable(self):
         self.circleLay.SetActive(True)
         self.isMoveMent = True

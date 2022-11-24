@@ -44,6 +44,9 @@ class Object:
 
         pass
 
+    def Resume(self):
+        pass
+
     def Enable(self):   # 오브젝트를 활성화 할때 한 번 호출
         pass
 
@@ -59,5 +62,6 @@ class Object:
     def Info(self):
         print(self.ID, " : ", self.name)
         pass
+
 
     pass

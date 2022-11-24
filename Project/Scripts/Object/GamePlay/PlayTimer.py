@@ -24,6 +24,10 @@ class PlayTimer(Number):
         super(PlayTimer, self).__del__()
         pass
 
+    def Resume(self):
+        self.startTime += FrameTime.diffTime
+        pass
+
     def Update(self):
         t = math.ceil(time.time() - self.startTime)
 
