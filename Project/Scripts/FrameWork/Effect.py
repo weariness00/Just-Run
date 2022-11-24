@@ -38,8 +38,6 @@ class Effect(Object):
             self.count_X = 0
             self.count_Y += 1
             pass
-        if self.count_Y >= self.frame_Y:
-            self.count_Y = 0
 
         self.image_type[0] = int(self.count_X) * self.image_type[2]
         self.image_type[1] = (self.frame_Y - self.count_Y - 1) * self.image_type[3]
@@ -54,6 +52,9 @@ class Effect(Object):
             if t >= self.lifeTime:
                 self.SetActive(False)
             pass
+
+        if self.count_Y >= self.frame_Y:
+            self.count_Y = 0
         pass
 
     def OnEffect(self, transform):
