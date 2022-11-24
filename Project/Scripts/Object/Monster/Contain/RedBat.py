@@ -1,5 +1,4 @@
-from Scripts.Object.Monster.Monster import *
-from Scripts.Object.Monster.AttackBall import *
+from Scripts.Object.Monster.Contain.AttackBall import *
 from Scripts.FrameWork.Effect import Effect
 
 
