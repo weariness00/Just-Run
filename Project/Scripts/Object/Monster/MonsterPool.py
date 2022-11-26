@@ -10,6 +10,7 @@ class MonsterPool(Object):
 
     def __init__(self, monsterType, maxCount = 0, spawnCount=0, coolTime=0):
         super(MonsterPool, self).__init__()
+        self.name = "Pool : " + monsterType
         self.type = None
         self.maxCount = maxCount #Pool이 가지고 있는 최대 오브젝트 개수
         self.pool = []

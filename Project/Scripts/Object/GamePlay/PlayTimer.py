@@ -13,8 +13,8 @@ class PlayTimer(Number):
         self.nowTime = 0
         self.winTime = 1000
         self.levelUpLengthTime = 30
-        self.levelUpCount = 0
-        self.isLevelUp = False # 난이도 상승을 위해 사용하는 임시 변수
+        self.levelUpCount = 1
+        self.isLevelUp = True # 난이도 상승을 위해 사용하는 임시 변수
 
         self.alignmentType = "Middle"
 
@@ -41,9 +41,7 @@ class PlayTimer(Number):
                 number.image = Number.red_image
 
         if t // self.levelUpLengthTime - self.levelUpCount > 0:
-            self.levelUpCount += 1
-            game_framework.push_state(LevelUP)
-            self.isLevelUp = True
+            self.__LevelUp()
 
         if t >= self.winTime:
             game_framework.change_state(GameWinner)
@@ -57,6 +55,12 @@ class PlayTimer(Number):
         self.transform.Position += [w//2, h - 70]
         self.transform.Scale *= 0.5
         self.startTime = time.time()
+        pass
+
+    def __LevelUp(self):
+        self.levelUpCount += 1
+        game_framework.push_state(LevelUP)
+        self.isLevelUp = True
         pass
 
     pass

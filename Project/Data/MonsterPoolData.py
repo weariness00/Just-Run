@@ -4,7 +4,7 @@ from Scripts.Object.Monster.MonsterPool import MonsterPool
 class MonsterPoolData:
     def __init__(self):
         self.file = load_workbook("Data/MonsterPoolData.xlsx",data_only = True)
-        self.sheet = self.file["Sheet1"]
+        self.sheet = self.file["Easy"]
         pass
 
     def __del__(self):

@@ -4,7 +4,7 @@ from Scripts.Object.Item.Item import Item
 
 class PlayData:
     def __init__(self):
-        self.file = load_workbook('Data/PlayData.xlsx')
+        self.file = load_workbook('Data/PlayData.xlsx', data_only = True)
         self.sheet = self.file["Sheet1"]
         for i in range(2, 7):
             self.sheet.cell(row = 2, column=i).value = 0

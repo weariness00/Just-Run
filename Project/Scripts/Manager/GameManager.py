@@ -21,9 +21,10 @@ import Scripts.State.GameWInner_State as GameWin
 
 from Data.MonsterPoolData import MonsterPoolData
 from Data.PlayData import PlayData
+from Data.LevelingData import LevelingData
 
 class GameManager(Object):
-    def __init__(self):
+    def __init__(self, level = 'Easy'):
         super(GameManager, self).__init__()
         self.bgm = load_music('Music/Background/GamePlayBGM_0' + random.randint(1,2).__str__() + '.mp3')
         self.bgm.set_volume(10)
@@ -61,6 +62,7 @@ class GameManager(Object):
         Item.earnCount = 0
         MonsterPoolData().SetData(self.pools)
         self.playData = PlayData()
+        self.levelData = LevelingData(level)
 
         # Camera 초기화
         Camera.MainCamera = Camera(self.player.transform)
@@ -76,6 +78,11 @@ class GameManager(Object):
 
     def Update(self):
         self.playData.GetData(self)
+
+        if self.playTimer.isLevelUp:
+            self.playTimer.isLevelUp = False
+            self.levelData.SetData(self.pools, self.playTimer.levelUpCount)
+
         if Player.this.life <= 0:
             self.player.isActive = False
             game_framework.push_state(GameOver)
