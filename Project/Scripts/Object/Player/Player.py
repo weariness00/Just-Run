@@ -5,6 +5,9 @@ from Scripts.Object.Player.Animation.PlayerAnimationController import *
 from Scripts.Object.Player.Animation.Player_Static_State import key_event_table
 from Scripts.FrameWork.LayCast import CircleLay
 
+# Data
+from Data.PlayerData import PlayerData
+
 event_Name = ['null',
               'Right Key Down', 'Left Key Down', 'Up Key Down', 'Down Key Down',
               'Right Key Up', 'Left Key Up', 'Up Key Up', 'Down Key Up']
@@ -14,12 +17,13 @@ class Player(Object):
     renderList = None
     def __init__(self):
         super(Player, self).__init__()
-
         # 객체 초기화
-        self.name = 'Player'
-        self.maxLife = 4
-        self.life = self.maxLife
-        self.speed = 300
+        self.maxLife = 0
+        self.life = 0
+        self.speed = 0
+        data = PlayerData()
+        data.SetDate(self, 'FlameSpirit')
+
         self.addSpeed = 0
         self.idle = dict()
 
@@ -33,6 +37,8 @@ class Player(Object):
 
         # Life 초기화
         self.lifeObject = [Life([100 * i + 50, Instance.windowSize[1] - 50]) for i in range(self.maxLife)]
+        for i in range(1, self.maxLife - self.life + 1):
+            self.lifeObject[-i].mainAnimation = self.lifeObject[-i].blueFireAni
 
         # SKill
         self.skillBox = SkillBox()

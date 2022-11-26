@@ -19,6 +19,8 @@ import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.GameOver_State as GameOver
 import Scripts.State.GameWInner_State as GameWin
 
+from Data.MonsterPoolData import MonsterPoolData
+from Data.PlayData import PlayData
 
 class GameManager(Object):
     def __init__(self):
@@ -52,9 +54,13 @@ class GameManager(Object):
         self.endlessTile = EndlessTile(self.player)
 
         # Monster Pool 객체 생성
-        self.LimboPool = MonsterPool(Limbo(), 60, 5, 1)
-        self.RedBatPool = MonsterPool(RedBat(), 20, 2, 3)
-        self.WormPool = MonsterPool(Worm(), 10, 2, 5)
+        self.pools = []
+
+        # Data 셋팅
+        Monster.deathCount = 0
+        Item.earnCount = 0
+        MonsterPoolData().SetData(self.pools)
+        self.playData = PlayData()
 
         # Camera 초기화
         Camera.MainCamera = Camera(self.player.transform)
@@ -69,19 +75,12 @@ class GameManager(Object):
         pass
 
     def Update(self):
+        self.playData.GetData(self)
         if Player.this.life <= 0:
             self.player.isActive = False
             game_framework.push_state(GameOver)
 
         self.itemNumber.ChangeNumber(Player.this.itemCount)
-
-        if self.playTimer.isLevelUp is True:
-            self.playTimer.isLevelUp = False
-            self.LimboPool.spawnCount += 1
-            if self.playTimer.levelUpCount == 1:
-                self.RedBatPool.spawnCount += 3
-                self.WormPool.spawnCount += 3
-
 
         pass
 

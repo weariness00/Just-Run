@@ -10,6 +10,7 @@ class PlayTimer(Number):
     def __init__(self):
         super(PlayTimer, self).__init__()
         self.startTime = 0
+        self.nowTime = 0
         self.winTime = 1000
         self.levelUpLengthTime = 30
         self.levelUpCount = 0
@@ -30,6 +31,7 @@ class PlayTimer(Number):
 
     def Update(self):
         t = math.ceil(time.time() - self.startTime)
+        self.nowTime = t + t // 60 * 40
 
         self.ChangeNumber(t + t // 60 * 40)
         self.OnMark()

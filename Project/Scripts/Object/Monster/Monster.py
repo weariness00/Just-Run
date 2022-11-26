@@ -12,6 +12,7 @@ class Monster(Object):
     renderList = None
 
     addLifeTime = 0
+    deathCount = 0
     def __init__(self):
         super(Monster, self).__init__()
         self.speed = 0
@@ -76,6 +77,7 @@ class Monster(Object):
         self.isDeath = False
         self.collider.isCollide = True
         self.isMoveMent = True
+        Monster.deathCount += 1
         pass
 
     def MoveMent(self):

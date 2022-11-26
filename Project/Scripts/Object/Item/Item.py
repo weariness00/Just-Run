@@ -4,6 +4,7 @@ from Scripts.Object.Player.Player import Player
 
 class Item(Object):
     renderList = None
+    earnCount = 0
     def __init__(self):
         super(Item, self).__init__()
         self.isMoveMent = False
@@ -41,6 +42,7 @@ class Item(Object):
     def Disable(self):
         Object.renderList.RemoveObject(self)
         Player.this.itemCount += 1
+        Item.earnCount += 1
         pass
 
     def Update(self):

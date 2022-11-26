@@ -8,9 +8,9 @@ from Scripts.Object.Monster.Contain.Worm import Worm
 
 class MonsterPool(Object):
 
-    def __init__(self, monsterType, maxCount, spawnCount=5, coolTime=5):
+    def __init__(self, monsterType, maxCount = 0, spawnCount=0, coolTime=0):
         super(MonsterPool, self).__init__()
-        self.type = monsterType
+        self.type = None
         self.maxCount = maxCount #Pool이 가지고 있는 최대 오브젝트 개수
         self.pool = []
         self.coolTime = coolTime
@@ -18,10 +18,7 @@ class MonsterPool(Object):
 
         self.startTime = time.time()
 
-        self.name = 'Monster Pool'
-
-        for i in range(maxCount):
-            self.pool.append(self.type.Copy())
+        self.__Type(monsterType)
 
         pass
 
@@ -52,6 +49,16 @@ class MonsterPool(Object):
         setha = math.radians(random.randint(0, 360 + 1))
         position = [dis * math.cos(setha), dis * math.sin(setha)] + Camera.MainCamera.transform.Position
         return position
+        pass
+
+    def __Type(self, type):
+        if type == "Limbo": self.type = Limbo()
+        elif type == "RedBat": self.type = RedBat()
+        elif type == "Worm":self.type = Worm()
+        else: return
+
+        for i in range(self.maxCount):
+            self.pool.append(self.type.Copy())
         pass
 
     pass
