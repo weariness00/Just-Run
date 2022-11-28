@@ -7,7 +7,7 @@ class RedBat(Monster):
     attackImage = load_image('image/Monster/RedBat Monster/Attack.png')
     deathImage = load_image('image/Monster/RedBat Monster/Death.png')
 
-    effectImage = load_image('Effect/Fire/fire1_64.png')
+    effectImage = load_image('Effect/Sparkling/explosion_pixelfied.png')
     def __init__(self):
         # Objcet
         super(RedBat, self).__init__()
@@ -51,9 +51,9 @@ class RedBat(Monster):
         # Effect
         self.effect = Effect()
         self.effect.image = RedBat.effectImage
-        self.effect.image_type = [0,0,64,64]
-        self.effect.frame_X, self.effect.frame_Y = 10, 6
-        self.effect.countSpeed = 5
+        self.effect.image_type = [0,0,128//4,128//4]
+        self.effect.frame_X, self.effect.frame_Y = 4,4
+        self.effect.countSpeed = 10
         self.effect.isOneCycle = True
 
         pass
