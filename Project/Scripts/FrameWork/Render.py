@@ -49,9 +49,24 @@ class Render:
                 if not text.isActive or not text.isDraw:
                     continue
 
-                text.font.draw(*text.transform.Position,
-                               text.text,
-                               text.color)
+                if type(text.text) is list:
+                    for i, t in enumerate(text.text):
+                        if text.type is 'Left':typePos = [0, 0]
+                        elif text.type is 'Middle':typePos = [-len(text), 0]
+                        elif text.type is 'Right':typePos = [len(text), 0]
+                        pos = text.transform.Position + [0,-text.lineSpacing * i] + typePos
+                        text.font.draw(*pos,
+                                       t,
+                                       text.color)
+                    pass
+                else:
+                    if text.type is 'Left': typePos = [0,0]
+                    elif text.type is 'Middle': typePos = [-len(text.text) * text.lineSpacing/2, 0]
+                    elif text.type is 'Right' : typePos = [-len(text.text), 0]
+
+                    text.font.draw(*text.transform.Position + typePos,
+                                   text.text,
+                                   text.color)
                 pass
         pass
 
