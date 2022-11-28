@@ -17,9 +17,8 @@ from Scripts.UI.Button import Button
 
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.GameOver_State as GameOver
-import Scripts.State.GameWInner_State as GameWin
+import Scripts.State.GameWInner_State as GameWinner
 
-from Data.MonsterPoolData import MonsterPoolData
 from Data.PlayData import PlayData
 from Data.LevelingData import LevelingData
 
@@ -45,7 +44,7 @@ class GameManager(Object):
         UI.renderList.AddObject(self.item)
 
         # Player
-        self.player = Player()
+        self.player = Player('FlameSpirit_' + level)
         self.player.transform.Position = numpy.array([Instance.windowSize[0] // 2, Instance.windowSize[1] // 2], dtype=float)
         Player.this = self.player
         Monster.target = self.player
@@ -60,9 +59,10 @@ class GameManager(Object):
         # Data 셋팅
         Monster.deathCount = 0
         Item.earnCount = 0
-        MonsterPoolData().SetData(self.pools)
         self.playData = PlayData()
         self.levelData = LevelingData(level)
+        self.levelData.SetTimeData(self.playTimer)
+        self.levelData.SetDefaultPoolData(self.pools)
 
         # Camera 초기화
         Camera.MainCamera = Camera(self.player.transform)
@@ -77,15 +77,17 @@ class GameManager(Object):
         pass
 
     def Update(self):
-        self.playData.GetData(self)
-
         if self.playTimer.isLevelUp:
             self.playTimer.isLevelUp = False
-            self.levelData.SetData(self.pools, self.playTimer.levelUpCount)
+            self.levelData.SetPoolData(self.pools, self.playTimer.levelUpCount)
 
         if Player.this.life <= 0:
+            self.playData.GetData(self)
             self.player.isActive = False
             game_framework.push_state(GameOver)
+        elif self.playTimer.isWin:
+            self.playData.GetData(self)
+            game_framework.change_state(GameWinner)
 
         self.itemNumber.ChangeNumber(Player.this.itemCount)
 
