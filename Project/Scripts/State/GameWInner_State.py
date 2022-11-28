@@ -45,7 +45,7 @@ def enter():
     Object.updateList = updateList
 
     background = UI()
-    background.image = load_image('background.png')
+    background.image = load_image('imgae/GameWin/background.png')
     background.image_type = [0, 0, 1920, 1100]
     background.transform.Scale *= Instance.windowSize / [1920, 1100]
     background.transform.Position += Instance.windowSize//2
