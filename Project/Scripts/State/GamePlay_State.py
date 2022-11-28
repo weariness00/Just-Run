@@ -1,7 +1,7 @@
 from Scripts.Manager.GameManager import *
 
 import Scripts.State.PlayStop as Stop
-import Scripts.State.Lobby_State as Lobby
+import Scripts.State.GameWInner_State as GameWin
 import Scripts.State.LevelUp_State as LevelUp
 
 
@@ -17,6 +17,7 @@ textRender = None
 
 # Objcet
 gameManager = None
+level = None
 
 # list
 UpdateList = None
@@ -48,7 +49,7 @@ def enter():
     Life.renderList = uiRender
     Life.updateList = UpdateList
 
-    gameManager = GameManager()
+    gameManager = GameManager(level)
 
     pass
 
@@ -86,8 +87,10 @@ def handle_events():
                 game_framework.push_state(LevelUp)
             elif event.key == SDLK_F10:
                 Player.this.SetActive(False)
+                gameManager.playData.GetData(gameManager)
                 game_framework.push_state(GameOver)
             elif event.key == SDLK_F11:
+                gameManager.playData.GetData(gameManager)
                 game_framework.change_state(GameWin)
             elif event.key == SDLK_DELETE:
                 isDrawColliderBox = not isDrawColliderBox

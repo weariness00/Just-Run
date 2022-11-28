@@ -32,7 +32,6 @@ class Object:
         pass
 
     def __del__(self):
-        del self.transform
         pass
 
     def SetActive(self, value):
@@ -54,6 +53,9 @@ class Object:
         pass
 
     def Update(self):
+        pass
+
+    def Handle_Event(self):
         pass
 
     def OnCollide(self):

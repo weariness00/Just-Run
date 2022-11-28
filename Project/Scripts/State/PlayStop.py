@@ -59,10 +59,12 @@ def exit():
     pass
 
 def handle_events():
-    ButtonLogic()
+
 
     events = get_events()
     Object.events = events
+    for obj in UpdateList:
+        obj.Handle_Event()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.pop_state()
@@ -72,6 +74,7 @@ def handle_events():
     pass
 
 def update():
+    ButtonLogic()
     for obj in UpdateList:
         obj.Update()
 

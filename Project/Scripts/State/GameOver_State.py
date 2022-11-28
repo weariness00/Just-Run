@@ -34,6 +34,7 @@ def enter():
     textRender = Render()
     textRender.name += " : Text - GameOver"
 
+    Object.renderList = objectRender
     UI.renderList = uiRender
     Text.renderList = textRender
 
@@ -61,7 +62,7 @@ def enter():
     back_Button.text.text = '로비'
     back_Button.text.transform.Position += back_Button.transform.Position + [-40, 0]
 
-    backGround_UI = Object()
+    backGround_UI = UI()
     backGround_UI.image = load_image('image/UI/PopUp/BackGround.png')
     backGround_UI.image_type = [0,0,1600,900]
     backGround_UI.transform.Position = Instance.windowSize//2
@@ -81,11 +82,11 @@ def exit():
     pass
 
 def handle_events():
-    if back_Button.isClick is True:
-        game_framework.change_state(Lobby_State)
 
     events = get_events()
     Object.events = events
+    for obj in Object.updateList:
+        obj.Handle_Event()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
@@ -100,6 +101,8 @@ def handle_events():
 
 
 def update():
+    if back_Button.isClick is True:
+        game_framework.change_state(Lobby_State)
     if p.ani.count < p.ani.frame:
         p.ani.OnAnimation(FrameTime.fTime)
     for obj in Object.updateList:

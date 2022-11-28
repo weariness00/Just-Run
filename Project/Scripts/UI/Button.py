@@ -5,6 +5,8 @@ class Button(UI):
     def __init__(self, death=0):
         super(Button, self).__init__()
         self.isClick = False
+        self.isOnMouse = False
+        self.mousePos = [0,0]
 
         self.name = "Button"
         self.image = Button.image
@@ -19,8 +21,6 @@ class Button(UI):
         pass
 
     def Update(self):
-        self.Handle_Event()
-
         self.image_type[0] = self.image_type[2] * self.frameCount
         pass
 
@@ -41,8 +41,11 @@ class Button(UI):
             y = Instance.windowSize[1] - event.y
             if dot[0][0] <= x <= dot[1][0] and dot[0][1] <= y <= dot[1][1] and self.frameCount != 2:
                 self.frameCount = 1
+                self.isOnMouse = True
+                self.mousePos = numpy.array([x,y], dtype=float)
             elif self.frameCount != 2:
                 self.frameCount = 0
+                self.isOnMouse = False
         pass
     pass
 
