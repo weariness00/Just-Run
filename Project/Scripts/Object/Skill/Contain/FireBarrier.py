@@ -31,6 +31,8 @@ class FireBarrier(Skill):
         self.skill_Type = 'Active'
         self.transform.Scale *= 30/512
 
+        self.coolTime = 3
+
         # Text 초기화
         self.skillName = '[불의 방패]'
         self.explain[0].text = '따뜻한 불길이 모여 나를 지켜준다.'

@@ -48,8 +48,7 @@ class Clone_Techniqu(Skill):
 
         self.cloneCount += 1
 
-        newClone = Player()
-        newClone.name = 'Player Clone'
+        newClone = Player(Player.this.name)
         newClone.speed += 100
         newClone.transform.Position += Player.this.transform.Position
         newClone.circleLay.SetActive(False)
