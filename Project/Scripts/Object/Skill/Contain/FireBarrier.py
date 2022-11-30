@@ -1,7 +1,7 @@
 # 불의 방패
 from Scripts.Object.Skill.Skill import *
-from Scripts.Object.Player.Player import Player
 from Scripts.FrameWork.Effect import Effect
+from Scripts.Object.Player.Player import Player
 
 class Barrier(Effect):
     image = load_image('Effect/Fire/FireRing.png')
@@ -19,6 +19,11 @@ class Barrier(Effect):
 
     def __del__(self):
         super(Barrier, self).__del__()
+        pass
+
+    def Update(self):
+        super(Barrier, self).Update()
+        self.transform.Position = Player.this.transform.Position - [0, 50]
         pass
 
     pass
@@ -41,7 +46,7 @@ class FireBarrier(Skill):
         self.explain[1].text = 'level * 2만큼의 시간만큼 무적이 된다.'
         self.explain.append(Text())
         self.explain[2].font = self.explain[1].fontList['Explain']
-        self.explain[2].text = '최대 Level 5, CoolTime 3, Space Bar을 누르면 발동'
+        self.explain[2].text = '최대 Level 5, CoolTime 3 + level * 2, Space Bar을 누르면 발동'
 
         # Barrier
         self.barrier = Barrier()
@@ -56,8 +61,8 @@ class FireBarrier(Skill):
 
     def Update(self):
         super(FireBarrier, self).Update()
-        self.barrier.transform.Position = Player.this.transform.Position - [0, 50]
         pass
+
     def OnSkill(self):
         super(FireBarrier, self).OnSkill()
         Player.this.OnGotMode(self.level * 2)
