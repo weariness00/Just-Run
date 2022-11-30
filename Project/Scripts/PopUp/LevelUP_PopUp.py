@@ -1,8 +1,9 @@
 from Scripts.Object.Skill.SkillContain import *
 from Scripts.Object.Skill.Skill import *
 from Scripts.Object.Player.Player import Player
+from Scripts.FrameWork.Animation import Animation
 from Scripts.FrameWork.UI import UI
-
+import Scripts.State.GamePlay_State as Game_State
 class LevelUP_PopUp(Object):
     def __init__(self):
         super(LevelUP_PopUp, self).__init__()
@@ -59,7 +60,7 @@ class LevelUP_PopUp(Object):
 
             index = SkillContain.RandomIndex()
             # maxLevel인 스킬 제외
-            if SkillContain.array[index].isMaxLevel is True:
+            if SkillContain.array[index].isMaxLevel is True and SkillContain.array[index].skill_Type is "Passive":
                 continue
 
             setIndex.add(index)
@@ -86,6 +87,7 @@ class LevelUP_PopUp(Object):
             imageObj.image_type = SkillContain.array[self.skillIndex[i]].image_type
             imageObj.transform.Position += self.imageBoxObject[i].transform.Position
             imageObj.transform.Scale = SkillContain.array[self.skillIndex[i]].transform.Scale
+            imageObj.image.opacify(1)
             pass
 
         UI.renderList.AddObject(self.textBoxObject, 1)
@@ -98,12 +100,16 @@ class LevelUP_PopUp(Object):
         pass
 
     def ChangeSkill(self):
+        Object.renderList = Game_State.ObjectRender
+        UI.renderList = Game_State.uiRender
+        Text.renderList = Game_State.textRender
         if SkillContain.array[self.skillIndex[self.count]].skill_Type == 'Passive':
             SkillContain.array[self.skillIndex[self.count]].OnSkill()
             SkillContain.array[self.skillIndex[self.count]].LevelUp()
         else:
-            Player.this.skill.SetActive(False)
-            Player.this.skill = SkillContain.array[self.skillIndex[self.count]]
+            if Player.this.skill != SkillContain.array[self.skillIndex[self.count]]:
+                Player.this.skill.SetActive(False)
+                Player.this.skill = SkillContain.array[self.skillIndex[self.count]]
             Player.this.skill.LevelUp()
             Player.this.skill.transform.Position = Player.this.skillBox.transform.Position
             Player.this.skill.SetActive(True)
