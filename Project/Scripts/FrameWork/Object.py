@@ -27,7 +27,7 @@ class Object:
         self.name = None
         self.ID = Object.Count
         Object.Count += 1
-        Object.AllObject.append(self)
+        # Object.AllObject.append(self)
         Object.updateList.append(self)
         pass
 

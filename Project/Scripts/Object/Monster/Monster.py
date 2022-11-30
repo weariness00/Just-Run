@@ -53,7 +53,7 @@ class Monster(Object):
 
         # LootTable
         self.lootTable = LootTable(self.transform)
-        self.lootTable.AddItem_Table(FireJewelry(), 100, [1, 1])    # 임시 값
+        self.lootTable.AddItem_Table(FireJewelry(), 50, [0, 1])    # 임시 값
 
         Monster.AllMonster.append(self)
         Object.renderList.AddObject(self, 4)

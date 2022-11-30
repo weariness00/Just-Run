@@ -61,8 +61,8 @@ class GameManager(Object):
         Item.earnCount = 0
         self.playData = PlayData()
         self.levelData = LevelingData(level)
-        self.levelData.SetTimeData(self.playTimer)
         self.levelData.SetDefaultPoolData(self.pools)
+        self.levelData.SetTimeData(self.playTimer)
 
         # Camera 초기화
         Camera.MainCamera = Camera(self.player.transform)

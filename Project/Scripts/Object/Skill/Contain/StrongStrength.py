@@ -1,5 +1,7 @@
 # 강인한 체력
-from Scripts.Object.Player.Player import *
+from Scripts.Object.Skill.Skill import *
+from Scripts.Object.Player.Player import Player
+from Scripts.Object.Player.Life import Life
 from Scripts.UI.Text import Text
 
 

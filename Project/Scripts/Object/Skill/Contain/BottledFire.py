@@ -2,7 +2,6 @@
 from Scripts.Object.Skill.Skill import *
 from Scripts.Object.Player.Player import Player
 
-
 class BottledFire(Skill):
 
     def __init__(self):
