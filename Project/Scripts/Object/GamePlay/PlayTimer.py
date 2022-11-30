@@ -1,7 +1,7 @@
 from Scripts.FrameWork.Object import *
 from Scripts.UI.Number import Number
+from Scripts.Object.Player.Player import Player
 import Scripts.State.LevelUp_State as LevelUP
-import Scripts.State.GameWInner_State as GameWinner
 import Scripts.FrameWork.game_framework as game_framework
 
 
@@ -15,6 +15,7 @@ class PlayTimer(Number):
         self.levelUpLengthTime = 30
         self.levelUpCount = 1
         self.isLevelUp = True # 난이도 상승을 위해 사용하는 임시 변수
+        self.isWin = False
 
         self.alignmentType = "Middle"
 
@@ -40,11 +41,11 @@ class PlayTimer(Number):
             for number in self.numberObjects:
                 number.image = Number.red_image
 
-        if t // self.levelUpLengthTime - self.levelUpCount > 0:
+        if t // self.levelUpLengthTime - self.levelUpCount >= 0:
             self.__LevelUp()
 
         if t >= self.winTime:
-            game_framework.change_state(GameWinner)
+            self.isWin = True
 
         pass
 
@@ -60,6 +61,7 @@ class PlayTimer(Number):
     def __LevelUp(self):
         self.levelUpCount += 1
         game_framework.push_state(LevelUP)
+        Player.this.OnGotMode(2)
         self.isLevelUp = True
         pass
 

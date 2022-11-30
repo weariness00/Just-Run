@@ -4,6 +4,7 @@ import Scripts.State.PlayStop as Stop
 import Scripts.State.GameWInner_State as GameWin
 import Scripts.State.LevelUp_State as LevelUp
 
+state = None
 
 # Timer
 start = None
@@ -101,11 +102,15 @@ def handle_events():
 
 
 def update():
+    global state
     # Function Flow
     # 모든 Object의 Update 호출
-    for obj in UpdateList:
+    for obj in UpdateList.copy():
         if obj.isActive is False:
             continue
+        if state is "Pause":
+            state = "None"
+            return
         obj.Update()
     # 모든 Object의 OnCollider을 호출
     Collide.SortAllCollide()
@@ -130,8 +135,9 @@ def draw():
     pass
 
 def pause():
-    global start
+    global start, state
     start = time.time()
+    state = "Pause"
     pass
 
 def resume():
