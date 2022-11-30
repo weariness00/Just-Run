@@ -1,6 +1,7 @@
-from Scripts.UI.Text import *
-from Scripts.Object.Player.Player import *
+from Scripts.FrameWork.Object import *
+from Scripts.UI.Text import Text
 from Scripts.FrameWork.UI import UI
+from Scripts.UI.Number import Number
 
 class Skill(Object):
     def __init__(self):
@@ -18,6 +19,11 @@ class Skill(Object):
 
         # Transform
         self.transform.Scale *= 3
+        self.coolTimeNumber = Number(3)
+        self.coolTimeNumber.image = Number.blue_image
+        self.coolTimeNumber.SetActive(False)
+        self.coolTimeNumber.transform.Scale *= 0.7
+        self.coolTimeNumber.transform.Position += [Instance.windowSize[0]//2, 100] # 위치 임의 지정
 
         # 스킬에 대한 능력치 관련
         # 스킬에 쓸 떄 사용할 이미지 -> 이거는 skill들 만들떄 거기서 초기화
@@ -33,17 +39,32 @@ class Skill(Object):
         super(Skill, self).__del__()
         pass
 
+    def Enable(self):
+        self.coolTimeNumber.SetActive(True)
+        self.image.opacify(1)
+        pass
+
+    def Disable(self):
+        self.coolTimeNumber.SetActive(False)
+        pass
+
     def Resume(self):
         self.onSkillTime += FrameTime.diffTime
+        if self.isSkillOn:
+            self.image.opacify(0.5)
         pass
 
     def Update(self):
         skillTime = time.time() - self.onSkillTime
+        self.coolTimeNumber.ChangeNumber(int(abs(self.coolTime - skillTime)))
         if skillTime >= self.coolTime:
             self.isSkillOn = False
-
+            self.image.opacify(1)
+            self.coolTimeNumber.SetActive(False)
     def OnSkill(self):
         self.isSkillOn = True
+        self.image.opacify(0.5)
+        self.coolTimeNumber.SetActive(True)
         self.onSkillTime = time.time()
         pass
 
