@@ -15,14 +15,15 @@ event_Name = ['null',
 class Player(Object):
     this = None
     renderList = None
-    def __init__(self):
+    def __init__(self, name='FlameSpirit'):
         super(Player, self).__init__()
         # 객체 초기화
+        self.name = name
         self.maxLife = 0
         self.life = 0
         self.speed = 0
         data = PlayerData()
-        data.SetDate(self, 'FlameSpirit')
+        data.SetDate(self, name)
 
         self.addSpeed = 0
         self.idle = dict()
@@ -96,6 +97,7 @@ class Player(Object):
 
     def Resume(self):
         self.InitHandle()
+        self.gotTime += FrameTime.diffTime
         pass
 
     def Update(self):
@@ -149,9 +151,7 @@ class Player(Object):
         self.collider.isTrigger = True
         onColliderList = self.collider.OnCollider()
         for collider in onColliderList:
-            if collider.tag == "Tile":
-                pass
-            elif collider.tag == "Monster":
+            if collider.tag == "Monster" or collider.tag == "Monster Attack":
                 if self.isGot is True:
                     continue
 
@@ -162,8 +162,9 @@ class Player(Object):
                 self.lifeObject[self.life].mainAnimation = self.lifeObject[self.life].blueFireAni
 
                 self.OnGotMode()
-                if self.name == "Player Clone" and self.life <= 0:
-                    self.__del__()
+                # if self.name == "Player Clone" and self.life <= 0:
+                #     Object.updateList.remove(self)
+                #     Object.renderList.RemoveObject(self)
 
                 pass
             elif collider.tag == "Player":
