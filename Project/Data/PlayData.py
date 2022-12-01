@@ -15,12 +15,20 @@ class PlayData:
         pass
 
     def GetData(self, game):
-        for i in range(2, 7):
-            self.sheet.cell(row = 2, column=i).value = 0
-        self.sheet['B2'] = game.playTimer.nowTime
-        self.sheet['C2'] = Monster.deathCount
-        self.sheet['D2'] = Item.earnCount
+        nextIndex = self.sheet["A1"].value
+        for i in range(3, 8):
+            self.sheet.cell(row = nextIndex + 2, column=i).value = 0
+        self.sheet.cell(row=nextIndex + 2, column=3).value = game.playTimer.nowTime
+        self.sheet.cell(row=nextIndex + 2, column=4).value = Monster.deathCount
+        self.sheet.cell(row=nextIndex + 2, column=5).value = Item.earnCount
 
+        # Player 정보 저장
+        self.sheet.cell(row=nextIndex + 2, column=8).value = game.player.name
+        self.sheet.cell(row=nextIndex + 2, column=9).value = game.player.speed
+        self.sheet.cell(row=nextIndex + 2, column=10).value = game.player.maxLife
+        self.sheet.cell(row=nextIndex + 2, column=11).value = game.player.life
+
+        self.sheet["A1"].value = nextIndex + 1
         self.file.save('Data/PlayData.xlsx')
         pass
 
