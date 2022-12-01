@@ -19,6 +19,8 @@ class Skill(Object):
 
         # Transform
         self.transform.Scale *= 3
+
+        # CollTime GUI
         self.coolTimeNumber = Number(3)
         self.coolTimeNumber.image = Number.blue_image
         self.coolTimeNumber.SetActive(False)

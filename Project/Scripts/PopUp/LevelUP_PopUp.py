@@ -60,7 +60,7 @@ class LevelUP_PopUp(Object):
 
             index = SkillContain.RandomIndex()
             # maxLevel인 스킬 제외
-            if SkillContain.array[index].isMaxLevel is True and SkillContain.array[index].skill_Type is "Passive":
+            if SkillContain.array[index].isMaxLevel is True and SkillContain.array[index].skill_Type == "Passive":
                 continue
 
             setIndex.add(index)
@@ -110,6 +110,7 @@ class LevelUP_PopUp(Object):
             if Player.this.skill != SkillContain.array[self.skillIndex[self.count]]:
                 Player.this.skill.SetActive(False)
                 Player.this.skill = SkillContain.array[self.skillIndex[self.count]]
+            Player.this.skill.onSkillTime = 0
             Player.this.skill.LevelUp()
             Player.this.skill.transform.Position = Player.this.skillBox.transform.Position
             Player.this.skill.SetActive(True)
