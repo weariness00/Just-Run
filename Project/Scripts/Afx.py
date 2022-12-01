@@ -1,5 +1,5 @@
-import os
-os.chdir("D:/GItData/Just Run/Project")
+# import os
+# os.chdir("D:/GItData/Just Run/Project")
 
 import math
 import numpy

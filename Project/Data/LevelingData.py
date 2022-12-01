@@ -1,3 +1,5 @@
+import time
+
 from openpyxl import load_workbook
 from Scripts.Object.Monster.MonsterPool import MonsterPool
 
@@ -14,6 +16,7 @@ class LevelingData:
     def SetTimeData(self, playTimer):
         playTimer.winTime = self.level["L2"].value
         playTimer.levelUpLengthTime = self.level["M2"].value
+        playTimer.startTime = time.time()
         pass
     def SetDefaultPoolData(self, pools):
         maxPool = self.level["N2"].value
@@ -38,3 +41,9 @@ class LevelingData:
             r += 1
             pass
         pass
+
+    def SetTileData(self, endlessTile):
+        endlessTile.minType = self.level["P2"].value
+        endlessTile.maxType = self.level["Q2"].value
+        pass
+    pass
