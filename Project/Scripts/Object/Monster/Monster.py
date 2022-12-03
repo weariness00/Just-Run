@@ -18,7 +18,7 @@ class Monster(Object):
         self.speed = 0
         self.addSpeed = 0
         self.hitSound = Monster.HitSound
-        self.hitSound.set_volume(10)
+        self.hitSound.set_volume(30)
 
         self.isActive = False
         self.isMoveMent = True

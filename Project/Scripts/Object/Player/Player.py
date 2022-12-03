@@ -179,7 +179,8 @@ class Player(Object):
         layColliderList = self.circleLay.OnLayCast()
         for collider in layColliderList:
             if collider.tag == 'Item':
-                collider.object.Earn()
+                collider.object.isMoveMent = True
+                collider.isCollide = False
         pass
 
     def OnAnimation(self):

@@ -41,12 +41,11 @@ class PlayTimer(Number):
             for number in self.numberObjects:
                 number.image = Number.red_image
 
-        if self.nowTime >= self.winTime:
-            self.isWin = True
-
-        if t // self.levelUpLengthTime - self.levelUpCount >= 0 and self.isWin is False:
+        if t // self.levelUpLengthTime - self.levelUpCount >= 0:
             self.__LevelUp()
 
+        if t >= self.winTime:
+            self.isWin = True
 
         pass
 

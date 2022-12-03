@@ -5,9 +5,6 @@ from Scripts.Object.Player.Player import Player
 class Item(Object):
     renderList = None
     earnCount = 0
-
-    earnSound = load_wav('Music/Item/ItemEarn.wav')
-    earnSound.set_volume(10)
     def __init__(self):
         super(Item, self).__init__()
         self.isMoveMent = False
@@ -46,7 +43,6 @@ class Item(Object):
         Object.renderList.RemoveObject(self)
         Player.this.itemCount += 1
         Item.earnCount += 1
-        Item.earnSound.play()
         pass
 
     def Update(self):
@@ -67,10 +63,4 @@ class Item(Object):
     def OnItem(self, position):
         self.SetActive(True)
         self.transform.Position = numpy.copy(position)
-        pass
-
-    def Earn(self):
-        self.isMoveMent = True
-        self.collider.isCollide = False
-        pass
     pass

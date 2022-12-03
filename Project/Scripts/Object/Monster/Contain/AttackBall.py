@@ -3,9 +3,6 @@ from Scripts.Object.Monster.Monster import *
 class AttackBall(Monster):
     image = load_image('image/Monster/RedBat Monster/Ball_Red.png')
     image_type = [0, 0, 32, 32]
-
-    attackSound = load_wav('Music/Monster/Attack.wav')
-    attackSound.set_volume(10)
     def __init__(self):
         super(AttackBall, self).__init__()
 
@@ -36,8 +33,6 @@ class AttackBall(Monster):
         dir = dir / numpy.linalg.norm(dir)
 
         self.moveDir = dir
-
-        AttackBall.attackSound.play()
         pass
 
     def Disable(self):
