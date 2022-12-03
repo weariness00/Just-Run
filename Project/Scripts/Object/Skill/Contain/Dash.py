@@ -14,7 +14,7 @@ class Dash(Skill):
         self.image = load_image('image/UI/Skill/Dash.png')
         self.image_type = [0, 0, 32, 32]
         self.skill_Type = 'Active'
-        self.coolTime = 1
+        self.coolTime = 3
 
         # Text 초기화
         self.skillName = '[돌진]'

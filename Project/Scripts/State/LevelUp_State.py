@@ -38,6 +38,10 @@ def enter():
     backGround_UI.image_type = [0,0,1600,900]
     backGround_UI.transform.Position = Instance.windowSize//2
     UIRender.AddObject(backGround_UI)
+
+    levelupSound = load_wav('Music/LevelUp.wav')
+    levelupSound.set_volume(60)
+    levelupSound.play()
     pass
 
 # finalization code

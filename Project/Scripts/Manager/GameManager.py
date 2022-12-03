@@ -26,7 +26,7 @@ class GameManager(Object):
     def __init__(self, level = 'Easy'):
         super(GameManager, self).__init__()
         self.bgm = load_music('Music/Background/GamePlayBGM_0' + random.randint(1,2).__str__() + '.mp3')
-        self.bgm.set_volume(10)
+        self.bgm.set_volume(32)
         self.bgm.repeat_play()
 
         self.playTimer = PlayTimer()    # 게임 진행 시간
@@ -86,7 +86,7 @@ class GameManager(Object):
             self.playData.GetData(self)
             self.player.isActive = False
             game_framework.push_state(GameOver)
-        elif self.playTimer.isWin:
+        elif self.playTimer.isWin is True:
             self.playData.GetData(self)
             game_framework.change_state(GameWinner)
 
@@ -102,7 +102,7 @@ class GameManager(Object):
 
     def KeyDown(self, key):
         if key == SDLK_EQUALS:
-            self.playTimer.startTime -= 1
+            self.playTimer.startTime -= 10
         elif key == SDLK_F2:
             if Player.this.life <= 0:
                 return

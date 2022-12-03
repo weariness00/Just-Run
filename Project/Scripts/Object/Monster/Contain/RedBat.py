@@ -8,6 +8,8 @@ class RedBat(Monster):
     deathImage = load_image('image/Monster/RedBat Monster/Death.png')
 
     effectImage = load_image('Effect/Sparkling/explosion_pixelfied.png')
+
+    hitSound = load_wav('Music/Monster/Hit/Flame.ogg')
     def __init__(self):
         # Objcet
         super(RedBat, self).__init__()
@@ -15,6 +17,9 @@ class RedBat(Monster):
         self.speed = 70
         self.attackRange = 500
         self.attackObjectCount = 2
+
+        self.hitSound = RedBat.hitSound
+        self.hitSound.set_volume(10)
 
         # Transform
         self.transform.Scale = self.transform.Scale * 0.15
