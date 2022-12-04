@@ -18,6 +18,7 @@ class Monster(Object):
         self.speed = 0
         self.addSpeed = 0
         self.hitSound = Monster.HitSound
+        self.hitVelum = 10
 
         self.isActive = False
         self.isMoveMent = True
@@ -134,10 +135,10 @@ class Monster(Object):
             self.collider.isCollide = False
             self.isMoveMent = False
             self.isDeath = True
-            self.hitSound.set_volume(10)
-            self.hitSound.play(1)
             self.mainAnimation = self.deathAni
             self.deathStart = time.time()
+            self.hitSound.set_volume(self.hitVelum)
+            self.hitSound.play(1)
         elif collider.tag == 'Monster Attack':
             self.collider.isTrigger = False
         elif collider.tag == "Item":

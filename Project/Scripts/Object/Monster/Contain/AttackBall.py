@@ -13,6 +13,8 @@ class AttackBall(Monster):
         self.moveDir = [0,0] # 공이 나아가는 방향
         self.speed = 130
 
+        self.hitVelum = 0
+
         # Transform
         self.transform.Scale *= 0.7
 
@@ -36,7 +38,7 @@ class AttackBall(Monster):
 
         self.moveDir = dir
 
-        AttackBall.attackSound.set_volume(10)
+        AttackBall.attackSound.set_volume(5)
         AttackBall.attackSound.play()
         pass
 

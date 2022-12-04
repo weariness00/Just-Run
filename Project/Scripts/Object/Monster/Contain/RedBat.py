@@ -19,6 +19,7 @@ class RedBat(Monster):
         self.attackObjectCount = 2
 
         self.hitSound = RedBat.HitSound
+        self.hitVelum = 20
 
         # Transform
         self.transform.Scale = self.transform.Scale * 0.15

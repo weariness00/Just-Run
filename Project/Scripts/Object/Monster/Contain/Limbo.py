@@ -13,6 +13,8 @@ class Limbo(Monster):
         self.name = 'Limbo'
         self.speed = 150
 
+        self.hitVelum = 100
+
         # Transform
         self.transform.Scale = self.transform.Scale * 0.2
 
