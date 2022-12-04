@@ -32,3 +32,15 @@ class PlayData:
         self.file.save('Data/PlayData.xlsx')
         pass
 
+    def GetPlayData(self, score):
+        lastScoreNum = self.sheet["A1"].value
+        t = self.sheet.cell(row=lastScoreNum + 1, column=3).value.__str__()
+        if len(t) > 2:
+            ts = t.split()
+            ts.insert(3, ' : ')
+            t = ' '.join(ts)
+        timeText = "[PlayTime]" + t
+        score.playTimeText.SetTextBox(10, 2, timeText)
+        score.killCountText.SetTextBox(12,2, "[Kill Count]" + self.sheet.cell(row=lastScoreNum + 1, column=4).value.__str__())
+        score.earnItemCountText.SetTextBox(17,2, "[Earn Item Count]" + self.sheet.cell(row=lastScoreNum + 1, column=5).value.__str__())
+        pass

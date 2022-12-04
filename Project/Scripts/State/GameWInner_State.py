@@ -143,16 +143,7 @@ class Score:
 
     def OnScore(self):
         pd = PlayData()
-
-        t = pd.sheet["B2"].value.__str__()
-        if len(t) > 2:
-            ts = t.split()
-            ts.insert(3, ' : ')
-            t = ' '.join(ts)
-        timeText = "[PlayTime]" + t
-        self.playTimeText.SetTextBox(10, 2, timeText)
-        self.killCountText.SetTextBox(12,2, "[Kill Count]" + pd.sheet["C2"].value.__str__())
-        self.earnItemCountText.SetTextBox(17,2, "[Earn Item Count]" + pd.sheet["D2"].value.__str__())
+        pd.GetPlayData(self)
         pass
 
 

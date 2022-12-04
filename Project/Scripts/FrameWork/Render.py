@@ -10,7 +10,6 @@ class Render:
         pass
 
     def __del__(self):
-        print(self.name + " 소멸")
         self.Clear()
         pass
 

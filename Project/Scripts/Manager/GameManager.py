@@ -26,7 +26,7 @@ class GameManager(Object):
     def __init__(self, level = 'Easy'):
         super(GameManager, self).__init__()
         self.bgm = load_music('Music/Background/GamePlayBGM_0' + random.randint(1,2).__str__() + '.mp3')
-        self.bgm.set_volume(10)
+        self.bgm.set_volume(32)
         self.bgm.repeat_play()
 
         self.playTimer = PlayTimer()    # 게임 진행 시간

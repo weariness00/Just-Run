@@ -14,12 +14,17 @@ levelUp = None
 backGround_UI = None
 Skills_UI = None
 
+
+slideSound = None
+
 def enter():
+    global slideSound
     global ObjectRender, UIRender, TextRender
     global levelUp, backGround_UI
 
     # Init
     Object.updateList = []
+    slideSound = load_wav('Music/Button/OnMouse.wav') # 임시
 
     # 객체 생성
     ObjectRender = Render()
@@ -38,6 +43,10 @@ def enter():
     backGround_UI.image_type = [0,0,1600,900]
     backGround_UI.transform.Position = Instance.windowSize//2
     UIRender.AddObject(backGround_UI)
+
+    levelupSound = load_wav('Music/LevelUp.wav')
+    levelupSound.set_volume(10)
+    levelupSound.play()
     pass
 
 # finalization code
@@ -47,7 +56,7 @@ def exit():
     pass
 
 def handle_events():
-    global levelUp
+    global levelUp, slideSound
 
     events = get_events()
     for event in events:
@@ -59,9 +68,13 @@ def handle_events():
             elif event.key == SDLK_DOWN:
                 levelUp.count = (levelUp.count - 1) % 3
                 levelUp.ChangeBoxColor('Red')
+                slideSound.set_volume(10)
+                slideSound.play()
             elif event.key == SDLK_UP:
                 levelUp.count = (levelUp.count + 1) % 3
                 levelUp.ChangeBoxColor('Red')
+                slideSound.set_volume(10)
+                slideSound.play()
             elif event.key == SDLK_RETURN:   # 현재 Enter의 값하고 달라서 디버그 돌려서 나온 key value를 임의로 넣어줌
                 levelUp.ChangeSkill()
                 game_framework.pop_state()

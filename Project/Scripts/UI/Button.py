@@ -2,6 +2,9 @@ from Scripts.FrameWork.UI import *
 
 class Button(UI):
     image = load_image('image/UI/Button.png')
+
+    clickSound = load_wav('Music/Button/Click.wav')
+    onMouseSound = load_wav('Music/Button/OnMouse.wav')
     def __init__(self, death=0):
         super(Button, self).__init__()
         self.isClick = False
@@ -40,12 +43,15 @@ class Button(UI):
             x = event.x
             y = Instance.windowSize[1] - event.y
             if dot[0][0] <= x <= dot[1][0] and dot[0][1] <= y <= dot[1][1] and self.frameCount != 2:
-                self.frameCount = 1
+                if not self.isOnMouse:
+                    Button.onMouseSound.set_volume(10)
+                    Button.onMouseSound.play()
                 self.isOnMouse = True
+                self.frameCount = 1
                 self.mousePos = numpy.array([x,y], dtype=float)
             elif self.frameCount != 2:
-                self.frameCount = 0
                 self.isOnMouse = False
+                self.frameCount = 0
         pass
     pass
 
@@ -62,6 +68,8 @@ class Button(UI):
             if event.button == SDL_BUTTON_LEFT and \
                     dot[0][0] <= x <= dot[1][0] and dot[0][1] <= y <= dot[1][1]:
                 self.isClick = True
+                Button.clickSound.set_volume(10)
+                Button.clickSound.play()
             else:
                 self.frameCount = 0
         pass

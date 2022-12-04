@@ -5,6 +5,8 @@ from Scripts.Object.Player.Player import Player
 class Item(Object):
     renderList = None
     earnCount = 0
+
+    earnSount = load_wav('Music/Item/ItemEarn.wav')
     def __init__(self):
         super(Item, self).__init__()
         self.isMoveMent = False
@@ -43,6 +45,8 @@ class Item(Object):
         Object.renderList.RemoveObject(self)
         Player.this.itemCount += 1
         Item.earnCount += 1
+        Item.earnSount.set_volume(10)
+        Item.earnSount.play()
         pass
 
     def Update(self):

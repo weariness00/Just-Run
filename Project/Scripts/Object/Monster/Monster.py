@@ -18,7 +18,6 @@ class Monster(Object):
         self.speed = 0
         self.addSpeed = 0
         self.hitSound = Monster.HitSound
-        self.hitSound.set_volume(30)
 
         self.isActive = False
         self.isMoveMent = True
@@ -135,6 +134,7 @@ class Monster(Object):
             self.collider.isCollide = False
             self.isMoveMent = False
             self.isDeath = True
+            self.hitSound.set_volume(10)
             self.hitSound.play(1)
             self.mainAnimation = self.deathAni
             self.deathStart = time.time()
