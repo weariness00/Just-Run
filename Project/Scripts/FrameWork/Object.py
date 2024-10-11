@@ -58,6 +58,9 @@ class Object:
     def Handle_Event(self):
         pass
 
+    def EventCall(self):
+        pass
+
     def OnCollide(self):
         pass
 

@@ -4,8 +4,11 @@ from Scripts.FrameWork.Object import Object
 from Scripts.FrameWork.Render import Render
 from Scripts.UI.Button import Button
 from Scripts.UI.Text import Text
+from Scripts.UI.InputFiled import InputFiled
+
 import Scripts.FrameWork.game_framework as game_framework
 import Scripts.State.GamePlay_State as game_state
+import Scripts.State.RankGraph_State as rank_state
 
 from openpyxl import load_workbook
 
@@ -77,6 +80,11 @@ def update():
 
     pass
 
+def event_update():
+    for obj in Object.updateList:
+        obj.EventCall()
+    pass
+
 def draw():
 
     ui_Render.UIDraw()
@@ -114,10 +122,18 @@ class BannerPopUp(Object):
         # Start
         self.start_Button = Button(1)
         self.start_Button.transform.Scale *= 2
-        self.start_Button.transform.Position += [Instance.windowSize[0] // 2, 300]
+        self.start_Button.transform.Position += [Instance.windowSize[0] // 2, 400]
         self.start_Button.text = Text(40)
         self.start_Button.text.text = '시작'
         self.start_Button.text.transform.Position += self.start_Button.transform.Position + [-40, 0]
+
+        # Rank Graph
+        self.rank_Graph_Button = Button(1)
+        self.rank_Graph_Button.transform.Scale *= 2
+        self.rank_Graph_Button.transform.Position += [Instance.windowSize[0] // 2, 300]
+        self.rank_Graph_Button.text = Text(40)
+        self.rank_Graph_Button.text.text = '랭크'
+        self.rank_Graph_Button.text.transform.Position += self.rank_Graph_Button.transform.Position + [-40, 0]
 
         # Exit
         self.exit_Button = Button(1)
@@ -138,6 +154,8 @@ class BannerPopUp(Object):
         self.subBanner.SetActive(True)
         self.start_Button.SetActive(True)
         self.start_Button.text.SetActive(True)
+        self.rank_Graph_Button.SetActive(True)
+        self.rank_Graph_Button.text.SetActive(True)
         self.exit_Button.SetActive(True)
         self.exit_Button.text.SetActive(True)
         pass
@@ -148,6 +166,8 @@ class BannerPopUp(Object):
         self.subBanner.SetActive(False)
         self.start_Button.SetActive(False)
         self.start_Button.text.SetActive(False)
+        self.rank_Graph_Button.SetActive(False)
+        self.rank_Graph_Button.text.SetActive(False)
         self.exit_Button.SetActive(False)
         self.exit_Button.text.SetActive(False)
         pass
@@ -160,6 +180,10 @@ class BannerPopUp(Object):
             self.start_Button.frameCount = 0
         elif self.exit_Button.isClick is True:
             game_framework.quit()
+        elif self.rank_Graph_Button.isClick is True:
+            game_framework.push_state(rank_state)
+            self.rank_Graph_Button.isClick = False
+            self.rank_Graph_Button.frameCount = 0
         pass
     pass
 

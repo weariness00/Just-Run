@@ -80,6 +80,11 @@ def update():
 
     pass
 
+def event_update():
+    for obj in Object.updateList:
+        obj.EventCall()
+    pass
+
 def draw():
 
     game_state.draw()

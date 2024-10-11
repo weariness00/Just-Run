@@ -20,6 +20,8 @@ class EndlessTile(Object):
         # Tile이 여러개 있는데 현재 index로 관리중이라 쓰는 임시 변수
         self.minType = 0
         self.maxType = 0
+        # Tile의 지형 이름 index
+        self.tileNameIndex = 0
         pass
 
     def __del__(self):
@@ -34,6 +36,7 @@ class EndlessTile(Object):
         #현재 Active중인 타일 전부 False
         for obj in self.LastUpdateTerrain:
             obj.SetActive(False)
+            obj.changeTypeIndex(self.tileNameIndex)
             pass
         self.LastUpdateTerrain = []
 
@@ -50,8 +53,7 @@ class EndlessTile(Object):
                 if obj is not None:
                     pass
                 else:
-                    # obj = Tile(load_image("image\Tile\snow-expansion.png"), (16 * 1, 208, 16, 16))
-                    obj = TileType(random.randint(self.minType, self.maxType))
+                    obj = TileType(random.randint(self.minType, self.maxType), self.tileNameIndex)
                     obj.transform.Position = pos * self.terrainSize
                     obj.tileSize = 16
                     obj.transform.Scale *= self.terrainSize // obj.tileSize

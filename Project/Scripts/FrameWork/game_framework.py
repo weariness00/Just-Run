@@ -114,6 +114,7 @@ def run(start_state):
     while running:
         stack[-1].handle_events()
         stack[-1].update()
+        stack[-1].event_update()
         pico2d.clear_canvas()
         stack[-1].draw()
         pico2d.update_canvas()

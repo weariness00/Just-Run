@@ -109,6 +109,11 @@ def update():
         obj.Update()
     pass
 
+def event_update():
+    for obj in Object.updateList:
+        obj.EventCall()
+    pass
+
 def draw():
     Game_State.draw()
 

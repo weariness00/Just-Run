@@ -7,6 +7,8 @@ class Button(UI):
     onMouseSound = load_wav('Music/Button/OnMouse.wav')
     def __init__(self, death=0):
         super(Button, self).__init__()
+        self.OnValueChange = []
+
         self.isClick = False
         self.isOnMouse = False
         self.mousePos = [0,0]
@@ -36,6 +38,11 @@ class Button(UI):
             self.OnMouse(event, dot)
             self.ClickMouse(event, dot)
             pass
+        pass
+
+    def EventCall(self):
+        for action in self.OnValueChange:
+            action()
         pass
 
     def OnMouse(self, event, dot):

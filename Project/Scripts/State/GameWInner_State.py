@@ -7,6 +7,7 @@ from Scripts.FrameWork.Effect import Effect
 from Scripts.FrameWork.Animation import Animation
 from Scripts.FrameWork.Render import Render
 from Scripts.FrameWork.FrameTime import FrameTime
+from Scripts.UI.InputFiled import InputFiled
 
 
 import Scripts.FrameWork.game_framework as game_framework
@@ -17,6 +18,7 @@ from Data.PlayData import PlayData
 # 객체
 background = None
 back_Button = None
+nameInputFiled = None
 # Render
 objectRender = None
 uiRender = None
@@ -26,7 +28,7 @@ textRender = None
 updateList = None
 
 def enter():
-    global background, back_Button
+    global background, back_Button, nameInputFiled
     global objectRender, uiRender, textRender
     global updateList
 
@@ -71,6 +73,14 @@ def enter():
 
     Score().OnScore()
 
+    nameInputFiled = InputFiled(3)
+    nameInputFiled.transform.Scale *= [3,2]
+    nameInputFiled.transform.Position[0] = Instance.windowSize[0] // 2
+    nameInputFiled.transform.Position[1] = nameInputFiled.image_type[3] + 30
+    nameInputFiled.explainText.text = "이름을 입력해주세요."
+
+    nameInputFiled.OnValueChangeCall.append(ValueChange)
+
     uiRender.AddObject(background)
     uiRender.AddObject(window, 1)
     pass
@@ -113,6 +123,11 @@ def update():
         obj.Update()
     pass
 
+def event_update():
+    for obj in Object.updateList:
+        obj.EventCall()
+    pass
+
 def draw():
 
     objectRender.Draw()
@@ -128,22 +143,35 @@ def resume():
 
 class Score:
     def __init__(self):
+        self.inputFiled = InputFiled()
+
         self.playTimeText = Text()
         self.killCountText = Text()
         self.earnItemCountText = Text()
+        self.scoreText = Text(35)
 
         self.playTimeText.color = [0,0,0]
         self.killCountText.color = [0,0,0]
         self.earnItemCountText.color = [0,0,0]
+        self.scoreText.color = [0,0,0]
 
         self.playTimeText.transform.Position += Instance.windowSize//2 + [-200, 100]
         self.killCountText.transform.Position += Instance.windowSize//2 + [-50, 100]
         self.earnItemCountText.transform.Position += Instance.windowSize//2 + [100, 100]
+        self.scoreText.transform.Position += Instance.windowSize//2 + [-50, 0]
         pass
 
     def OnScore(self):
         pd = PlayData()
         pd.GetPlayData(self)
         pass
+    pass
 
+def ValueChange():
+    global nameInputFiled
+    pd = PlayData()
+    nextIndex = pd.sheet["A1"].value - 1
+    pd.sheet.cell(row=nextIndex + 2, column=2).value = nameInputFiled.Text.text
+    pd.file.save('Data/PlayData.xlsx')
+    pass
 
