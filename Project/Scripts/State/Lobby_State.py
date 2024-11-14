@@ -111,37 +111,42 @@ class BannerPopUp(Object):
 
         self.banner = Text(120)
         self.banner.text = '그냥 튀어!'
+        self.banner.type = 'Middle'
         self.banner.color = [62, 62, 62]
         self.banner.font = self.banner.fontList['Explain']
-        self.banner.transform.Position = Instance.windowSize // 2 + [-230, 200]
+        self.banner.transform.Position = Instance.windowSize // 2 + [115, 200]
         self.subBanner = Text(40)
         self.subBanner.text = 'Just Run!'
+        self.subBanner.type = 'Middle'
         self.subBanner.color = [62, 62, 62]
-        self.subBanner.transform.Position = self.banner.transform.Position + [130, -100]
+        self.subBanner.transform.Position = Instance.windowSize // 2 + [75, 100]
 
         # Start
         self.start_Button = Button(1)
         self.start_Button.transform.Scale *= 2
         self.start_Button.transform.Position += [Instance.windowSize[0] // 2, 400]
         self.start_Button.text = Text(40)
+        self.start_Button.text.type = "Middle"
         self.start_Button.text.text = '시작'
-        self.start_Button.text.transform.Position += self.start_Button.transform.Position + [-40, 0]
+        self.start_Button.text.transform.Position += self.start_Button.transform.Position #+ [-40, 0]
 
         # Rank Graph
         self.rank_Graph_Button = Button(1)
         self.rank_Graph_Button.transform.Scale *= 2
         self.rank_Graph_Button.transform.Position += [Instance.windowSize[0] // 2, 300]
         self.rank_Graph_Button.text = Text(40)
+        self.rank_Graph_Button.text.type = 'Middle'
         self.rank_Graph_Button.text.text = '랭크'
-        self.rank_Graph_Button.text.transform.Position += self.rank_Graph_Button.transform.Position + [-40, 0]
+        self.rank_Graph_Button.text.transform.Position += self.rank_Graph_Button.transform.Position #+ [-40, 0]
 
         # Exit
         self.exit_Button = Button(1)
         self.exit_Button.transform.Scale *= 2
         self.exit_Button.transform.Position += [Instance.windowSize[0] // 2, 200]
         self.exit_Button.text = Text(40)
+        self.exit_Button.text.type = 'Middle'
         self.exit_Button.text.text = '종료'
-        self.exit_Button.text.transform.Position += self.exit_Button.transform.Position + [-40, 0]
+        self.exit_Button.text.transform.Position += self.exit_Button.transform.Position #+ [-40, 0]
         # Render 초기화
         ui_Render.AddObject(self.frame, 0)
 
